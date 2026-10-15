@@ -1,0 +1,90 @@
+{
+	"ID": "5cf8834e4101fec29984dd9b85389834",
+	"TypeName": "FlaxEngine.Prefab",
+	"EngineBuild": 6912,
+	"Data": [
+	{
+		"ID": "05d72da047ffe91862554fbd5c7c2600",
+		"TypeName": "FlaxEngine.CharacterController",
+		"Name": "Player",
+		"StaticFlags": 0,
+		"Layer": 1,
+		"Tag": "Player"
+	},
+	{
+		"ID": "f21f41964f9a336df564e4bc9fcacedc",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
+		"Name": "Movement",
+		"StaticFlags": 0,
+		"Layer": 1
+	},
+	{
+		"ID": "dc383b864343bfc4c028b0a14cf7c456",
+		"TypeName": "Game.Behaviours.Player.Movement.PlayerBodyController",
+		"ParentID": "f21f41964f9a336df564e4bc9fcacedc",
+		"V": {
+	"MaxSpeed": 250.0,
+	"Controller": "05d72da047ffe91862554fbd5c7c2600",
+	"BodyActor": "05d72da047ffe91862554fbd5c7c2600",
+	"CameraActor": "c68c6b8b445fcc5842ef95a0d4942e97"
+}
+	},
+	{
+		"ID": "5b557b414d049a6a7dbcf79814c91083",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
+		"Name": "Look",
+		"StaticFlags": 0,
+		"Layer": 1
+	},
+	{
+		"ID": "c72e1d684009f65042e658ac89ad33ab",
+		"TypeName": "Game.Behaviours.Player.Look.PlayerCameraController",
+		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
+		"V": {
+	"CameraActor": "764d64de4fe1a0013d89d9802a78e24f",
+	"YawActor": "c68c6b8b445fcc5842ef95a0d4942e97"
+}
+	},
+	{
+		"ID": "c68c6b8b445fcc5842ef95a0d4942e97",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
+		"Name": "Yaw",
+		"Transform": {
+			"Translation": {
+				"X": 0.0,
+				"Y": 80.0,
+				"Z": 0.0
+			}
+		}
+	},
+	{
+		"ID": "764d64de4fe1a0013d89d9802a78e24f",
+		"TypeName": "FlaxEngine.Camera",
+		"ParentID": "c68c6b8b445fcc5842ef95a0d4942e97",
+		"Name": "Camera",
+		"StaticFlags": 0
+	},
+	{
+		"ID": "ed57bb6045f86fdd5978f69f602250a2",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
+		"Name": "Sound",
+		"StaticFlags": 0,
+		"Layer": 1
+	},
+	{
+		"ID": "ef1715fe4efef8aa6ed962b3fe331d7d",
+		"TypeName": "Game.Behaviours.Player.Sound.PlayerSoundController",
+		"ParentID": "ed57bb6045f86fdd5978f69f602250a2",
+		"V": {
+	"JumpClip": "2e48281b4ca102f53703dfbe1480096a",
+	"HurtClip": "ffd9d80d4d66e5c492f2bbabf64ade76",
+	"LandClip": "81dada3a47a1745c7d3429a28eca200a",
+	"FootstepClip": "ec69015f4d7b83f82bf9fe827f65ba08"
+}
+	}
+]
+}
