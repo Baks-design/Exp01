@@ -3,19 +3,19 @@ using Game.Systems.Input;
 
 namespace Game.Behaviours.Player.Movement;
 
-public sealed class MovementInputSource(InputManager input) : IInputSource
+public sealed class MovementInputSource(IInputService input) : IInputSource
 {
-    readonly InputManager input = input;
+    readonly IInputService input = input;
     bool jumpQueued;
 
+    public Vector2 MoveAxis => new(input.GetAxis(GameAxis.MoveX), input.GetAxis(GameAxis.MoveY));
     public bool JumpPressedThisFrame { get; private set; }
     public bool SprintHeld { get; private set; }
-    public Vector2 MoveAxis => new(input.GetAxis(GameAxis.MoveX), input.GetAxis(GameAxis.MoveY));
 
     public void Poll(bool focused)
     {
-        SprintHeld = focused && input.GetAxis(GameAxis.Sprint) > 0.5f;
-        JumpPressedThisFrame = jumpQueued;
+        SprintHeld = input.GetAction(InputActions.Sprint) && focused;
+        JumpPressedThisFrame = focused && jumpQueued;
         jumpQueued = false;
     }
 

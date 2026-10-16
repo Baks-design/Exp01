@@ -5,11 +5,11 @@ namespace Game.Behaviours.Player.Sound;
 
 public sealed class PlayerSoundController : Script
 {
-    public int PoolSize { get; init; } = 10;
-    public required AudioClip JumpClip { get; init; }
-    public required AudioClip HurtClip { get; init; }
-    public required AudioClip LandClip { get; init; }
-    public required AudioClip FootstepClip { get; init; }
+    public int PoolSize = 10;
+    public required AudioClip JumpClip;
+    public required AudioClip HurtClip;
+    public required AudioClip LandClip;
+    public required AudioClip FootstepClip;
     static readonly SoundEffectClip JumpSound = new(SoundId.Jump);
     static readonly SoundEffectClip HurtSound = new(SoundId.Hurt);
     static readonly SoundEffectClip LandSound = new(SoundId.Land);

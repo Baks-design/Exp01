@@ -24,7 +24,11 @@
 		"TypeName": "Game.Behaviours.Player.Movement.PlayerBodyController",
 		"ParentID": "f21f41964f9a336df564e4bc9fcacedc",
 		"V": {
-	"MaxSpeed": 250.0,
+	"MaxSpeed": 500.0,
+	"JumpMultiplier": 100.0,
+	"FallGravityMultiplier": 5.0,
+	"TerminalVelocity": 500.0,
+	"MaxAirJumps": 1,
 	"Controller": "05d72da047ffe91862554fbd5c7c2600",
 	"BodyActor": "05d72da047ffe91862554fbd5c7c2600",
 	"CameraActor": "c68c6b8b445fcc5842ef95a0d4942e97"
@@ -43,6 +47,8 @@
 		"TypeName": "Game.Behaviours.Player.Look.PlayerCameraController",
 		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
 		"V": {
+	"MinPitch": -60.0,
+	"MaxPitch": 60.0,
 	"CameraActor": "764d64de4fe1a0013d89d9802a78e24f",
 	"YawActor": "c68c6b8b445fcc5842ef95a0d4942e97"
 }

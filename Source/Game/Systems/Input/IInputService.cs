@@ -2,7 +2,7 @@ using System;
 
 namespace Game.Systems.Input;
 
-public interface IInputManager : IDisposable
+public interface IInputService 
 {
     bool GetAction(InputActions action);
     float GetAxis(GameAxis axis, bool rawValue = true);

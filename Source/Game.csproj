@@ -325,17 +325,16 @@
     <Compile Include="Game\Core\Helpers\Cursor\CursorService.cs" />
     <Compile Include="Game\Core\Helpers\Cursor\CursorState.cs" />
     <Compile Include="Game\Core\Helpers\Cursor\ICursorService.cs" />
-    <Compile Include="Game\Core\Helpers\ExitOnEsc.cs" />
+    <Compile Include="Game\Core\Helpers\SystemTools.cs" />
     <Compile Include="Game\Core\Helpers\Timer\ITimeService.cs" />
-    <Compile Include="Game\Core\Helpers\Timer\SlowMotionHandler.cs" />
     <Compile Include="Game\Core\Helpers\Timer\TimeService.cs" />
-    <Compile Include="Game\Core\Helpers\Timer\TimeSnapshot.cs" />
-    <Compile Include="Game\Core\Helpers\Timer\Transition.cs" />
-    <Compile Include="Game\Core\Helpers\Timer\TransitionTimeMode.cs" />
+    <Compile Include="Game\Core\Patterns\Services\IServiceLocator.cs" />
+    <Compile Include="Game\Core\Patterns\Services\ServiceLocator.cs" />
+    <Compile Include="Game\Initialization\GameBootstrapPlugin.cs" />
     <Compile Include="Game\Systems\Input\GameAxis.cs" />
-    <Compile Include="Game\Systems\Input\IInputManager.cs" />
+    <Compile Include="Game\Systems\Input\IInputService.cs" />
     <Compile Include="Game\Systems\Input\InputActions.cs" />
-    <Compile Include="Game\Systems\Input\InputManager.cs" />
+    <Compile Include="Game\Systems\Input\InputService.cs" />
     <Compile Include="Game\UI\PauseMenu.cs" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Editor.Windows.Debug|x64' " >

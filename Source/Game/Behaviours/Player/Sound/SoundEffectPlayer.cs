@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using FlaxEngine;
@@ -29,7 +28,7 @@ public sealed class SoundEffectPlayer(
         foreach (var source in pool) source.Stop();
     }
 
-    AudioSource? GetAvailableSource()
+    AudioSource GetAvailableSource()
     {
         foreach (var source in pool) if (!source.IsActuallyPlaying) return source;
         return stealOldestWhenFull ? pool[0] : null;

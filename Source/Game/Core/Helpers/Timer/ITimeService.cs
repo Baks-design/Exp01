@@ -1,8 +1,6 @@
-using System;
-
 namespace Game.Core.Helpers.Timer;
 
-public interface ITimeService : IDisposable
+public interface ITimeService
 {
     float DeltaTime { get; }
     float FixedDeltaTime { get; }
@@ -11,6 +9,5 @@ public interface ITimeService : IDisposable
     ulong FrameCount { get; }
     float TimeScale { get; set; }
 
-    TimeSnapshot Capture();
-    IDisposable PushTimeScale(float scale);
+    void PushTimeScale(float scale);
 }

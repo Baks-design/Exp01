@@ -18,6 +18,59 @@
 			}
 		},
 		{
+			"ID": "b67edcfd4e4bd60dcdca6bb83dcbc51f",
+			"TypeName": "FlaxEngine.EmptyActor",
+			"ParentID": "74a68a984824b4510d12589f199ad68f",
+			"Name": "System"
+		},
+		{
+			"ID": "95bf520342c33d61aefd2e992eb28897",
+			"TypeName": "Game.Helpers.SystemTools",
+			"ParentID": "b67edcfd4e4bd60dcdca6bb83dcbc51f",
+			"V": {}
+		},
+		{
+			"ID": "0aceca56432a4a265861c580382e8bf4",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
+			"ParentID": "74a68a984824b4510d12589f199ad68f",
+			"V": {}
+		},
+		{
+			"ID": "8f69e1d94657646b08ef95a68729ac04",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "9e296b9e44c5c50dd6d23d95e1766e13",
+			"ParentID": "0aceca56432a4a265861c580382e8bf4",
+			"Transform": {
+				"Translation": {
+					"X": 0.0,
+					"Y": 0.79998779296875,
+					"Z": 0.0
+				}
+			},
+			"Data": {
+	"ResolutionCurve": {},
+	"DpiCurve": {},
+	"Offsets": {
+		"Top": 0.7999878,
+		"Bottom": -0.7999878
+	}
+}
+		},
+		{
+			"ID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "4e32e2f346ac14a0117f52a75f752caf",
+			"ParentID": "0aceca56432a4a265861c580382e8bf4"
+		},
+		{
+			"ID": "b9a1c5cb4e63f3ea375efa8c630a4de8",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "9fb135ba411250842108bdbf00c7ce93",
+			"ParentID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"V": {}
+		},
+		{
 			"ID": "28553d634087c67c711ebd96080482aa",
 			"TypeName": "FlaxEngine.EmptyActor",
 			"ParentID": "74a68a984824b4510d12589f199ad68f",
@@ -105,9 +158,9 @@
 			"Name": "Floor",
 			"Transform": {
 				"Scale": {
-					"X": 10.0,
+					"X": 50.0,
 					"Y": 0.5,
-					"Z": 10.0
+					"Z": 50.0
 				}
 			},
 			"Model": "b43f0f8f4aaba3f3156896a5a22ba493",
@@ -159,44 +212,6 @@
 			"Name": "BoxCollider"
 		},
 		{
-			"ID": "0aceca56432a4a265861c580382e8bf4",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
-			"ParentID": "74a68a984824b4510d12589f199ad68f",
-			"V": {}
-		},
-		{
-			"ID": "702c87c6441081e049aa60a9196770e5",
-			"TypeName": "Game.Helpers.ExitOnEsc",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4",
-			"V": {}
-		},
-		{
-			"ID": "8f69e1d94657646b08ef95a68729ac04",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "9e296b9e44c5c50dd6d23d95e1766e13",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4",
-			"Data": {
-	"ResolutionCurve": {},
-	"DpiCurve": {}
-}
-		},
-		{
-			"ID": "3b98aeec49c2715303a4d7841f9ff2bb",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "4e32e2f346ac14a0117f52a75f752caf",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4"
-		},
-		{
-			"ID": "b9a1c5cb4e63f3ea375efa8c630a4de8",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "9fb135ba411250842108bdbf00c7ce93",
-			"ParentID": "3b98aeec49c2715303a4d7841f9ff2bb",
-			"V": {
-	"TransitionDuration": 1.0
-}
-		},
-		{
 			"ID": "f70e53fc475fc45fa8229db890c43775",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
 			"PrefabObjectID": "05d72da047ffe91862554fbd5c7c2600",
@@ -220,11 +235,7 @@
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
 			"PrefabObjectID": "dc383b864343bfc4c028b0a14cf7c456",
 			"ParentID": "6d0df38d42f6fe6598386ca1d2929010",
-			"V": {
-	"MaxSpeed": 500.0,
-	"FallGravityMultiplier": 5.0,
-	"TerminalVelocity": 500.0
-}
+			"V": {}
 		},
 		{
 			"ID": "f45d3ee04b613d0c283bc485f6ae5e3e",

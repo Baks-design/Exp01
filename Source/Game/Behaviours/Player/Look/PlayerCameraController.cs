@@ -4,16 +4,16 @@ namespace Game.Behaviours.Player.Look;
 
 public sealed class PlayerCameraController : Script
 {
-    public required Actor CameraActor { get; set; }
-    public required Actor YawActor { get; set; }
-    [Limit(0.01f, 10f)] public float SensitivityX { get; set; } = 1f;
-    [Limit(0.01f, 10f)] public float SensitivityY { get; set; } = 1f;
-    [Limit(0f, 2f)] public float AimScale { get; set; } = 1f;
-    [Limit(0f, 2f)] public float InvertY { get; set; } = 1f;
-    [Limit(-89f, 0f)] public float MinPitch { get; set; } = -89f;
-    [Limit(0f, 89f)] public float MaxPitch { get; set; } = 89f;
-    [Limit(1f, 25f)] public float DecayRate { get; set; } = 3.5f;
-    [Limit(0f, 0.1f)] public float MaxFrameStep { get; set; } = 0.05f;
+    [Limit(0.01f, 10f)] public float SensitivityX = 1f;
+    [Limit(0.01f, 10f)] public float SensitivityY = 1f;
+    [Limit(0f, 2f)] public float AimScale = 1f;
+    [Limit(0f, 2f)] public float InvertY = 1f;
+    [Limit(-89f, 0f)] public float MinPitch = -89f;
+    [Limit(0f, 89f)] public float MaxPitch = 89f;
+    [Limit(1f, 25f)] public float DecayRate = 3.5f;
+    [Limit(0f, 0.1f)] public float MaxFrameStep = 0.05f;
+    public required Actor CameraActor;
+    public required Actor YawActor;
     ExponentialSmoother Smoother;
     ILookSource LookSource;
     ICameraRig Rig;
@@ -35,6 +35,20 @@ public sealed class PlayerCameraController : Script
         smoothedYaw = Rig.Yaw;
     }
 
+    bool TryResolveCamera(out Actor camera)
+    {
+        CameraActor ??= Actor.GetChild<Camera>();
+        if (CameraActor is null)
+        {
+            Debug.LogWarning("[PlayerCameraController] No camera assigned or found.");
+            camera = null;
+            Enabled = false;
+            return false;
+        }
+        camera = CameraActor;
+        return true;
+    }
+
     CameraSettings BuildSettings() => new()
     {
         SensitivityX = SensitivityX,
@@ -53,28 +67,6 @@ public sealed class PlayerCameraController : Script
         if (Rig is null || LookSource is null || Smoother is null) return;
 
         StepLook(Time.DeltaTime);
-    }
-
-    public override void OnDestroy()
-    {
-        LookSource?.Dispose();
-        LookSource = null;
-        Smoother = null;
-        Rig = null;
-    }
-
-    bool TryResolveCamera(out Actor camera)
-    {
-        CameraActor ??= Actor.GetChild<Camera>();
-        if (CameraActor is null)
-        {
-            Debug.LogWarning("[PlayerCameraController] No camera assigned or found.");
-            camera = null;
-            Enabled = false;
-            return false;
-        }
-        camera = CameraActor;
-        return true;
     }
 
     void StepLook(float deltaTime)

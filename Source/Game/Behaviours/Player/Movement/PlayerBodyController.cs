@@ -1,4 +1,5 @@
 using FlaxEngine;
+using Game.Initialization;
 using Game.Systems.Input;
 
 namespace Game.Behaviours.Player.Movement;
@@ -6,33 +7,35 @@ namespace Game.Behaviours.Player.Movement;
 public sealed class PlayerBodyController : Script
 {
     [Header("Speed")]
-    [Limit(1f, 2000f)] public float MaxSpeed { get; set; } = 50f;
-    [Limit(0.1f, 60f)] public float MoveResponseRate { get; set; } = 20f;
-    [Limit(0.1f, 60f)] public float AirResponseRate { get; set; } = 6f;
+    [Limit(1f, 100f)] public float MaxSpeed = 50f;
+    [Limit(1f, 5f)] public float SpeedMultiplier = 2f;
+    [Limit(0.1f, 60f)] public float MoveResponseRate = 20f;
+    [Limit(0.1f, 60f)] public float AirResponseRate = 6f;
     [Header("Jump / Gravity")]
-    [Limit(1f, 100f)] public float Gravity { get; set; } = 20f;
-    [Limit(0.1f, 20f)] public float JumpHeight { get; set; } = 2f;
-    [Limit(1f, 5f)] public float FallGravityMultiplier { get; set; } = 1.8f;
-    [Limit(10f, 500f)] public float TerminalVelocity { get; set; } = 120f;
-    [Limit(0f, 10f)] public float GroundStickSpeed { get; set; } = 2f;
+    [Limit(0.1f, 100f)] public float JumpMultiplier = 2f;
+    [Limit(1f, 5f)] public float FallGravityMultiplier = 1.8f;
+    [Limit(10f, 500f)] public float TerminalVelocity = 120f;
+    [Limit(0f, 10f)] public float GroundStickSpeed = 2f;
     [Header("Feel")]
-    [Limit(0f, 0.5f)] public float CoyoteTime { get; set; } = 0.12f;
-    [Limit(0f, 0.5f)] public float JumpBufferTime { get; set; } = 0.12f;
-    [Limit(0f, 1f)] public float JumpCooldown { get; set; } = 0.10f;
-    [Limit(0, 4)] public int MaxAirJumps { get; set; } = 1;
-    public required CharacterController Controller { get; set; }
-    public required Actor BodyActor { get; set; }
-    public required Actor CameraActor { get; set; }
+    [Limit(0f, 0.5f)] public float CoyoteTime = 0.12f;
+    [Limit(0f, 0.5f)] public float JumpBufferTime = 0.12f;
+    [Limit(0f, 1f)] public float JumpCooldown = 0.10f;
+    [Limit(0, 4)] public int MaxAirJumps = 2;
+    public required CharacterController Controller;
+    public required Actor BodyActor;
+    public required Actor CameraActor;
     CharacterMotor motor;
     MovementInputSource inputSource;
     ICameraOrientationSource cameraOrientation;
-    InputManager input;
+    IInputService input;
 
     public override void OnStart()
     {
         if (!ResolveReferences()) { Enabled = false; return; }
 
-        input ??= new();
+        var bootstrap = PluginManager.GetPlugin<GameBootstrapPlugin>();
+        if (bootstrap != null) input = bootstrap.Locator.Resolve<IInputService>();
+    
         inputSource ??= new(input);
         cameraOrientation ??= new ActorCameraOrientation(CameraActor);
         motor ??= new(Controller, BuildSettings());
@@ -66,10 +69,10 @@ public sealed class PlayerBodyController : Script
     MotorSettings BuildSettings() => new()
     {
         MaxSpeed = MaxSpeed,
+        SpeedMultiplier= SpeedMultiplier,
         MoveResponseRate = MoveResponseRate,
         AirResponseRate = AirResponseRate,
-        Gravity = Gravity,
-        JumpHeight = JumpHeight,
+        JumpMultiplier = JumpMultiplier,
         FallGravityMultiplier = FallGravityMultiplier,
         TerminalVelocity = TerminalVelocity,
         GroundStickSpeed = GroundStickSpeed,
@@ -79,39 +82,22 @@ public sealed class PlayerBodyController : Script
         MaxAirJumps = MaxAirJumps,
     };
 
-    public override void OnEnable()
-    {
-        input?.Subscribe(InputActions.Jump, inputSource.OnJumpAction);
-        input?.Subscribe(InputActions.Sprint, inputSource.OnJumpAction);
-    }
+    public override void OnEnable() => input.Subscribe(InputActions.Jump, inputSource.OnJumpAction);
 
     public override void OnUpdate() => inputSource.Poll(Engine.HasGameViewportFocus);
 
     public override void OnFixedUpdate()
     {
-        if (!Engine.HasGameViewportFocus || motor is null) return;
+        if (!Engine.HasGameViewportFocus) return;
 
         var intent = BuildIntent(inputSource, cameraOrientation);
-        var dt = 1f / Time.PhysicsFPS;
-        motor.Step(intent, dt);
+        var time = 1f / Time.PhysicsFPS;
+        motor.Step(intent, time);
     }
 
-    public override void OnDisable()
-    {
-        input?.Unsubscribe(InputActions.Jump, inputSource.OnJumpAction);
-        input?.Unsubscribe(InputActions.Sprint, inputSource.OnJumpAction);
-    }
+    public override void OnDisable() => input.Unsubscribe(InputActions.Jump, inputSource.OnJumpAction);
 
-    public override void OnDestroy()
-    {
-        input?.Dispose();
-        input = null;
-        motor = null;
-        inputSource = null;
-        cameraOrientation = null;
-    }
-
-    static MovementIntent BuildIntent(IInputSource src, ICameraOrientationSource cam)
+    static MovementIntent BuildIntent(MovementInputSource src, ICameraOrientationSource cam)
     {
         var raw = src.MoveAxis;
         var magnitude = raw.Length;

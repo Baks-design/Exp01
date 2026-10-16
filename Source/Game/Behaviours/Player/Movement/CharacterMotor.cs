@@ -63,7 +63,7 @@ public sealed class CharacterMotor(CharacterController controller, in MotorSetti
         var canAirJump = !canGroundJump && airJumpsRemaining > 0;
         if (!canGroundJump && !canAirJump) return;
 
-        verticalVelocity = Mathf.Sqrt(2f * settings.JumpHeight * settings.Gravity);
+        verticalVelocity = Mathf.Sqrt(2f * settings.JumpMultiplier * -Physics.Gravity.Y);
 
         if (canAirJump) airJumpsRemaining--;
         else coyoteTimer = 0f;
@@ -74,7 +74,7 @@ public sealed class CharacterMotor(CharacterController controller, in MotorSetti
 
     void UpdateHorizontal(in MovementIntent intent, float dt)
     {
-        var maxSpeed = intent.SprintHeld ? settings.MaxSpeed * 1.5f : settings.MaxSpeed;
+        var maxSpeed = intent.SprintHeld ? settings.MaxSpeed * settings.SpeedMultiplier : settings.MaxSpeed;
 
         var target = intent.Direction * maxSpeed;
         var rate = controller.IsGrounded ? settings.MoveResponseRate : settings.AirResponseRate;
@@ -89,7 +89,7 @@ public sealed class CharacterMotor(CharacterController controller, in MotorSetti
     {
         if (controller.IsGrounded && verticalVelocity <= 0f) return;
 
-        var g = settings.Gravity;
+        var g = -Physics.Gravity.Y;
         if (verticalVelocity < 0f) g *= settings.FallGravityMultiplier;
 
         verticalVelocity -= g * dt;

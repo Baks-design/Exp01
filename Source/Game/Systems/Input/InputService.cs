@@ -4,7 +4,7 @@ using FlaxEngine;
 
 namespace Game.Systems.Input;
 
-public sealed class InputManager : IInputManager
+public sealed class InputService : IInputService
 {
     readonly Dictionary<InputActions, InputEvent> events = [];
     readonly Dictionary<GameAxis, InputAxis> axes = [];
@@ -19,7 +19,7 @@ public sealed class InputManager : IInputManager
 
         if (!events.TryGetValue(action, out var inputEvent))
         {
-            inputEvent = new InputEvent(action.Name);
+            inputEvent = new(action.Name);
             events[action] = inputEvent;
         }
 
@@ -55,11 +55,10 @@ public sealed class InputManager : IInputManager
 
         if (!axes.TryGetValue(axis, out var engineAxis))
         {
-            engineAxis = new InputAxis(axis.Name);
+            engineAxis = new(axis.Name);
             axes[axis] = engineAxis;
         }
 
-        if (rawValue) return engineAxis.ValueRaw;
-        else return engineAxis.Value;
+        return rawValue ? engineAxis.ValueRaw : engineAxis.Value;
     }
 }
