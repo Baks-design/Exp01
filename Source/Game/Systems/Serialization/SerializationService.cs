@@ -8,8 +8,8 @@ namespace Game.Systems.Serialization;
 // OnUpdate => serializationService.LoadAll();
 public sealed class SerializationService(ISaveStorage storage)
 {
-    readonly Dictionary<string, ISaveable> saveables = [];
-    readonly ISaveStorage storage = storage;
+    private readonly Dictionary<string, ISaveable> saveables = [];
+    private readonly ISaveStorage storage = storage;
 
     public void Register(ISaveable saveable) => saveables[saveable.SaveKey] = saveable;
 

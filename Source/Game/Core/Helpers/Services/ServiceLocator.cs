@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Core.Helpers.Services;
 
-public class ServiceLocator : IServiceLocator
+public class ServiceLocator 
 {
     private readonly Dictionary<Type, object> services = [];
 

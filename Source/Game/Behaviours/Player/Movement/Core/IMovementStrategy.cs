@@ -9,8 +9,8 @@ public interface IMovementStrategy
 
     MovementResult CalculateMovement(
         InputService inputService,
-        PlayerMovementPreset ActivePreset,
-        CharacterController Controller,
-        PlayerMovementData movementData,
-        Camera CameraActor);
+        CharacterController controller,
+        Actor camera,
+        PlayerMovementPreset activePreset,
+        PlayerMovementData movementData);
 }

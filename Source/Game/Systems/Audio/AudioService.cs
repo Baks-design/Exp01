@@ -7,7 +7,7 @@ namespace Game.Systems.Audio;
 //  jumpAudio ??= new AudioService(jumpPool);
 public sealed class AudioService(AudioSourcePool pool) 
 {
-    readonly AudioSourcePool pool = pool;
+    private readonly AudioSourcePool pool = pool;
 
     public void PlayOneShot(AudioClip clip, Vector3 position, float volume = 1f)
     {

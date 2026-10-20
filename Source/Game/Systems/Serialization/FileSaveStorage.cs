@@ -6,7 +6,7 @@ namespace Game.Systems.Serialization;
 
 public sealed class FileSaveStorage(string filePath) : ISaveStorage
 {
-    readonly string filePath = filePath;
+    private readonly string filePath = filePath;
 
     public void Write(Dictionary<string, object> data)
     {

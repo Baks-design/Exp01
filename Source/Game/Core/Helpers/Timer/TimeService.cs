@@ -2,7 +2,7 @@ using FlaxEngine;
 
 namespace Game.Core.Helpers.Timer;
 
-public sealed class TimeService : ITimeService
+public sealed class TimeService 
 {
     public float DeltaTime => Time.DeltaTime;
     public float FixedDeltaTime => Time.PhysicsFPS > 0f ? 1f / Time.PhysicsFPS : 0f;

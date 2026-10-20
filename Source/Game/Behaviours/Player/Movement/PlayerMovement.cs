@@ -11,12 +11,12 @@ public sealed class PlayerMovement : Script
     [Header("References")]
     public CharacterController Controller;
     public Camera CameraActor;
-    readonly InputService inputService = new();
-    readonly PlayerStateMachine stateMachine = new();
-    readonly PlayerMovementData movementData = new();
-    IMovementStrategy strategy;
-    MovementResult result;
-    PlayerVerticalMovement verticalMovement;
+    private readonly InputService inputService = new();
+    private readonly PlayerStateMachine stateMachine = new();
+    private readonly PlayerMovementData movementData = new();
+    private IMovementStrategy strategy;
+    private MovementResult result;
+    private PlayerAxisMovement axisMovement;
 
     public PlayerMovementPreset ActivePreset { get; private set; }
     public float SpeedRatio => result.SpeedRatio;
@@ -29,19 +29,20 @@ public sealed class PlayerMovement : Script
         else
             RefreshActivePreset();
 
-        verticalMovement ??= new PlayerVerticalMovement(inputService, Controller, movementData);
+        axisMovement ??= new PlayerAxisMovement(inputService, Controller, movementData);
     }
 
     public override void OnUpdate()
     {
         if (!Controller || strategy == null || ActivePreset == null || !CameraActor) return;
 
-        verticalMovement.UpdateJumpTimers(ActivePreset);
-        result = strategy.CalculateMovement(inputService, ActivePreset, Controller, movementData, CameraActor);
+        axisMovement.UpdateJumpTimers(ActivePreset);
+        result = strategy.CalculateMovement(inputService, Controller, CameraActor, ActivePreset, movementData);
+        axisMovement.UpdateHorizontalVelocity(result.TargetVelocity, ActivePreset);
         UpdateStateMachine(result.State);
-        verticalMovement.ApplyVerticalMovement(Controller.IsGrounded, ActivePreset);
-        ApplyMovement(result.Displacement);
-        ApplyRotation(result.Displacement);
+        axisMovement.UpdateVerticalVelocity(Controller.IsGrounded, ActivePreset);
+        ApplyMovement();
+        ApplyRotation();
     }
 
     public void SetMovementStrategy(IMovementStrategy newStrategy)
@@ -60,7 +61,7 @@ public sealed class PlayerMovement : Script
         RefreshActivePreset();
     }
 
-    void RefreshActivePreset()
+    private void RefreshActivePreset()
     {
         var reference = strategy.PresetReference;
         if (reference == null || !reference.Asset)
@@ -73,7 +74,7 @@ public sealed class PlayerMovement : Script
         ActivePreset = reference.Asset.CreateInstance<PlayerMovementPreset>();
     }
 
-    void UpdateStateMachine(CharacterMoveState state)
+    private void UpdateStateMachine(CharacterMoveState state)
     {
         switch (state)
         {
@@ -84,17 +85,17 @@ public sealed class PlayerMovement : Script
         }
     }
 
-    void ApplyMovement(Vector3 horizontalDisplacement)
+    private void ApplyMovement()
     {
-        var finalMove = horizontalDisplacement + movementData.verticalVelocity * Time.DeltaTime;
+        var finalMove = (movementData.horizontalVelocity + movementData.verticalVelocity) * Time.DeltaTime;
         Controller.Move(finalMove);
     }
 
-    void ApplyRotation(Vector3 displacement)
+    private void ApplyRotation()
     {
-        if (displacement.LengthSquared <= 0.01f) return;
+        if (movementData.horizontalVelocity.LengthSquared <= 0.01f) return;
 
-        var targetRot = Quaternion.LookRotation(displacement.Normalized, Vector3.Up);
+        var targetRot = Quaternion.LookRotation(movementData.horizontalVelocity.Normalized, Vector3.Up);
         Controller.Orientation = Quaternion.Lerp(
             Controller.Transform.Orientation, targetRot, Time.DeltaTime * ActivePreset.RotationLerpSpeed);
     }

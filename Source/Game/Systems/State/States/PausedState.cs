@@ -6,18 +6,18 @@ namespace Game.Systems.State;
 
 public sealed class PausedState : IState
 {
-    readonly CursorService cursor = new();
-    readonly TimeService time = new();
+    private readonly CursorService cursor = new();
+    private readonly TimeService time = new();
     
     public StateId Id => StateId.Paused;
 
-    public bool CanEnter(StateId from) => from is StateId.InGame;
+    public bool CanEnter(StateId from) => from == StateId.InGame;
 
     public void OnEnter()
     {
         Debug.Log("Enter Paused");
-        cursor?.Apply(CursorState.Gameplay);
-        time?.PushTimeScale(0f);
+        cursor.Apply(CursorState.Menu);
+        time.PushTimeScale(0f);
         Engine.FocusGameViewport();
     }
 

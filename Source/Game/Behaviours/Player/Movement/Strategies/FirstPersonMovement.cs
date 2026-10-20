@@ -3,44 +3,43 @@ using Game.Systems.Input;
 
 namespace Game.Behaviours.Player;
 
-public sealed class FirstPersonMovement : IMovementStrategy
+public class FirstPersonMovement : IMovementStrategy
 {
     public JsonAssetReference<PlayerMovementPreset> PresetReference { get; set; }
 
     public MovementResult CalculateMovement(
         InputService inputService,
-        PlayerMovementPreset ActivePreset,
         CharacterController controller,
-        PlayerMovementData movementData,
-        Camera CameraActor)
+        Actor camera,
+        PlayerMovementPreset activePreset,
+        PlayerMovementData movementData)
     {
-        var p = PresetReference ? PresetReference.Instance : null;
-        if (p == null)
-        {
-            Debug.LogError("ThirdPersonMovement preset is missing!");
-            return default;
-        }
+        var h = inputService.GetAxis(GameAxis.MoveX);
+        var v = inputService.GetAxis(GameAxis.MoveY);
 
-        var forward = controller.Transform.Forward;
-        forward.Y = 0f;
-        forward.Normalize();
-        var right = controller.Transform.Right;
-        right.Y = 0f;
-        right.Normalize();
+        var bodyForward = controller.Transform.Forward;
+        bodyForward.Y = 0f;
+        bodyForward.Normalize();
+        var bodyRight = controller.Transform.Right;
+        bodyRight.Y = 0f;
+        bodyRight.Normalize();
 
-        var direction = forward * inputService.GetAxis(GameAxis.MoveY) + right * inputService.GetAxis(GameAxis.MoveX);
-        var inputMag = Mathf.Saturate(direction.Length);
-        if (direction.LengthSquared > 0.01f) direction.Normalize();
+        var direction = bodyForward * v + bodyRight * h;
 
-        var displacement = direction * p.Speed * Time.DeltaTime * inputMag;
+        var inputMag = Mathf.Clamp(direction.Length, 0f, 1f);
+        if (direction.LengthSquared > 0.0001f) direction.Normalize();
 
-        var state = !controller.IsGrounded
-            ? movementData.verticalVelocity.Y > 0f ? CharacterMoveState.Jumping : CharacterMoveState.Falling
-            : inputMag > 0.1f ? CharacterMoveState.Moving : CharacterMoveState.Idle;
+        var targetVelocity = direction * activePreset.Speed * inputMag;
+
+        CharacterMoveState state;
+        if (!controller.IsGrounded)
+            state = movementData.verticalVelocity.Y > 0f ? CharacterMoveState.Jumping : CharacterMoveState.Falling;
+        else
+            state = inputMag > 0.1f ? CharacterMoveState.Moving : CharacterMoveState.Idle;
 
         return new MovementResult
         {
-            Displacement = displacement,
+            TargetVelocity = targetVelocity,
             State = state,
             SpeedRatio = inputMag
         };

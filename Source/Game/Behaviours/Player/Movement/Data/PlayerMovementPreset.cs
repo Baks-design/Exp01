@@ -9,6 +9,8 @@ public sealed class PlayerMovementPreset
     public float JumpForce = 400f;
     public float GravityMultiplier = 2f;
     public float RotationLerpSpeed = 10f;
+    public float Acceleration = 12f;     
+    public float Deceleration = 16f;      
     [Header("Forgiveness")]
     public float CoyoteTime = 0.12f;
     public float JumpBufferTime = 0.15f;

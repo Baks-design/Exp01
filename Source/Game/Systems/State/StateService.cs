@@ -20,23 +20,22 @@ public sealed class StateService
 
     void SetupStates()
     {
-        states.TryAdd(StateId.Booting, new BootingState());
-        states.TryAdd(StateId.MainMenu, new MainMenuState());
-        states.TryAdd(StateId.Loading, new LoadingState());
-        states.TryAdd(StateId.InGame, new InGameState());
-        states.TryAdd(StateId.Paused, new PausedState());
-        states.TryAdd(StateId.GameOver, new GameOverState());
+        states[StateId.Booting] = new BootingState();
+        states[StateId.MainMenu] = new MainMenuState();
+        states[StateId.Loading] = new LoadingState();
+        states[StateId.InGame] = new InGameState();
+        states[StateId.Paused] = new PausedState();
+        states[StateId.GameOver] = new GameOverState();
     }
 
     public bool SetState(StateId targetId)
     {
-        if (!states.TryGetValue(targetId, out var next) ||
-            currentState != null && !next.CanEnter(currentState.Id))
-            return false;
-
+        if (!states.TryGetValue(targetId, out var next))  return false;
+        if (currentState != null && !next.CanEnter(currentState.Id)) return false;
+        
         currentState?.OnExit();
         currentState = next;
-        currentState?.OnEnter();
+        currentState.OnEnter();
 
         return true;
     }

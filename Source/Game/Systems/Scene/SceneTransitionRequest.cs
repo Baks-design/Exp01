@@ -5,7 +5,7 @@ namespace Game.Systems.Scene;
 
 public sealed class SceneTransitionRequest
 {
-    SceneReference target;
+    private SceneReference target;
 
     public SceneReference Target
     {

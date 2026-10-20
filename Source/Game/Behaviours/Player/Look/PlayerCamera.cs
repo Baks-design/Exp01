@@ -11,9 +11,9 @@ public sealed class PlayerCamera : Script
     [Header("References")]
     public Camera CameraActor;
     public Actor TargetActor;
-    readonly InputService inputService = new();
-    ICameraStrategy strategy;
-    Vector2 mouseAngles = new(45f, 45f);
+    private readonly InputService inputService = new();
+    private ICameraStrategy strategy;
+    private Vector2 mouseAngles = new(45f, 45f);
 
     public CameraPreset ActivePreset { get; private set; }
 
@@ -48,7 +48,7 @@ public sealed class PlayerCamera : Script
         RefreshActivePreset();
     }
 
-    void RefreshActivePreset()
+    private void RefreshActivePreset()
     {
         var reference = strategy.PresetReference;
         if (reference == null || !reference.Asset)

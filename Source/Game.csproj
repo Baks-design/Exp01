@@ -309,8 +309,8 @@
     <Compile Include="Game\Behaviours\Player\Look\Strategies\ThirdPersonCameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Core\CharacterMoveState.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Core\IMovementStrategy.cs" />
+    <Compile Include="Game\Behaviours\Player\Movement\Core\PlayerAxisMovement.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Core\PlayerStateMachine.cs" />
-    <Compile Include="Game\Behaviours\Player\Movement\Core\PlayerVerticalMovement.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\MovementResult.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\PlayerMovementData.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\PlayerMovementPreset.cs" />
@@ -326,11 +326,8 @@
     <Compile Include="Game\Core\Extensions\LerpExtensions.cs" />
     <Compile Include="Game\Core\Helpers\Cursor\CursorService.cs" />
     <Compile Include="Game\Core\Helpers\Cursor\CursorState.cs" />
-    <Compile Include="Game\Core\Helpers\Cursor\ICursorService.cs" />
-    <Compile Include="Game\Core\Helpers\Services\IServiceLocator.cs" />
     <Compile Include="Game\Core\Helpers\Services\ServiceLocator.cs" />
     <Compile Include="Game\Core\Helpers\SystemTools.cs" />
-    <Compile Include="Game\Core\Helpers\Timer\ITimeService.cs" />
     <Compile Include="Game\Core\Helpers\Timer\TimeService.cs" />
     <Compile Include="Game\Systems\Audio\AudioService.cs" />
     <Compile Include="Game\Systems\Audio\AudioSourcePool.cs" />

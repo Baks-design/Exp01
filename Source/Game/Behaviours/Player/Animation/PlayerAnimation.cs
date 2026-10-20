@@ -6,8 +6,8 @@ public sealed class PlayerAnimation : Script
 {
     public PlayerMovement playerMovement;
     public AnimatedModel CharacterModel;
-    AnimGraphParameter paramSpeed;
-    AnimGraphParameter paramIsGrounded;
+    private AnimGraphParameter paramSpeed;
+    private AnimGraphParameter paramIsGrounded;
 
     public override void OnStart()
     {
@@ -20,7 +20,7 @@ public sealed class PlayerAnimation : Script
 
     public override void OnUpdate() => UpdateAnimation();
 
-    void UpdateAnimation()
+    private void UpdateAnimation()
     {
         if (!CharacterModel) return;
 

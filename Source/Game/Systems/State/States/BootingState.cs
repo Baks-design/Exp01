@@ -6,7 +6,7 @@ public sealed class BootingState : IState
 {
     public StateId Id => StateId.Booting;
 
-    public bool CanEnter(StateId from) => from is StateId.None;
+    public bool CanEnter(StateId from) => from == StateId.None;
 
     public void OnEnter() => Debug.Log("Enter Booting");
 

@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.CompilerServices;
 using FlaxEngine;
 
@@ -6,7 +5,7 @@ namespace Game.Core.Extensions;
 
 public static class LerpExtensions
 {
-    const MethodImplOptions INLINE = MethodImplOptions.AggressiveInlining;
+    private const MethodImplOptions INLINE = MethodImplOptions.AggressiveInlining;
 
     extension(float current)
     {
@@ -16,7 +15,7 @@ public static class LerpExtensions
 
         [MethodImpl(INLINE)]
         public float ExpDecay(float target, float deltaTime, float decay = 16f)
-            => Lerp(current, target, 1f - MathF.Exp(-decay * deltaTime));
+            => Lerp(current, target, 1f - Mathf.Exp(-decay * deltaTime));
 
         /// <summary>
         /// Exponential interpolation, the multiplicative version of lerp, 
@@ -28,7 +27,7 @@ public static class LerpExtensions
             {
                 0f => current,
                 1f => target,
-                _ => current * MathF.Exp(MathF.Log(target / current) * time)
+                _ => current * Mathf.Exp(Mathf.Log(target / current) * time)
             };
     }
 
@@ -36,11 +35,14 @@ public static class LerpExtensions
     {
         [MethodImpl(INLINE)]
         public Vector2 ExpDecay(Vector2 target, float deltaTime, float decay = 16f)
-            => Lerp(current, target, 1f - MathF.Exp(-decay * deltaTime));
+            => Lerp(current, target, 1f - Mathf.Exp(-decay * deltaTime));
 
         [MethodImpl(INLINE)]
         public Vector2 Lerp(Vector2 target, float t)
-            => new(Lerp(current.X, target.X, t), Lerp(current.Y, target.Y, t));
+            => new(
+                Lerp(current.X, target.X, t),
+                Lerp(current.Y, target.Y, t)
+            );
     }
 
     extension(Vector3 current)
@@ -55,7 +57,7 @@ public static class LerpExtensions
 
         [MethodImpl(INLINE)]
         public Vector3 ExpDecay(Vector3 target, float deltaTime, float decay = 16f)
-            => Lerp(current, target, 1f - MathF.Exp(-decay * deltaTime));
+            => Lerp(current, target, 1f - Mathf.Exp(-decay * deltaTime));
 
         /// <inheritdoc cref="Eerp(float,float,float)"/>
         [MethodImpl(INLINE)]

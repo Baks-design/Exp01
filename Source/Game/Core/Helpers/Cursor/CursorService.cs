@@ -2,7 +2,7 @@ using FlaxEngine;
 
 namespace Game.Core.Cursor;
 
-public sealed class CursorService : ICursorService
+public sealed class CursorService 
 {
     public void Apply(CursorState state)
     {        

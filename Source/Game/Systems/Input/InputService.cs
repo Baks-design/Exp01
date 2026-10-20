@@ -8,9 +8,9 @@ namespace Game.Systems.Input;
 // inputService = new InputService();
 public sealed class InputService
 {
-    readonly Dictionary<InputActions, InputEvent> events = [];
-    readonly Dictionary<GameAxis, InputAxis> axes = [];
-    bool disposed;
+    private readonly Dictionary<InputActions, InputEvent> events = [];
+    private readonly Dictionary<GameAxis, InputAxis> axes = [];
+    private bool disposed;
 
     public Float2 GetDelta => FlaxEngine.Input.MousePositionDelta;
 

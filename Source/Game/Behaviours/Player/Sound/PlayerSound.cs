@@ -13,7 +13,7 @@ public sealed class PlayerSound : Script
     [Header("References")]
     public Actor PoolHost;
     public JsonAssetReference<SoundBank> SoundBank;
-    AudioSourcePool pool;
+    private AudioSourcePool pool;
 
     public override void OnStart()
     {
@@ -70,7 +70,7 @@ public sealed class PlayerSound : Script
         PlayClipAtPosition(clip, Actor.Position);
     }
 
-    bool CanPlay(out SoundBank bank)
+    private bool CanPlay(out SoundBank bank)
     {
         bank = null;
         if (pool == null || !SoundBank) return false;
@@ -78,7 +78,7 @@ public sealed class PlayerSound : Script
         return bank != null;
     }
 
-    bool TryGetGroundTag(out Tag tag)
+    private bool TryGetGroundTag(out Tag tag)
     {
         tag = Tag.Default;
         var feetPos = Actor.Position;
@@ -87,7 +87,7 @@ public sealed class PlayerSound : Script
         return true;
     }
 
-    static AudioClip FindClip(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
+    private static AudioClip FindClip(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
     {
         if (entries == null || entries.Length == 0) return null;
 
@@ -95,7 +95,7 @@ public sealed class PlayerSound : Script
         return entry != null ? PickRandomClip(entry.Clip) : null;
     }
 
-    static SoundEntryByTag FindEntry(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
+    private static SoundEntryByTag FindEntry(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
     {
         foreach (var reference in entries)
         {
@@ -118,7 +118,7 @@ public sealed class PlayerSound : Script
         return null;
     }
 
-    static AudioClip PickRandomClip(AudioClip[] clips)
+    private static AudioClip PickRandomClip(AudioClip[] clips)
     {
         if (clips == null || clips.Length == 0) return null;
 
@@ -134,7 +134,7 @@ public sealed class PlayerSound : Script
         return null;
     }
 
-    void PlayClipAtPosition(AudioClip clip, Vector3 position)
+    private void PlayClipAtPosition(AudioClip clip, Vector3 position)
     {
         if (clip == null || pool == null) return;
 
