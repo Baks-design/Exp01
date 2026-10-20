@@ -1,0 +1,19 @@
+{
+	"ID": "8cafa9524c8a73c54c93e99f87777e63",
+	"TypeName": "Game.Systems.Audio.SoundBank",
+	"EngineBuild": 6912,
+	"Data": {
+	"FootstepSounds": [
+		"c488f3134ba2f46ac666918abe1cb3d9"
+	],
+	"JumpSounds": [
+		"119c1c4f41a96b1e186bc68b55ea8165"
+	],
+	"LandSounds": [
+		"a3fea93b4539441bbbf93c9c94484453"
+	],
+	"HurtSounds": [
+		"470440b446099b6050d5a9a034968c63"
+	]
+}
+}

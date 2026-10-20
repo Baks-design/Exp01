@@ -4,5 +4,20 @@
         <name>Game.CSharp</name>
     </assembly>
     <members>
+        <member name="M:Game.Core.Extensions.LerpExtensions.Eerp(System.Single,System.Single,System.Single)">
+            <inheritdoc cref="M:Game.Core.Extensions.LerpExtensions.&lt;G&gt;$464CF13CF05F23E774A9D567340C67D6.Eerp(System.Single,System.Single)"/>
+        </member>
+        <member name="M:Game.Core.Extensions.LerpExtensions.Eerp(FlaxEngine.Vector3,FlaxEngine.Vector3,System.Single)">
+            <inheritdoc cref="M:Game.Core.Extensions.LerpExtensions.&lt;G&gt;$CFD185D6BF19A49CC0F32AA0163A3FBA.Eerp(FlaxEngine.Vector3,System.Single)"/>
+        </member>
+        <member name="M:Game.Core.Extensions.LerpExtensions.&lt;G&gt;$464CF13CF05F23E774A9D567340C67D6.Eerp(System.Single,System.Single)">
+            <summary>
+            Exponential interpolation, the multiplicative version of lerp, 
+            useful for values such as scaling or zooming
+            </summary>
+        </member>
+        <member name="M:Game.Core.Extensions.LerpExtensions.&lt;G&gt;$CFD185D6BF19A49CC0F32AA0163A3FBA.Eerp(FlaxEngine.Vector3,System.Single)">
+            <inheritdoc cref="M:Game.Core.Extensions.LerpExtensions.Eerp(System.Single,System.Single,System.Single)"/>
+        </member>
     </members>
 </doc>

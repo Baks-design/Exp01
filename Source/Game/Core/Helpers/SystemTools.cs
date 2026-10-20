@@ -1,24 +1,20 @@
 using FlaxEngine;
 using Game.Core.Cursor;
 using Game.Core.Helpers.Timer;
-using Game.Initialization;
+using Game.Systems.State;
 
 namespace Game.Helpers;
 
 public sealed class SystemTools : Script
 {
-    ICursorService cursor;
-    ITimeService time;
+    readonly CursorService cursor = new();
+    readonly TimeService time = new();
+    readonly StateService state = new();
 
     public override void OnStart()
     {
-        var bootstrap = PluginManager.GetPlugin<GameBootstrapPlugin>();
-        if (bootstrap != null)
-        {
-            cursor = bootstrap.Locator.Resolve<ICursorService>();
-            time = bootstrap.Locator.Resolve<ITimeService>();
-        }
-        cursor?.Push(CursorState.Gameplay);
+        state?.SetState(StateId.InGame);
+        cursor?.Apply(CursorState.Gameplay);
         time?.PushTimeScale(1f);
     }
 

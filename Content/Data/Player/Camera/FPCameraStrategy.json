@@ -1,0 +1,17 @@
+{
+	"ID": "b483403144e047718bc1028a79a242e3",
+	"TypeName": "Game.Behaviours.Player.CameraPreset",
+	"EngineBuild": 6912,
+	"Data": {
+	"RotationSpeed": 0.5,
+	"ZoomSpeed": 1.0,
+	"Distance": 1000.0,
+	"MinDistance": 10.0,
+	"MaxDistance": 2000.0,
+	"CollisionDistanceBias": 10.0,
+	"CollisionLayers": {
+		"Mask": 4294967295
+	},
+	"FirstPersonHeightOffset": 160.0
+}
+}

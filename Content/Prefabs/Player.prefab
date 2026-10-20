@@ -20,18 +20,18 @@
 		"Layer": 1
 	},
 	{
-		"ID": "dc383b864343bfc4c028b0a14cf7c456",
-		"TypeName": "Game.Behaviours.Player.Movement.PlayerBodyController",
+		"ID": "4165e4ab452b664d4e28b48de0e95d0a",
+		"TypeName": "Game.Behaviours.Player.PlayerMovement",
 		"ParentID": "f21f41964f9a336df564e4bc9fcacedc",
 		"V": {
-	"MaxSpeed": 500.0,
-	"JumpMultiplier": 100.0,
-	"FallGravityMultiplier": 5.0,
-	"TerminalVelocity": 500.0,
-	"MaxAirJumps": 1,
+	"ThirdPerson": {
+		"PresetReference": "f74001a34ac875fe11e12db218c43526"
+	},
+	"FirstPerson": {
+		"PresetReference": "e8a99ad343f3911ed62aaebe4af876db"
+	},
 	"Controller": "05d72da047ffe91862554fbd5c7c2600",
-	"BodyActor": "05d72da047ffe91862554fbd5c7c2600",
-	"CameraActor": "c68c6b8b445fcc5842ef95a0d4942e97"
+	"CameraActor": "764d64de4fe1a0013d89d9802a78e24f"
 }
 	},
 	{
@@ -43,14 +43,18 @@
 		"Layer": 1
 	},
 	{
-		"ID": "c72e1d684009f65042e658ac89ad33ab",
-		"TypeName": "Game.Behaviours.Player.Look.PlayerCameraController",
+		"ID": "bafb132f480ac3c7a2bf68a80afef881",
+		"TypeName": "Game.Behaviours.Player.PlayerCamera",
 		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
 		"V": {
-	"MinPitch": -60.0,
-	"MaxPitch": 60.0,
+	"ThirdPerson": {
+		"PresetReference": "b483403144e047718bc1028a79a242e3"
+	},
+	"FirstPerson": {
+		"PresetReference": "e883979c4486026605938f894c300e60"
+	},
 	"CameraActor": "764d64de4fe1a0013d89d9802a78e24f",
-	"YawActor": "c68c6b8b445fcc5842ef95a0d4942e97"
+	"TargetActor": "05d72da047ffe91862554fbd5c7c2600"
 }
 	},
 	{
@@ -82,15 +86,55 @@
 		"Layer": 1
 	},
 	{
-		"ID": "ef1715fe4efef8aa6ed962b3fe331d7d",
-		"TypeName": "Game.Behaviours.Player.Sound.PlayerSoundController",
+		"ID": "23ad38084d0a995c0183f8918b6e7e22",
+		"TypeName": "Game.Behaviours.Player.PlayerSound",
 		"ParentID": "ed57bb6045f86fdd5978f69f602250a2",
 		"V": {
-	"JumpClip": "2e48281b4ca102f53703dfbe1480096a",
-	"HurtClip": "ffd9d80d4d66e5c492f2bbabf64ade76",
-	"LandClip": "81dada3a47a1745c7d3429a28eca200a",
-	"FootstepClip": "ec69015f4d7b83f82bf9fe827f65ba08"
+	"PoolHost": "ed57bb6045f86fdd5978f69f602250a2",
+	"SoundBank": "8cafa9524c8a73c54c93e99f87777e63"
 }
+	},
+	{
+		"ID": "509d08014ea6b1102326219bc5b893f7",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
+		"Name": "Animation",
+		"StaticFlags": 0,
+		"Layer": 1
+	},
+	{
+		"ID": "df70a0854d918c87e5ab79b647c8f8e2",
+		"TypeName": "Game.Behaviours.Player.PlayerAnimation",
+		"ParentID": "509d08014ea6b1102326219bc5b893f7",
+		"V": {
+	"playerMovement": "4165e4ab452b664d4e28b48de0e95d0a",
+	"CharacterModel": "b2bb6b8d460e8891fe09bbbfb59fa9bf"
+}
+	},
+	{
+		"ID": "b2bb6b8d460e8891fe09bbbfb59fa9bf",
+		"TypeName": "FlaxEngine.AnimatedModel",
+		"ParentID": "509d08014ea6b1102326219bc5b893f7",
+		"Name": "AnimatedModel",
+		"StaticFlags": 0,
+		"Layer": 1,
+		"Buffer": {
+			"Entries": []
+		}
+	},
+	{
+		"ID": "6e450e2c49cd2c6c12d3698e64c58d4b",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
+		"Name": "Data",
+		"StaticFlags": 0,
+		"Layer": 1
+	},
+	{
+		"ID": "f83dc94a4e26984f0a49ee8ea29637ed",
+		"TypeName": "Game.Behaviours.Player.PlayerData",
+		"ParentID": "6e450e2c49cd2c6c12d3698e64c58d4b",
+		"V": {}
 	}
 ]
 }

@@ -4,11 +4,15 @@ using FlaxEngine;
 
 namespace Game.Systems.Input;
 
-public sealed class InputService : IInputService
+// Use:
+// inputService = new InputService();
+public sealed class InputService
 {
     readonly Dictionary<InputActions, InputEvent> events = [];
     readonly Dictionary<GameAxis, InputAxis> axes = [];
     bool disposed;
+
+    public Float2 GetDelta => FlaxEngine.Input.MousePositionDelta;
 
     void ThrowIfDisposed() => ObjectDisposedException.ThrowIf(disposed, this);
 
