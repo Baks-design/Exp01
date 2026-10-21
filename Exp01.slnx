@@ -1,0 +1,25 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Editor.Debug" />
+    <BuildType Name="Editor.Development" />
+    <BuildType Name="Editor.Release" />
+    <BuildType Name="Game.Debug" />
+    <BuildType Name="Game.Development" />
+    <BuildType Name="Game.Release" />
+    <Platform Name="ARM64" />
+    <Platform Name="Win64" />
+  </Configurations>
+  <Project Path="Source/Game.csproj">
+    <BuildType Solution="Editor.Debug|*" Project="Editor.Windows.Debug" />
+    <BuildType Solution="Editor.Development|*" Project="Editor.Windows.Development" />
+    <BuildType Solution="Editor.Release|*" Project="Editor.Windows.Release" />
+    <BuildType Solution="Game.Debug|*" Project="Game.Windows.Debug" />
+    <BuildType Solution="Game.Development|*" Project="Game.Windows.Development" />
+    <BuildType Solution="Game.Release|*" Project="Game.Windows.Release" />
+    <Platform Solution="*|Win64" Project="x64" />
+  </Project>
+  <Project Path="Cache/Projects/BuildScripts.csproj">
+    <BuildType Project="Debug" />
+    <Build Project="false" />
+  </Project>
+</Solution>

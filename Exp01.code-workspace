@@ -5,7 +5,7 @@
 		"gulp.autoDetect": "off",
 		"jake.autoDetect": "off",
 		"grunt.autoDetect": "off",
-		"omnisharp.defaultLaunchSolution": "Exp01.sln",
+		"omnisharp.defaultLaunchSolution": "Exp01.slnx",
 		"omnisharp.useModernNet": true
 	},
 	"folders": [
@@ -15,7 +15,7 @@
 		},
 		{
 			"name": "Flax",
-			"path": "C:\\Program Files (x86)\\Flax\\Flax_1.12"
+			"path": "C:\\Program Files (x86)\\Flax\\Flax_1.13"
 		}
 	]
 }

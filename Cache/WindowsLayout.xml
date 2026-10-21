@@ -4,7 +4,7 @@
 	</MainWindow>
 	<MasterPanel SelectedTab="1">
 		<Window Typename="::FlaxEditor.Windows.EditGameWindow">
-			<Data GridEnabled="True" ShowFpsCounter="False" ShowNavigation="False" NearPlane="8" FarPlane="20000" FieldOfView="60" MovementSpeed="1" ViewportIconsScale="1" OrthographicScale="1" UseOrthographicProjection="False" ViewFlags="391118847" />
+			<Data GridEnabled="True" ShowFpsCounter="False" ShowNavigation="False" UseOrthographicProjection="False" NearPlane="8" FarPlane="20000" FieldOfView="60" MovementSpeed="1" Brightness="1" ViewportIconsScale="1" ResolutionScale="1" OrthographicScale="1" ViewFlags="927989759" DebugView="0" LayerMask="4294967295" />
 		</Window>
 		<Window Typename="::FlaxEditor.Windows.GameWindow">
 			<Data ShowGUI="True" EditGUI="True" ShowDebugDraw="False" DefaultViewportScalingIndex="1" CustomViewportScalingIndex="-1" />
@@ -19,7 +19,7 @@
 				<Data Split="0.2" Scale="1" ShowFileExtensions="False" ShowEngineFiles="True" ShowPluginsFiles="True" ShowAllFiles="True" ShowGeneratedFiles="False" ViewType="Tiles" TreeViewAllContent="False" />
 			</Window>
 			<Window Typename="::FlaxEditor.Windows.DebugLogWindow">
-				<Data Split="0.5415584" />
+				<Data Split="0.7309091" />
 			</Window>
 			<Window Typename="::FlaxEditor.Windows.OutputLogWindow">
 				<Data LogTypeShowMask="15" />

@@ -6,7 +6,7 @@ namespace Game.Systems.Scene;
 // OnUpdate => sceneService = new SceneService();
 public sealed class SceneService()
 {
-    public void RequestTransition(SceneTransitionRequest request)
+    public static void RequestTransition(SceneTransitionRequest request)
     {
         if (!Level.ChangeSceneAsync(request.Target))
             Debug.LogError($"Failed to change scene to {request.Target}");

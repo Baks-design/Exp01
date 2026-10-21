@@ -1,7 +1,7 @@
 {
 	"ID": "5cf8834e4101fec29984dd9b85389834",
 	"TypeName": "FlaxEngine.Prefab",
-	"EngineBuild": 6912,
+	"EngineBuild": 7012,
 	"Data": [
 	{
 		"ID": "05d72da047ffe91862554fbd5c7c2600",
@@ -10,6 +10,15 @@
 		"StaticFlags": 0,
 		"Layer": 1,
 		"Tag": "Player"
+	},
+	{
+		"ID": "1980bcdd46166981f7c59db49eeb9164",
+		"TypeName": "Game.Behaviours.Player.PlayerController",
+		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
+		"V": {
+	"movement": "4165e4ab452b664d4e28b48de0e95d0a",
+	"camera": "bafb132f480ac3c7a2bf68a80afef881"
+}
 	},
 	{
 		"ID": "f21f41964f9a336df564e4bc9fcacedc",
@@ -24,14 +33,14 @@
 		"TypeName": "Game.Behaviours.Player.PlayerMovement",
 		"ParentID": "f21f41964f9a336df564e4bc9fcacedc",
 		"V": {
-	"ThirdPerson": {
-		"PresetReference": "f74001a34ac875fe11e12db218c43526"
-	},
-	"FirstPerson": {
+	"thirdPerson": {
 		"PresetReference": "e8a99ad343f3911ed62aaebe4af876db"
 	},
-	"Controller": "05d72da047ffe91862554fbd5c7c2600",
-	"CameraActor": "764d64de4fe1a0013d89d9802a78e24f"
+	"firstPerson": {
+		"PresetReference": "f74001a34ac875fe11e12db218c43526"
+	},
+	"controller": "05d72da047ffe91862554fbd5c7c2600",
+	"camera": "764d64de4fe1a0013d89d9802a78e24f"
 }
 	},
 	{
@@ -47,14 +56,14 @@
 		"TypeName": "Game.Behaviours.Player.PlayerCamera",
 		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
 		"V": {
-	"ThirdPerson": {
-		"PresetReference": "b483403144e047718bc1028a79a242e3"
-	},
-	"FirstPerson": {
+	"thirdPerson": {
 		"PresetReference": "e883979c4486026605938f894c300e60"
 	},
-	"CameraActor": "764d64de4fe1a0013d89d9802a78e24f",
-	"TargetActor": "05d72da047ffe91862554fbd5c7c2600"
+	"firstPerson": {
+		"PresetReference": "b483403144e047718bc1028a79a242e3"
+	},
+	"camera": "764d64de4fe1a0013d89d9802a78e24f",
+	"target": "05d72da047ffe91862554fbd5c7c2600"
 }
 	},
 	{
@@ -90,6 +99,8 @@
 		"TypeName": "Game.Behaviours.Player.PlayerSound",
 		"ParentID": "ed57bb6045f86fdd5978f69f602250a2",
 		"V": {
+	"volume": 1.0,
+	"maxDistance": 100.0,
 	"PoolHost": "ed57bb6045f86fdd5978f69f602250a2",
 	"SoundBank": "8cafa9524c8a73c54c93e99f87777e63"
 }
@@ -107,6 +118,7 @@
 		"TypeName": "Game.Behaviours.Player.PlayerAnimation",
 		"ParentID": "509d08014ea6b1102326219bc5b893f7",
 		"V": {
+	"controller": "05d72da047ffe91862554fbd5c7c2600",
 	"playerMovement": "4165e4ab452b664d4e28b48de0e95d0a",
 	"CharacterModel": "b2bb6b8d460e8891fe09bbbfb59fa9bf"
 }
@@ -117,10 +129,7 @@
 		"ParentID": "509d08014ea6b1102326219bc5b893f7",
 		"Name": "AnimatedModel",
 		"StaticFlags": 0,
-		"Layer": 1,
-		"Buffer": {
-			"Entries": []
-		}
+		"Layer": 1
 	},
 	{
 		"ID": "6e450e2c49cd2c6c12d3698e64c58d4b",

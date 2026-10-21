@@ -5,7 +5,7 @@ namespace Game.Core.Extensions;
 
 public static class LerpExtensions
 {
-    private const MethodImplOptions INLINE = MethodImplOptions.AggressiveInlining;
+    const MethodImplOptions INLINE = MethodImplOptions.AggressiveInlining;
 
     extension(float current)
     {

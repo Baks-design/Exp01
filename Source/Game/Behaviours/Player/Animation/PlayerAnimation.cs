@@ -4,27 +4,40 @@ namespace Game.Behaviours.Player;
 
 public sealed class PlayerAnimation : Script
 {
+    public CharacterController controller;
     public PlayerMovement playerMovement;
     public AnimatedModel CharacterModel;
-    private AnimGraphParameter paramSpeed;
-    private AnimGraphParameter paramIsGrounded;
+    readonly PlayerMovementData movementData = new();
+    AnimGraphParameter paramSpeed;
+    AnimGraphParameter paramIsGrounded;
 
     public override void OnStart()
     {
-        if (CharacterModel)
+        if (!controller)
         {
-            paramSpeed = CharacterModel.GetParameter(Parameters.Speed);
-            paramIsGrounded = CharacterModel.GetParameter(Parameters.IsGrounded);
+            Debug.LogError("PlayerAnimation: CharacterController is not assigned.");
+            return;
         }
+        if (!playerMovement)
+        {
+            Debug.LogError("PlayerAnimation: PlayerMovement is not assigned.");
+            return;
+        }
+        if (!CharacterModel)
+        {
+            Debug.LogError("PlayerAnimation: AnimatedModel is not assigned.");
+            return;
+        }
+
+        paramSpeed = CharacterModel.GetParameter(Parameters.Speed);
+        paramIsGrounded = CharacterModel.GetParameter(Parameters.IsGrounded);
     }
 
     public override void OnUpdate() => UpdateAnimation();
 
-    private void UpdateAnimation()
+    void UpdateAnimation()
     {
-        if (!CharacterModel) return;
-
-        paramSpeed?.Value = playerMovement.SpeedRatio;
-        paramIsGrounded?.Value = playerMovement.IsGrounded ? 1f : 0f;
+        paramSpeed?.Value = movementData.horizontalVelocity;
+        paramIsGrounded?.Value = controller.IsGrounded ? 1 : 0;
     }
 }

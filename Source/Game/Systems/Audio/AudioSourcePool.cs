@@ -5,10 +5,10 @@ namespace Game.Systems.Audio;
 
 public sealed class AudioSourcePool
 {
-    private readonly Stack<AudioSource> pool = new();
-    private readonly HashSet<AudioSource> active = [];
-    private readonly Actor host;
-    private readonly int maxSize;
+    readonly Stack<AudioSource> pool = new();
+    readonly HashSet<AudioSource> active = [];
+    readonly Actor host;
+    readonly int maxSize;
 
     public AudioSourcePool(Actor host, int initialSize = 5, int maxSize = 15)
     {
@@ -18,7 +18,7 @@ public sealed class AudioSourcePool
         for (var i = 0; i < initialSize; i++) pool.Push(CreateNew());
     }
 
-    private AudioSource CreateNew() => new()
+    AudioSource CreateNew() => new()
     {
         Parent = host,
         PlayOnStart = false,

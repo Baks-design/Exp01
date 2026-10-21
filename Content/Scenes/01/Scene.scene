@@ -1,7 +1,7 @@
 {
 	"ID": "74a68a984824b4510d12589f199ad68f",
 	"TypeName": "FlaxEngine.SceneAsset",
-	"EngineBuild": 6912,
+	"EngineBuild": 7012,
 	"Data": [
 		{
 			"ID": "74a68a984824b4510d12589f199ad68f",
@@ -16,19 +16,6 @@
 				"UseGeometryWithNoMaterials": true,
 				"Quality": 100
 			}
-		},
-		{
-			"ID": "b67edcfd4e4bd60dcdca6bb83dcbc51f",
-			"PrefabID": "1ff43f0a4740c6b5c45a31ab611ecf21",
-			"PrefabObjectID": "966a530e4d363136dc84dd9464e3bf8f",
-			"ParentID": "74a68a984824b4510d12589f199ad68f"
-		},
-		{
-			"ID": "95bf520342c33d61aefd2e992eb28897",
-			"PrefabID": "1ff43f0a4740c6b5c45a31ab611ecf21",
-			"PrefabObjectID": "aa700e4d469621028873e2afa5066688",
-			"ParentID": "b67edcfd4e4bd60dcdca6bb83dcbc51f",
-			"V": {}
 		},
 		{
 			"ID": "0aceca56432a4a265861c580382e8bf4",
@@ -237,8 +224,8 @@
 			"PrefabObjectID": "4165e4ab452b664d4e28b48de0e95d0a",
 			"ParentID": "6d0df38d42f6fe6598386ca1d2929010",
 			"V": {
-	"ThirdPerson": {},
-	"FirstPerson": {}
+	"thirdPerson": {},
+	"firstPerson": {}
 }
 		},
 		{
@@ -253,8 +240,8 @@
 			"PrefabObjectID": "bafb132f480ac3c7a2bf68a80afef881",
 			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e",
 			"V": {
-	"ThirdPerson": {},
-	"FirstPerson": {}
+	"thirdPerson": {},
+	"firstPerson": {}
 }
 		},
 		{
@@ -299,10 +286,7 @@
 			"ID": "9f5f7aec40c2d011bd565ab796ad5794",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
 			"PrefabObjectID": "b2bb6b8d460e8891fe09bbbfb59fa9bf",
-			"ParentID": "681844c8449e3bd3f1e934b66824a691",
-			"Buffer": {
-				"Entries": []
-			}
+			"ParentID": "681844c8449e3bd3f1e934b66824a691"
 		},
 		{
 			"ID": "8ae41c4a475f91e4fc45649e1951b1da",

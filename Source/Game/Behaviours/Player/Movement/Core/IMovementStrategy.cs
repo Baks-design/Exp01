@@ -7,10 +7,13 @@ public interface IMovementStrategy
 {
     JsonAssetReference<PlayerMovementPreset> PresetReference { get; }
 
-    MovementResult CalculateMovement(
-        InputService inputService,
+    void ApplyMovement(InputService input,
         CharacterController controller,
         Actor camera,
-        PlayerMovementPreset activePreset,
-        PlayerMovementData movementData);
+        PlayerMovementPreset preset,
+        PlayerMovementData data);
+    void ApplyRotation(
+        CharacterController controller,
+        PlayerMovementPreset preset,
+        PlayerMovementData data);
 }

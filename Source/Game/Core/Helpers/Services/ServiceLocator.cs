@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Core.Helpers.Services;
 
-public class ServiceLocator 
+public class ServiceLocator
 {
-    private readonly Dictionary<Type, object> services = [];
+    readonly Dictionary<Type, object> services = [];
 
     public void Register<T>(T service) where T : class => services[typeof(T)] = service;
 

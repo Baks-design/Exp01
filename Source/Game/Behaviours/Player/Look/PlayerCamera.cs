@@ -6,58 +6,50 @@ namespace Game.Behaviours.Player;
 public sealed class PlayerCamera : Script
 {
     [Header("Strategies")]
-    public ThirdPersonCameraStrategy ThirdPerson = new();
-    public FirstPersonCameraStrategy FirstPerson = new();
+    public ThirdPersonCameraStrategy thirdPerson = new();
+    public FirstPersonCameraStrategy firstPerson = new();
     [Header("References")]
-    public Camera CameraActor;
-    public Actor TargetActor;
-    private readonly InputService inputService = new();
-    private ICameraStrategy strategy;
-    private Vector2 mouseAngles = new(45f, 45f);
-
-    public CameraPreset ActivePreset { get; private set; }
+    public Camera camera;
+    public Actor target;
+    readonly InputService input = new();
+    readonly CameraData data = new();
+    CameraPreset activePreset;
+    ICameraStrategy activeStrategy;
 
     public override void OnStart()
     {
-        if (!CameraActor || !TargetActor)
+        if (!camera)
         {
-            Debug.LogError("CameraController: CameraActor or TargetActor is not assigned.");
+            Debug.LogError("PlayerCamera: CameraActor is not assigned.");
             return;
         }
-
-        SetCameraStrategy(ThirdPerson);
+        if (!target)
+        {
+            Debug.LogError("PlayerCamera: TargetActor is not assigned.");
+            return;
+        }
     }
 
-    public override void OnUpdate()
-    {
-        if (!CameraActor || !TargetActor || strategy == null || ActivePreset == null) return;
-
-        strategy.Update(inputService, CameraActor, TargetActor, ActivePreset, ref mouseAngles);
-    }
+    public override void OnUpdate() => activeStrategy.Update(data, input, camera, target, activePreset);
 
     public void SetCameraStrategy(ICameraStrategy newStrategy)
     {
-        if (newStrategy == null)
-        {
-            Debug.LogError("SwitchStrategy received null.");
-            return;
-        }
+        if (newStrategy == null || activeStrategy == newStrategy) return;
 
-        strategy = newStrategy;
-        mouseAngles = Vector2.Zero;
-        RefreshActivePreset();
+        activeStrategy = newStrategy;
+        data.Reset();
+        RefreshActivePreset(newStrategy);
     }
 
-    private void RefreshActivePreset()
+    void RefreshActivePreset(ICameraStrategy newStrategy)
     {
-        var reference = strategy.PresetReference;
-        if (reference == null || !reference.Asset)
+        var reference = newStrategy.PresetReference;
+        if (reference == null)
         {
-            Debug.LogError($"{strategy.GetType().Name} has no preset reference assigned.");
-            ActivePreset = null;
+            activePreset = null;
             return;
         }
-
-        ActivePreset = reference.Asset.CreateInstance<CameraPreset>();
+        else
+            activePreset = reference.Instance;
     }
 }

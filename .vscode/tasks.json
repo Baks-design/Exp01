@@ -7,7 +7,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -29,7 +29,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -51,7 +51,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -73,7 +73,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -95,7 +95,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -117,7 +117,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -139,7 +139,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -161,7 +161,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -183,7 +183,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -205,7 +205,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -227,7 +227,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",
@@ -249,7 +249,7 @@
 				"kind": "build",
 				"isDefault": false
 			},
-			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Tools\\Flax.Build",
+			"command": "..\\..\\..\\..\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Tools\\Flax.Build",
 			"args": [
 				"-build",
 				"-log",

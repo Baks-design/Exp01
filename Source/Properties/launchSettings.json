@@ -3,8 +3,8 @@
     "Game": {
       "commandName": "Executable",
       "workingDirectory": "C:/Users/Adriano/Flax/Exp01",
-      "executablePath": "C:/Program Files (x86)/Flax/Flax_1.12/Binaries/Editor/Win64/$(FlaxConfiguration)/FlaxEditor.exe",
-      "commandLineArgs": "-project \"C:/Users/Adriano/Flax/Exp01\"",
+      "executablePath": "C:/Program Files (x86)/Flax/Flax_1.13/Binaries/Editor/Win64/$(FlaxConfiguration)/FlaxEditor.exe",
+      "commandLineArgs": "-project=\"C:/Users/Adriano/Flax/Exp01\"",
       "nativeDebugging": false
     }
   }

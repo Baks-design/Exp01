@@ -1,22 +1,13 @@
 {
 	"ID": "f4c1c67842f6b745a6976aa8e7eff360",
 	"TypeName": "FlaxEditor.Content.Settings.InputSettings",
-	"EngineBuild": 6912,
+	"EngineBuild": 7012,
 	"Data": {
 	"ActionMappings": [
 		{
 			"Name": "Menu",
 			"Mode": 1,
 			"Key": 27,
-			"MouseButton": 0,
-			"GamepadButton": 0,
-			"Gamepad": 0,
-			"DeadZone": 0.5
-		},
-		{
-			"Name": "Jump",
-			"Mode": 1,
-			"Key": 32,
 			"MouseButton": 0,
 			"GamepadButton": 0,
 			"Gamepad": 0,
@@ -32,9 +23,27 @@
 			"DeadZone": 0.5
 		},
 		{
-			"Name": "Interact",
+			"Name": "Jump",
 			"Mode": 1,
-			"Key": 69,
+			"Key": 32,
+			"MouseButton": 0,
+			"GamepadButton": 0,
+			"Gamepad": 0,
+			"DeadZone": 0.5
+		},
+		{
+			"Name": "FirstView",
+			"Mode": 1,
+			"Key": 49,
+			"MouseButton": 0,
+			"GamepadButton": 0,
+			"Gamepad": 0,
+			"DeadZone": 0.5
+		},
+		{
+			"Name": "ThirdView",
+			"Mode": 1,
+			"Key": 51,
 			"MouseButton": 0,
 			"GamepadButton": 0,
 			"Gamepad": 0,

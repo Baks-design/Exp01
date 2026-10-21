@@ -8,11 +8,12 @@ namespace Game.Systems.Input;
 // inputService = new InputService();
 public sealed class InputService
 {
-    private readonly Dictionary<InputActions, InputEvent> events = [];
-    private readonly Dictionary<GameAxis, InputAxis> axes = [];
-    private bool disposed;
+    readonly Dictionary<InputActions, InputEvent> events = [];
+    readonly Dictionary<GameAxis, InputAxis> axes = [];
+    bool disposed;
 
-    public Float2 GetDelta => FlaxEngine.Input.MousePositionDelta;
+    public static Float2 GetMousePosition => FlaxEngine.Input.MousePositionDelta;
+    public static float GetScroll => FlaxEngine.Input.MouseScrollDelta;
 
     void ThrowIfDisposed() => ObjectDisposedException.ThrowIf(disposed, this);
 

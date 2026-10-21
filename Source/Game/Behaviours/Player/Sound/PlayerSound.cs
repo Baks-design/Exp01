@@ -7,13 +7,13 @@ namespace Game.Behaviours.Player;
 public sealed class PlayerSound : Script
 {
     [Header("Settings")]
-    public float volume = 0.8f;
-    public float maxDistance = 10f;
+    [Limit(0, 1)] public float volume = 0.8f;
+    public float maxDistance = 10;
     public LayersMask WorldLayersMask = LayersMask.Default;
     [Header("References")]
     public Actor PoolHost;
     public JsonAssetReference<SoundBank> SoundBank;
-    private AudioSourcePool pool;
+    AudioSourcePool pool;
 
     public override void OnStart()
     {
@@ -70,7 +70,7 @@ public sealed class PlayerSound : Script
         PlayClipAtPosition(clip, Actor.Position);
     }
 
-    private bool CanPlay(out SoundBank bank)
+    bool CanPlay(out SoundBank bank)
     {
         bank = null;
         if (pool == null || !SoundBank) return false;
@@ -78,7 +78,7 @@ public sealed class PlayerSound : Script
         return bank != null;
     }
 
-    private bool TryGetGroundTag(out Tag tag)
+    bool TryGetGroundTag(out Tag tag)
     {
         tag = Tag.Default;
         var feetPos = Actor.Position;
@@ -87,7 +87,7 @@ public sealed class PlayerSound : Script
         return true;
     }
 
-    private static AudioClip FindClip(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
+    static AudioClip FindClip(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
     {
         if (entries == null || entries.Length == 0) return null;
 
@@ -95,7 +95,7 @@ public sealed class PlayerSound : Script
         return entry != null ? PickRandomClip(entry.Clip) : null;
     }
 
-    private static SoundEntryByTag FindEntry(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
+    static SoundEntryByTag FindEntry(JsonAssetReference<SoundEntryByTag>[] entries, Tag tag)
     {
         foreach (var reference in entries)
         {
@@ -105,7 +105,6 @@ public sealed class PlayerSound : Script
             if (entry == null) continue;
             if (entry.SurfaceTag == tag) return entry;
         }
-
         foreach (var reference in entries)
         {
             if (!reference) continue;
@@ -114,14 +113,12 @@ public sealed class PlayerSound : Script
             if (entry == null) continue;
             if (entry.SurfaceTag == Tag.Default) return entry;
         }
-
         return null;
     }
 
-    private static AudioClip PickRandomClip(AudioClip[] clips)
+    static AudioClip PickRandomClip(AudioClip[] clips)
     {
         if (clips == null || clips.Length == 0) return null;
-
         if (clips.Length == 1) return clips[0];
 
         var start = (int)(DateTime.Now.Ticks % clips.Length);
@@ -134,7 +131,7 @@ public sealed class PlayerSound : Script
         return null;
     }
 
-    private void PlayClipAtPosition(AudioClip clip, Vector3 position)
+    void PlayClipAtPosition(AudioClip clip, Vector3 position)
     {
         if (clip == null || pool == null) return;
 

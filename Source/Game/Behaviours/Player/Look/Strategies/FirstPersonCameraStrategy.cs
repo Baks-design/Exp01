@@ -7,15 +7,28 @@ public sealed class FirstPersonCameraStrategy : ICameraStrategy
 {
     public JsonAssetReference<CameraPreset> PresetReference { get; set; }
 
-    public void Update(
-        InputService inputService, Camera camera, Actor targetActor,
-        CameraPreset activePreset, ref Vector2 mouseAngles)
+    public void Update(CameraData data, InputService input, Camera camera, Actor target, CameraPreset preset)
     {
-        mouseAngles += inputService.GetDelta * activePreset.RotationSpeed;
-        mouseAngles.Y = Mathf.Clamp(mouseAngles.Y, -89f, 89f);
+        Position(camera, target, preset);
+        Rotation(data, input, camera, preset);
+    }
 
-        var eyePosition = targetActor.Position + Vector3.Up * activePreset.FirstPersonHeightOffset;
+    static void Position(Camera camera, Actor target, CameraPreset preset)
+    {
+        var eyePosition = target.Position + Vector3.Up * preset.FPHeightOffset;
         camera.Position = eyePosition;
-        camera.Orientation = Quaternion.Euler(mouseAngles.Y, mouseAngles.X, 0f);
+    }
+
+    static void Rotation(CameraData data, InputService input, Camera camera, CameraPreset preset)
+    {
+        var mouseDelta = InputService.GetMousePosition;
+
+        data.yaw += mouseDelta.X * preset.FPRotationSpeed;
+        data.pitch = Mathf.Clamp((data.pitch - mouseDelta.Y) * preset.FPRotationSpeed, preset.FPMinPitch, preset.FPMaxPitch);
+
+        var targetRotation = Quaternion.Euler(data.pitch, data.yaw, 0);
+
+        var t = 1 - Mathf.Exp(-preset.FPSmoothing * Time.DeltaTime);
+        camera.Orientation = Quaternion.Lerp(camera.Orientation, targetRotation, t);
     }
 }

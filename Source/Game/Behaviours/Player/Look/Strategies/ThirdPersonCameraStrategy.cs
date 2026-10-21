@@ -5,30 +5,44 @@ namespace Game.Behaviours.Player;
 
 public sealed class ThirdPersonCameraStrategy : ICameraStrategy
 {
+    Vector3 currentPos;
+
     public JsonAssetReference<CameraPreset> PresetReference { get; set; }
 
-    public void Update(
-        InputService inputService, Camera camera, Actor targetActor,
-        CameraPreset activePreset, ref Vector2 mouseAngles)
+    public void Update(CameraData data, InputService input, Camera camera, Actor target, CameraPreset preset)
     {
-        mouseAngles += inputService.GetDelta * activePreset.RotationSpeed;
-        mouseAngles.Y = Mathf.Clamp(mouseAngles.Y, -89f, 89f);
+        Rotation(data, input, preset, out var rotation);
+        Position(camera, target, preset, rotation);
+    }
 
-        var distance = activePreset.Distance + Input.MouseScrollDelta * -20f * activePreset.ZoomSpeed;
-        distance = Mathf.Clamp(distance, activePreset.MinDistance, activePreset.MaxDistance);
+    static void Rotation(CameraData data, InputService input, CameraPreset preset, out Quaternion rotation)
+    {
+        var mouseDelta = InputService.GetMousePosition;
 
-        var rotation = Quaternion.Euler(-mouseAngles.Y, mouseAngles.X, 0f);
-        var targetPosition = targetActor.Position;
-        var direction = Vector3.Transform(Vector3.Forward, rotation);
+        data.yaw += mouseDelta.X * preset.TPMouseSpeed;
+        data.pitch = Mathf.Clamp(data.yaw, preset.TPMinPitch, preset.TPMaxPitch);
 
-        camera.Position = targetPosition + direction * distance;
-        camera.LookAt(targetPosition, Vector3.Up);
+        rotation = Quaternion.Euler(-data.pitch, data.yaw, 0);
+    }
 
-        if (Physics.RayCast(targetPosition, direction, out var hit, distance, activePreset.CollisionLayers))
+    void Position(Camera camera, Actor target, CameraPreset preset, Quaternion rotation)
+    {
+        var targetPos = target.Position;
+        var direction = Vector3.Transform(Vector3.Forward, rotation).Normalized;
+
+        var targetDistance = preset.TPDistance;
+        if (Physics.RayCast(targetPos, direction, out var hit, preset.TPDistance, preset.TPCollisionLayers))
         {
-            var bias = activePreset.CollisionDistanceBias + camera.NearPlane;
-            var corrected = Mathf.Max(hit.Distance - bias, activePreset.MinDistance);
-            camera.Position = targetPosition + direction * corrected;
+            var bias = preset.TPCollisionDistanceBias + camera.NearPlane;
+            targetDistance = Mathf.Max(hit.Distance - bias, 10);
         }
+
+        var idealPos = targetPos + direction * targetDistance;
+
+        var t = 1 - Mathf.Exp(-preset.TPSmoothing * Time.DeltaTime);
+        currentPos = Vector3.Lerp(currentPos, idealPos, t);
+
+        camera.Position = currentPos;
+        camera.LookAt(targetPos, Vector3.Up);
     }
 }

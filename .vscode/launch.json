@@ -7,14 +7,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Editor.Windows.Debug|x64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win64\\Debug\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win64\\Debug\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -22,14 +20,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Editor.Windows.Debug|ARM64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win32\\Debug\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win32\\Debug\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -37,14 +33,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Editor.Windows.Development|x64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win64\\Development\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win64\\Development\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -52,14 +46,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Editor.Windows.Development|ARM64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win32\\Development\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win32\\Development\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -67,14 +59,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Editor.Windows.Release|x64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win64\\Release\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win64\\Release\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -82,14 +72,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Editor.Windows.Release|ARM64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win32\\Release\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win32\\Release\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -97,14 +85,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Game.Windows.Debug|x64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win64\\Debug\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win64\\Debug\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -112,14 +98,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Game.Windows.Debug|ARM64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win32\\Debug\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win32\\Debug\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -127,14 +111,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Game.Windows.Development|x64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win64\\Development\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win64\\Development\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -142,14 +124,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Game.Windows.Development|ARM64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win32\\Development\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win32\\Development\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -157,14 +137,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Game.Windows.Release|x64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win64\\Release\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win64\\Release\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
@@ -172,14 +150,12 @@
 			"request": "launch",
 			"preLaunchTask": "Exp01|Game.Windows.Release|ARM64",
 			"cwd": "C:\\Users\\Adriano\\Flax\\Exp01",
-			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.12\\Binaries\\Editor\\Win32\\Release\\FlaxEditor",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.13\\Binaries\\Editor\\Win32\\Release\\FlaxEditor",
 			"args": [
-				"-project",
-				"C:\\Users\\Adriano\\Flax\\Exp01",
+				"-project=C:\\Users\\Adriano\\Flax\\Exp01",
 				"-skipCompile"
 			],
-			"stopAtEntry": false,
-			"externalConsole": true
+			"stopAtEntry": false
 		},
 		{
 			"type": "coreclr",
