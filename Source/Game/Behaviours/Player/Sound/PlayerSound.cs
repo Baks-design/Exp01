@@ -4,7 +4,7 @@ using Game.Systems.Audio;
 
 namespace Game.Behaviours.Player;
 
-public sealed class PlayerSound : Script
+public sealed class PlayerSound : Script //TODO: Apply Sound
 {
     [Header("Settings")]
     [Limit(0, 1)] public float volume = 0.8f;
@@ -82,7 +82,7 @@ public sealed class PlayerSound : Script
     {
         tag = Tag.Default;
         var feetPos = Actor.Position;
-        if (!Physics.RayCast(feetPos, Vector3.Down, out var hit, maxDistance, WorldLayersMask)) return false;
+        if (!Physics.RayCast(feetPos, Vector3.Down, out var hit, maxDistance, WorldLayersMask, false)) return false;
         tag = hit.Material != null ? hit.Material.Tag : Tag.Default;
         return true;
     }

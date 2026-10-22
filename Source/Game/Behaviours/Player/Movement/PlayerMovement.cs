@@ -13,6 +13,7 @@ public sealed class PlayerMovement : Script
     public Actor charObj;
     public Actor cameraTarget;
     public Camera camera;
+    public PlayerSound sound;
     readonly InputService input = new();
     readonly PlayerMovementData data = new();
     readonly CameraData cameraData = new();
@@ -38,11 +39,11 @@ public sealed class PlayerMovement : Script
     public override void OnFixedUpdate()
     {
         strategy.ApplyCameraSmoothing(camera, cameraTarget, activePreset);
-        strategy.ApplyMovement(input, controller, cameraTarget, activePreset, data, cameraData);
+        strategy.ApplyMovement(input, controller, cameraTarget, activePreset, data, cameraData, sound);
         strategy.ApplyRotation(controller, activePreset, data, charObj, cameraData);
     }
 
-    public override void OnDebugDraw() 
+    public override void OnDebugDraw()
         => DebugDraw.DrawWireCapsule(
             controller.Transform.Translation,
             controller.Transform.Orientation * Quaternion.Euler(90, 0, 0),
@@ -70,4 +71,7 @@ public sealed class PlayerMovement : Script
         else
             activePreset = reference.Instance;
     }
+
+    public void SetMovement(float horizontal, float vertical)
+        => strategy.AddMovement(data, horizontal, vertical);
 }

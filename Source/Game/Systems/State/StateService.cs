@@ -30,9 +30,9 @@ public sealed class StateService
 
     public bool SetState(StateId targetId)
     {
-        if (!states.TryGetValue(targetId, out var next))  return false;
+        if (!states.TryGetValue(targetId, out var next)) return false;
         if (currentState != null && !next.CanEnter(currentState.Id)) return false;
-        
+
         currentState?.OnExit();
         currentState = next;
         currentState.OnEnter();

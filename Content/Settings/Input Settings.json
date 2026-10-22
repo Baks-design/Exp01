@@ -48,6 +48,15 @@
 			"GamepadButton": 0,
 			"Gamepad": 0,
 			"DeadZone": 0.5
+		},
+		{
+			"Name": "Aim",
+			"Mode": 0,
+			"Key": 0,
+			"MouseButton": 3,
+			"GamepadButton": 0,
+			"Gamepad": 0,
+			"DeadZone": 0.5
 		}
 	],
 	"AxisMappings": [

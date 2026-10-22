@@ -1,17 +1,34 @@
 {
 	"ID": "b483403144e047718bc1028a79a242e3",
 	"TypeName": "Game.Behaviours.Player.CameraPreset",
-	"EngineBuild": 6912,
+	"EngineBuild": 7012,
 	"Data": {
-	"RotationSpeed": 0.5,
-	"ZoomSpeed": 1.0,
-	"Distance": 1000.0,
-	"MinDistance": 10.0,
-	"MaxDistance": 2000.0,
-	"CollisionDistanceBias": 10.0,
-	"CollisionLayers": {
-		"Mask": 4294967295
+	"FPInvertY": false,
+	"FPLookSmoothing": 20.0,
+	"FPPitch": {
+		"X": -88.0,
+		"Y": 88.0
 	},
-	"FirstPersonHeightOffset": 160.0
+	"FPSensitivity": 1.0,
+	"FPFOVLerpSpeed": 8.0,
+	"FPShakeDecay": 5.0,
+	"FPShakeScale": 1.0,
+	"FPFOVZoom": 30.0,
+	"TPSensitivity": 0.15,
+	"TPPitch": {
+		"X": -60.0,
+		"Y": 60.0
+	},
+	"TPDistance": 400.0,
+	"TPMinDistance": 80.0,
+	"TPCollisionBias": 10.0,
+	"TPCameraCollisionLayers": {
+		"Mask": 0
+	},
+	"TPFOVZoom": 50.0,
+	"TPFOVLerpSpeed": 8.0,
+	"TPShakeDecay": 5.0,
+	"TPShakeScale": 1.0,
+	"TPLockOnLerpSpeed": 10.0
 }
 }

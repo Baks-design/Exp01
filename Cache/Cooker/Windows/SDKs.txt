@@ -1,0 +1,9 @@
+Missing Android SDK. Cannot build for Android platform.
+Missing Emscripten SDK. Cannot build for Web platform.
+DotNetSdk, 10.0.402.9999, C:\Program Files\dotnet\
+AndroidNdk, missing
+AndroidSdk, missing
+XCode, missing
+GDK, missing
+EmscriptenSdk, missing
+Windows SDK v10_0_19041_0, 10.0.19041.0, C:\Program Files (x86)\Windows Kits\10\

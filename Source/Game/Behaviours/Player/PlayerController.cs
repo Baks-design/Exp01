@@ -48,4 +48,12 @@ public sealed class PlayerController : Script
         camera.SetCameraStrategy(camera.thirdPerson);
         Debug.Log("Enter in Third View");
     }
+
+    public void SetMovementAndRotation(
+        float horizontal, float vertical, float pitch, float yaw)
+    {
+        movement.SetMovement(horizontal, vertical);
+        camera.SetRotation(pitch, yaw);
+        Debug.Log("Set Movement And/Or Rotation");
+    }
 }

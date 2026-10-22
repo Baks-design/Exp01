@@ -1,0 +1,77 @@
+[00:00:020] Flax.Build 1.0.0
+[00:00:026]   Arguments: -log -logfile=C:\Users/Adriano/Flax/Exp01/Cache/Cooker/Windows/CompileLog.txt -build -mutex -buildtargets=GameTarget -platform=Windows -arch=x64 -configuration=Development -aotMode=None -dotnet=10
+[00:00:026]   Workspace: C:\Users\Adriano\Flax\Exp01
+[00:00:026]   Engine: C:\Program Files (x86)\Flax\Flax_1.13
+[00:00:026]   .NET 10.0.13
+[00:00:095] Loading project file from "C:\Users\Adriano\Flax\Exp01\Exp01.flaxproj"...
+[00:00:216] Loading project file from "C:\Program Files (x86)\Flax\Flax_1.13\Flax.flaxproj"...
+[00:00:219] Loaded project Flax, version 1.13.7012
+[00:00:219] Loaded project Exp01, version 1.0
+[00:00:330] Engine build version: 1.13.7012
+[00:00:483] Building targets...
+[00:00:579] Missing Android SDK. Cannot build for Android platform.
+[00:00:581] Missing Linux Toolchain. Cannot build for Linux platform.
+[00:00:601] Found Windows SDK v10_0_19041_0 at C:\Program Files (x86)\Windows Kits\10\
+[00:00:662] Missing Emscripten SDK. Cannot build for Web platform.
+[00:00:667] Missing MSVC toolset v140 or later (VS 2015 or later C++ build tools). Cannot build for Windows platform.
+[00:00:678] Building C# only
+[00:00:678] Building target GameTarget in Development for Windows x64
+[00:00:734] Building referenced target Flax
+[00:00:765] Missing VULKAN_SDK environment variable. Cannot build Vulkan.
+[00:00:765] Building for Windows without Vulkan rendering backend (Vulkan SDK is missing)
+[00:00:765] Building for Windows without D3D12 rendering backend (Windows SDK is missing)
+[00:00:779] Parsing API bindings for Profiler (FlaxEngine)
+[00:01:216] Parsing API bindings for Platform (FlaxEngine)
+[00:01:787] Parsing API bindings for Core (FlaxEngine)
+[00:05:102] Parsing API bindings for Physics (FlaxEngine)
+[00:05:682] Parsing API bindings for AudioTool (FlaxEngine)
+[00:05:701] Parsing API bindings for TextureTool (FlaxEngine)
+[00:05:798] Parsing API bindings for ModelTool (FlaxEngine)
+[00:05:836] Parsing API bindings for Graphics (FlaxEngine)
+[00:06:999] Parsing API bindings for Utilities (FlaxEngine)
+[00:07:040] Parsing API bindings for Particles (FlaxEngine)
+[00:07:099] Parsing API bindings for Content (FlaxEngine)
+[00:07:514] Parsing API bindings for Renderer (FlaxEngine)
+[00:07:681] Found the following .NET SDK versions: 10.0.402
+[00:07:682] Found the following .NET runtime versions: 10.0.13
+[00:07:696] Using .NET SDK 10.0.402, runtime 10.0.13 (C:\Program Files\dotnet\)
+[00:07:709]   - Host Runtime for Windows x64
+[00:07:717] Parsing API bindings for Scripting (FlaxEngine)
+[00:07:901] Parsing API bindings for Serialization (FlaxEngine)
+[00:07:917] Parsing API bindings for Level (FlaxEngine)
+[00:08:595] Parsing API bindings for Navigation (FlaxEngine)
+[00:08:645] Parsing API bindings for AI (FlaxEngine)
+[00:08:743] Parsing API bindings for Visject (FlaxEngine)
+[00:08:760] Parsing API bindings for Animations (FlaxEngine)
+[00:09:133] Parsing API bindings for Audio (FlaxEngine)
+[00:09:165] Parsing API bindings for Video (FlaxEngine)
+[00:09:179] Parsing API bindings for Debug (FlaxEngine)
+[00:09:368] Parsing API bindings for Foliage (FlaxEngine)
+[00:09:490] Parsing API bindings for Render2D (FlaxEngine)
+[00:09:630] Parsing API bindings for Input (FlaxEngine)
+[00:09:757] Parsing API bindings for Networking (FlaxEngine)
+[00:09:949] Parsing API bindings for Streaming (FlaxEngine)
+[00:09:959] Parsing API bindings for Terrain (FlaxEngine)
+[00:10:030] Parsing API bindings for Threading (FlaxEngine)
+[00:10:061] Parsing API bindings for Localization (FlaxEngine)
+[00:10:096] Parsing API bindings for UI (FlaxEngine)
+[00:10:111] Parsing API bindings for Online (FlaxEngine)
+[00:10:148] Parsing API bindings for Engine (FlaxEngine)
+[00:10:284] Skipping build for target FlaxGame
+[00:10:377] Generating binary module bindings for Game
+[00:11:140] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Source\Game.Gen.cs
+[00:11:141] Building module Game
+[00:11:168] Saved file to C:\Users\Adriano\Flax\Exp01\Cache/Intermediate\GameTarget\Windows\x64\Development\Game.CSharp.response
+[00:11:246] Saved file to C:\Users\Adriano\Flax\Exp01\Binaries\GameTarget\Windows\x64\Development\GameTarget.Build.json
+[00:11:286] Found 3 valid and 0 invalid actions in Task Graph cache
+[00:11:288] 
+[00:11:288] Total 3 tasks
+[00:11:293] Executing 3 tasks using 3 threads
+[00:11:297] Compiling C:\Users\Adriano\Flax\Exp01\Binaries\GameTarget\Windows\x64\Development\Game.CSharp.dll
+[00:11:584] C:\Program Files (x86)\Flax\Flax_1.13\Source\Platforms\DotNet\Newtonsoft.Json.xml
+[00:11:594] C:\Program Files (x86)\Flax\Flax_1.13\Source\Platforms\DotNet\Newtonsoft.Json.dll
+[00:11:615] 1 arquivo(s) copiado(s)
+[00:11:628] 1 arquivo(s) copiado(s)
+[00:28:544] Done!
+[00:28:576] Total time: 00:00:28.6296567
+[00:28:576] End.

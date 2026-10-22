@@ -7,20 +7,26 @@ public interface IMovementStrategy
 {
     JsonAssetReference<PlayerMovementPreset> PresetReference { get; }
 
-    void ApplyMovement(InputService input,
+    void ApplyCameraSmoothing(
+        Camera camera,
+        Actor cameraTarget,
+        PlayerMovementPreset preset);
+    void ApplyMovement(
+        InputService input,
         CharacterController controller,
         Actor camera,
         PlayerMovementPreset preset,
         PlayerMovementData data,
-        CameraData cameraData);
+        CameraData cameraData,
+        PlayerSound sound);
     void ApplyRotation(
         CharacterController controller,
         PlayerMovementPreset preset,
         PlayerMovementData data,
         Actor characterObj,
         CameraData cameraData);
-    void ApplyCameraSmoothing(
-        Camera camera,
-        Actor cameraTarget,
-        PlayerMovementPreset preset);
+    void AddMovement(
+        PlayerMovementData data,
+        float horizontal,
+        float vertical);
 }

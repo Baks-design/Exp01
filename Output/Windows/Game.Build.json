@@ -1,0 +1,1 @@
+{"Name":"GameTarget","Platform":"Windows","Architecture":"x64","Configuration":"Development","VersionControlInfo":"1.0+main+a8881c4cf6a2c053bae775a51d44797ccd42aded","BinaryModules":[{"Name":"FlaxEngine","NativePath":"FlaxEngine.dll","ManagedPath":"FlaxEngine.CSharp.dll"},{"Name":"Game","ManagedPath":"Game.CSharp.dll"}]}

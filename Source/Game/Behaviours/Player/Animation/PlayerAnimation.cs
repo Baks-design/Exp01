@@ -2,7 +2,7 @@ using FlaxEngine;
 
 namespace Game.Behaviours.Player;
 
-public sealed class PlayerAnimation : Script
+public sealed class PlayerAnimation : Script //TODO: Apply Model
 {
     public CharacterController controller;
     public PlayerMovement playerMovement;

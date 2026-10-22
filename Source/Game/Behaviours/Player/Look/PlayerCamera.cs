@@ -1,5 +1,4 @@
 using FlaxEngine;
-using Game.Core.Cursor;
 using Game.Systems.Input;
 
 namespace Game.Behaviours.Player;
@@ -12,6 +11,7 @@ public sealed class PlayerCamera : Script
     [Header("References")]
     public Camera camera;
     public Actor cameraTarget;
+    public Actor lockOnTarget;
     readonly InputService input = new();
     readonly CameraData data = new();
     CameraPreset activePreset;
@@ -32,10 +32,7 @@ public sealed class PlayerCamera : Script
     }
 
     public override void OnUpdate()
-    {
-        CursorService.Apply(CursorState.Gameplay);
-        activeStrategy.ApplyLook(input, cameraTarget, data, activePreset, camera);
-    }
+        => activeStrategy.ApplyLook(input, cameraTarget, data, activePreset, camera, this);
 
     public void SetCameraStrategy(ICameraStrategy newStrategy)
     {
@@ -57,4 +54,10 @@ public sealed class PlayerCamera : Script
         else
             activePreset = reference.Instance;
     }
+
+    public void SetShake(float intensity, float duration)
+        => activeStrategy.TriggerShake(data, intensity, duration);
+
+    public void SetRotation(float pitch, float yaw)
+        => activeStrategy.AddMovementRotation(data, pitch, yaw);
 }
