@@ -304,13 +304,15 @@
     <Compile Include="Game\Behaviours\Player\Data\PlayerSaveData.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Core\ICameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Data\CameraData.cs" />
-    <Compile Include="Game\Behaviours\Player\Look\Data\CameraPreset.cs" />
+    <Compile Include="Game\Behaviours\Player\Look\Data\FirstPersonCameraPreset.cs" />
+    <Compile Include="Game\Behaviours\Player\Look\Data\ThirdPersonCameraPreset.cs" />
     <Compile Include="Game\Behaviours\Player\Look\PlayerCamera.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Strategies\FirstPersonCameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Strategies\ThirdPersonCameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Core\IMovementStrategy.cs" />
+    <Compile Include="Game\Behaviours\Player\Movement\Data\FirstPersonMovementPreset.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\PlayerMovementData.cs" />
-    <Compile Include="Game\Behaviours\Player\Movement\Data\PlayerMovementPreset.cs" />
+    <Compile Include="Game\Behaviours\Player\Movement\Data\ThirdPersonMovementPreset.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\PlayerMovement.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Strategies\FirstPersonMovement.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Strategies\ThirdPersonMovement.cs" />

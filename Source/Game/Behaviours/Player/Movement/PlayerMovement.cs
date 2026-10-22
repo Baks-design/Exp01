@@ -18,7 +18,7 @@ public sealed class PlayerMovement : Script
     readonly PlayerMovementData data = new();
     readonly CameraData cameraData = new();
     IMovementStrategy strategy;
-    PlayerMovementPreset activePreset;
+    object activePreset;
 
     public override void OnStart()
     {
@@ -38,40 +38,43 @@ public sealed class PlayerMovement : Script
 
     public override void OnFixedUpdate()
     {
+        if (strategy == null || activePreset == null) return;
+
         strategy.ApplyCameraSmoothing(camera, cameraTarget, activePreset);
         strategy.ApplyMovement(input, controller, cameraTarget, activePreset, data, cameraData, sound);
-        strategy.ApplyRotation(controller, activePreset, data, charObj, cameraData);
+        strategy.ApplyRotation(controller, activePreset, data, cameraData);
     }
 
     public override void OnDebugDraw()
-        => DebugDraw.DrawWireCapsule(
+    {
+        if (!controller) return;
+
+        DebugDraw.DrawWireCapsule(
             controller.Transform.Translation,
             controller.Transform.Orientation * Quaternion.Euler(90, 0, 0),
             controller.Radius,
             controller.Height,
             Color.Blue);
+    }
 
-    public void SetMovementStrategy(IMovementStrategy newStrategy)
+    public void SetMovementStrategy<T>(IMovementStrategy<T> newStrategy) where T : class
     {
         if (newStrategy == null || strategy == newStrategy) return;
 
         strategy = newStrategy;
         data.Reset();
-        RefreshActivePreset(newStrategy);
-    }
 
-    void RefreshActivePreset(IMovementStrategy newStrategy)
-    {
         var reference = newStrategy.PresetReference;
-        if (reference == null)
+        if (reference == null || !reference.Asset)
         {
+            Debug.LogError($"{newStrategy.GetType().Name} has no preset assigned.");
             activePreset = null;
             return;
         }
-        else
-            activePreset = reference.Instance;
+
+        activePreset = reference.Asset.CreateInstance<T>();
     }
 
     public void SetMovement(float horizontal, float vertical)
-        => strategy.AddMovement(data, horizontal, vertical);
+        => strategy?.AddMovement(data, horizontal, vertical);
 }

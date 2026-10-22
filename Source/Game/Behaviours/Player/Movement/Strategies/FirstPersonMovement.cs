@@ -3,13 +3,13 @@ using Game.Systems.Input;
 
 namespace Game.Behaviours.Player;
 
-public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
+public sealed class FirstPersonMovement : IMovementStrategy<FirstPersonMovementPreset>  
 {
-    public JsonAssetReference<PlayerMovementPreset> PresetReference { get; set; }
+    public JsonAssetReference<FirstPersonMovementPreset> PresetReference { get; set; }
 
     public void ApplyMovement(
         InputService input, CharacterController controller, Actor camera,
-        PlayerMovementPreset preset, PlayerMovementData data, CameraData cameraData, PlayerSound sound)
+        FirstPersonMovementPreset preset, PlayerMovementData data, CameraData cameraData, PlayerSound sound)
     {
         if (data.framesSinceJump < int.MaxValue) data.framesSinceJump++;
 
@@ -20,20 +20,20 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
     }
 
     public void ApplyRotation(
-        CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data,
-        Actor characterObj, CameraData cameraData)
+      CharacterController controller, FirstPersonMovementPreset preset, PlayerMovementData data,
+      CameraData cameraData)
     {
         if (data.horizontalVelocity.LengthSquared <= 0.01f) return;
 
         var targetRot = Quaternion.LookRotation(data.horizontalVelocity.Normalized, Vector3.Up);
-        var t = 1 - Mathf.Exp(-preset.FPRotationLerpSpeed * Time.DeltaTime);
+        var t = 1 - Mathf.Exp(-preset.rotationLerpSpeed * Time.DeltaTime);
         controller.Orientation = Quaternion.Lerp(controller.Transform.Orientation, targetRot, t);
     }
 
-    public void ApplyCameraSmoothing(Camera camera, Actor cameraTarget, PlayerMovementPreset preset)
+    public void ApplyCameraSmoothing(Camera camera, Actor cameraTarget, FirstPersonMovementPreset preset)
     {
         var camTrans = camera.Transform;
-        var camFactor = 1 - Mathf.Exp(-preset.FPCameraSmoothing * Time.DeltaTime);
+        var camFactor = 1 - Mathf.Exp(-preset.cameraSmoothing * Time.DeltaTime);
 
         cameraTarget.LocalOrientation = Quaternion.Lerp(
             cameraTarget.LocalOrientation,
@@ -45,27 +45,27 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
         camera.Transform = camTrans;
     }
 
-    static bool IsGrounded(CharacterController controller, PlayerMovementPreset preset)
+    static bool IsGrounded(CharacterController controller, FirstPersonMovementPreset preset)
     {
         if (controller.IsGrounded) return true;
 
         return Physics.RayCast(
             controller.Position, -Vector3.Up, out _,
-            preset.TPGroundCheck, preset.FPGroundLayers, false);
+            preset.groundCheck, preset.groundLayers, false);
     }
 
     static void UpdateJumpTimers(
-       InputService input, CharacterController controller, PlayerMovementPreset preset,
+       InputService input, CharacterController controller, FirstPersonMovementPreset preset,
        PlayerMovementData data)
     {
         var grounded = IsGrounded(controller, preset);
 
         data.jumpBufferTimer = input.GetAction(InputActions.Jump)
-            ? preset.FPJumpBufferTime
+            ? preset.jumpBufferTime
             : data.jumpBufferTimer - Time.DeltaTime;
 
         data.coyoteTimer = grounded
-            ? preset.FPCoyoteTime
+            ? preset.coyoteTime
             : data.coyoteTimer - Time.DeltaTime;
 
         if (input.GetAction(InputActions.Jump)) data.jumpRequested = true;
@@ -79,22 +79,22 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
         return prevVelocity + accelDir * accelVel;
     }
 
-    static Vector3 MoveGround(Vector3 accelDir, Vector3 prevVelocity, PlayerMovementPreset preset)
+    static Vector3 MoveGround(Vector3 accelDir, Vector3 prevVelocity, FirstPersonMovementPreset preset)
     {
         var speed = prevVelocity.Length;
         if (Mathf.Abs(speed) > 0.01f)
         {
-            var drop = speed * preset.FPFriction * Time.DeltaTime;
+            var drop = speed * preset.friction * Time.DeltaTime;
             prevVelocity *= Mathf.Max(speed - drop, 0) / speed;
         }
-        return Accelerate(accelDir, prevVelocity, preset.FPGroundAccelerate, preset.FPMaxVelocityGround);
+        return Accelerate(accelDir, prevVelocity, preset.groundAccelerate, preset.maxVelocityGround);
     }
 
-    static Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity, PlayerMovementPreset preset)
-       => Accelerate(accelDir, prevVelocity, preset.FPAirAccelerate, preset.FPMaxVelocityAir);
+    static Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity, FirstPersonMovementPreset preset)
+       => Accelerate(accelDir, prevVelocity, preset.airAccelerate, preset.maxVelocityAir);
 
     static void UpdateHorizontalVelocity(
-       InputService input, CharacterController controller, PlayerMovementPreset preset,
+       InputService input, CharacterController controller, FirstPersonMovementPreset preset,
        CameraData cameraData, PlayerMovementData data)
     {
         var raw = new Vector3(input.GetAxis(GameAxis.MoveX), 0, input.GetAxis(GameAxis.MoveY));
@@ -114,7 +114,8 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
     }
 
     static void UpdateVerticalVelocity(
-       CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data, PlayerSound sound)
+       CharacterController controller, FirstPersonMovementPreset preset, PlayerMovementData data,
+       PlayerSound sound)
     {
         var v = data.verticalVelocity;
         var grounded = IsGrounded(controller, preset);
@@ -125,19 +126,19 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
             var wantJump = data.jumpRequested && data.jumpBufferTimer > 0 && data.coyoteTimer > 0;
             if (wantJump)
             {
-                v.Y = preset.FPJumpForce;
+                v.Y = preset.jumpForce;
                 data.jumpBufferTimer = 0;
                 data.coyoteTimer = 0;
                 data.framesSinceJump = 0;
                 sound.PlayJump();
             }
-            else if (data.framesSinceJump > preset.FPJumpGraceFrames)
+            else if (data.framesSinceJump > preset.jumpGraceFrames)
                 v.Y = -Mathf.Abs(Physics.Gravity.Y * 0.5f);
         }
         else
         {
             v.Y = data.prevVelocity.Y;
-            v.Y += -Mathf.Abs(Physics.Gravity.Y * preset.FPGravityMultiplier) * Time.DeltaTime;
+            v.Y += -Mathf.Abs(Physics.Gravity.Y * preset.gravityMultiplier) * Time.DeltaTime;
         }
 
         if (grounded && data.lastVerticalVelocity < -1f && v.Y >= -Mathf.Abs(Physics.Gravity.Y * 0.5f))
@@ -152,7 +153,8 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
     }
 
     static void UpdateMove(
-        CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data, PlayerSound sound)
+        CharacterController controller, FirstPersonMovementPreset preset, PlayerMovementData data,
+        PlayerSound sound)
     {
         var finalMove = data.horizontalVelocity + data.verticalVelocity;
         controller.Move(finalMove * Time.DeltaTime);
@@ -162,9 +164,9 @@ public sealed class FirstPersonMovement : IMovementStrategy //FIXME:  Movement
         if (IsGrounded(controller, preset) && speed > 1)
         {
             data.footstepDistance += speed * Time.DeltaTime;
-            if (data.footstepDistance >= preset.FPFootstepDistance)
+            if (data.footstepDistance >= preset.footstepDistance)
             {
-                data.footstepDistance -= preset.FPFootstepDistance;
+                data.footstepDistance -= preset.footstepDistance;
                 sound.PlayFootstep();
             }
         }

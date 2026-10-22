@@ -22,6 +22,7 @@
 			"PrefabID": "a884dab64755cb311374d89448d0f767",
 			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
 			"ParentID": "74a68a984824b4510d12589f199ad68f",
+			"IsActive": false,
 			"V": {}
 		},
 		{
@@ -31,8 +32,8 @@
 			"ParentID": "0aceca56432a4a265861c580382e8bf4",
 			"Transform": {
 				"Translation": {
-					"X": 0.0,
-					"Y": 0.79998779296875,
+					"X": 11.60003662109375,
+					"Y": 4.79998779296875,
 					"Z": 0.0
 				}
 			},
@@ -40,8 +41,10 @@
 	"ResolutionCurve": {},
 	"DpiCurve": {},
 	"Offsets": {
-		"Top": 0.7999878,
-		"Bottom": -0.7999878
+		"Left": 11.600037,
+		"Right": -98.80005,
+		"Top": 4.799988,
+		"Bottom": -4.799988
 	}
 }
 		},
@@ -232,8 +235,7 @@
 			"ParentID": "6d0df38d42f6fe6598386ca1d2929010",
 			"V": {
 	"thirdPerson": {},
-	"firstPerson": {},
-	"cameraTarget": "b0d72c3746caebca055e1f921ca21c7c"
+	"firstPerson": {}
 }
 		},
 		{
@@ -249,8 +251,7 @@
 			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e",
 			"V": {
 	"thirdPerson": {},
-	"firstPerson": {},
-	"cameraTarget": "b0d72c3746caebca055e1f921ca21c7c"
+	"firstPerson": {}
 }
 		},
 		{

@@ -14,7 +14,7 @@ public sealed class PlayerCamera : Script
     public Actor lockOnTarget;
     readonly InputService input = new();
     readonly CameraData data = new();
-    CameraPreset activePreset;
+    object activePreset;
     ICameraStrategy activeStrategy;
 
     public override void OnStart()
@@ -34,25 +34,22 @@ public sealed class PlayerCamera : Script
     public override void OnUpdate()
         => activeStrategy.ApplyLook(input, cameraTarget, data, activePreset, camera, this);
 
-    public void SetCameraStrategy(ICameraStrategy newStrategy)
+    public void SetCameraStrategy<T>(ICameraStrategy<T> newStrategy) where T : class
     {
         if (newStrategy == null || activeStrategy == newStrategy) return;
 
         activeStrategy = newStrategy;
         data.Reset();
-        RefreshActivePreset(newStrategy);
-    }
 
-    void RefreshActivePreset(ICameraStrategy newStrategy)
-    {
         var reference = newStrategy.PresetReference;
-        if (reference == null)
+        if (reference == null || !reference.Asset)
         {
+            Debug.LogError($"{newStrategy.GetType().Name} has no preset assigned.");
             activePreset = null;
             return;
         }
-        else
-            activePreset = reference.Instance;
+
+        activePreset = reference.Asset.CreateInstance<T>();
     }
 
     public void SetShake(float intensity, float duration)

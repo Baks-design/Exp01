@@ -3,8 +3,8 @@
   "Platform": "Windows",
   "Architecture": "x64",
   "Configuration": "Development",
-  "VersionControlInfo": "1.0+main+a8881c4cf6a2c053bae775a51d44797ccd42aded",
-  "HotReloadPostfix": ".HotReload.78",
+  "VersionControlInfo": "1.0+main+36c39366baf6016a4a4a38360b1973a170f7af03",
+  "HotReloadPostfix": ".HotReload.67",
   "BinaryModules": [
     {
       "Name": "Game",

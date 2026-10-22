@@ -3,7 +3,7 @@ using FlaxEngine;
 
 namespace Game.Core.Extensions;
 
-public static class LerpExtensions //TODO: Apply for codebase
+public static class LerpExtensions
 {
     const MethodImplOptions INLINE = MethodImplOptions.AggressiveInlining;
 

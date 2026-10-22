@@ -9,7 +9,7 @@
 		<Window Typename="::FlaxEditor.Windows.GameWindow">
 			<Data ShowGUI="True" EditGUI="True" ShowDebugDraw="False" DefaultViewportScalingIndex="1" CustomViewportScalingIndex="-1" />
 		</Window>
-		<Panel DockState="10" SplitterValue="0.23541665" SelectedTab="0">
+		<Panel DockState="10" SplitterValue="0.28541666" SelectedTab="0">
 			<Window Typename="::FlaxEditor.Windows.PropertiesWindow">
 				<Data ScaleLinked="False" UIPivotRelative="True" />
 			</Window>

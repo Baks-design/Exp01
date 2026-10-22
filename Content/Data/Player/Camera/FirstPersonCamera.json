@@ -1,0 +1,18 @@
+{
+	"ID": "4d429e5e4c116ab4ee12f6ab6a664438",
+	"TypeName": "Game.Behaviours.Player.FirstPersonCameraPreset",
+	"EngineBuild": 7012,
+	"Data": {
+	"invertY": false,
+	"lookSmoothing": 20.0,
+	"minMaxPitch": {
+		"X": -88.0,
+		"Y": 88.0
+	},
+	"sensitivity": 1.0,
+	"fOVLerpSpeed": 8.0,
+	"shakeDecay": 5.0,
+	"shakeScale": 1.0,
+	"fOVZoom": 30.0
+}
+}
