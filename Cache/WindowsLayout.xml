@@ -14,7 +14,7 @@
 				<Data ScaleLinked="False" UIPivotRelative="True" />
 			</Window>
 		</Panel>
-		<Panel DockState="9" SplitterValue="0.4355191" SelectedTab="1">
+		<Panel DockState="9" SplitterValue="0.3896175" SelectedTab="2">
 			<Window Typename="::FlaxEditor.Windows.ContentWindow">
 				<Data Split="0.2" Scale="1" ShowFileExtensions="False" ShowEngineFiles="True" ShowPluginsFiles="True" ShowAllFiles="True" ShowGeneratedFiles="False" ViewType="Tiles" TreeViewAllContent="False" />
 			</Window>

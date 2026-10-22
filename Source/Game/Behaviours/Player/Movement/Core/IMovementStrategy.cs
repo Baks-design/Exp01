@@ -11,9 +11,16 @@ public interface IMovementStrategy
         CharacterController controller,
         Actor camera,
         PlayerMovementPreset preset,
-        PlayerMovementData data);
+        PlayerMovementData data,
+        CameraData cameraData);
     void ApplyRotation(
         CharacterController controller,
         PlayerMovementPreset preset,
-        PlayerMovementData data);
+        PlayerMovementData data,
+        Actor characterObj,
+        CameraData cameraData);
+    void ApplyCameraSmoothing(
+        Camera camera,
+        Actor cameraTarget,
+        PlayerMovementPreset preset);
 }

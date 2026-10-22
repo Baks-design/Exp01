@@ -7,5 +7,10 @@ public interface ICameraStrategy
 {
     public JsonAssetReference<CameraPreset> PresetReference { get; set; }
 
-    public void Update(CameraData data, InputService input, Camera camera, Actor target, CameraPreset preset);
+    void ApplyLook(
+        InputService input,
+        Actor cameraTarget,
+        CameraData data,
+        CameraPreset preset,
+        Camera camera);
 }

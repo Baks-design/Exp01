@@ -10,6 +10,7 @@ public readonly record struct InputActions(string Name)
     //Movement
     public static readonly InputActions Sprint = new("Sprint");
     public static readonly InputActions Jump = new("Jump");
+    public static readonly InputActions Aim = new("Aim");
 
     public override string ToString() => Name;
 }

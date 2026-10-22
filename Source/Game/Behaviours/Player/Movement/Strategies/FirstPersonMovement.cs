@@ -3,90 +3,134 @@ using Game.Systems.Input;
 
 namespace Game.Behaviours.Player;
 
-public class FirstPersonMovement : IMovementStrategy
+public sealed class FirstPersonMovement : IMovementStrategy //TODO: Apply Smooth
 {
     public JsonAssetReference<PlayerMovementPreset> PresetReference { get; set; }
 
-    static void UpdateJumpTimers(
-        InputService input, CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data)
-    {
-        data.jumpBufferTimer = input.GetAction(InputActions.Jump) ? preset.FPJumpBufferTime : data.jumpBufferTimer - Time.DeltaTime;
-        data.coyoteTimer = controller.IsGrounded ? preset.FPCoyoteTime : data.coyoteTimer - Time.DeltaTime;
-    }
-
-    static void UpdateMovement(
-        InputService input, CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data)
-    {
-        var bodyForward = controller.Transform.Forward;
-        bodyForward.Y = 0;
-        bodyForward.Normalize();
-        var bodyRight = controller.Transform.Right;
-        bodyRight.Y = 0;
-        bodyRight.Normalize();
-
-        var hv = new Float2(input.GetAxis(GameAxis.MoveX), input.GetAxis(GameAxis.MoveY));
-        var direction = bodyForward * hv.Y + bodyRight * hv.X;
-        
-        var inputMag = Mathf.Saturate(direction.Length);
-
-        if (direction.LengthSquared > 0.0001f) direction.Normalize();
-
-        var speed = input.GetAction(InputActions.Sprint) ? preset.FPSpeed : preset.FPRunSpeed;
-
-        data.targetVelocity = inputMag * direction * speed;
-    }
-
-    static void UpdateHorizontalVelocity(PlayerMovementData data, PlayerMovementPreset preset)
-    {
-        var hasInput = data.targetVelocity.LengthSquared > 0.01f;
-        var lerpRate = hasInput ? preset.FPAcceleration : preset.FPDeceleration;
-
-        var t = 1 - Mathf.Exp(-lerpRate * Time.DeltaTime);
-        data.horizontalVelocity = Vector3.Lerp(data.horizontalVelocity, data.targetVelocity, t);
-        if (data.horizontalVelocity.LengthSquared < 0.01f && !hasInput)
-            data.horizontalVelocity = Vector3.Zero;
-    }
-
-    static void UpdateVerticalVelocity(CharacterController controller, PlayerMovementData data, PlayerMovementPreset preset)
-    {
-        if (controller.IsGrounded)
-        {
-            if (data.verticalVelocity.Y < 0) data.verticalVelocity.Y = 0;
-
-            if (data.jumpBufferTimer > 0 && data.coyoteTimer > 0)
-            {
-                data.verticalVelocity.Y = preset.FPJumpForce;
-                data.jumpBufferTimer = 0;
-                data.coyoteTimer = 0;
-            }
-        }
-        else
-            data.verticalVelocity.Y += preset.FPGravityMultiplier * Physics.Gravity.Y * Time.DeltaTime;
-    }
-
-    static void UpdateMove(CharacterController controller, PlayerMovementData data)
-    {
-        var finalMove = (data.horizontalVelocity + data.verticalVelocity) * Time.DeltaTime;
-        controller.Move(finalMove);
-    }
-
     public void ApplyMovement(
         InputService input, CharacterController controller, Actor camera,
-        PlayerMovementPreset preset, PlayerMovementData data)
+        PlayerMovementPreset preset, PlayerMovementData data, CameraData cameraData)
     {
         UpdateJumpTimers(input, controller, preset, data);
-        UpdateMovement(input, controller, preset, data);
-        UpdateHorizontalVelocity(data, preset);
-        UpdateVerticalVelocity(controller, data, preset);
+        UpdateHorizontalVelocity(input, controller, preset, cameraData, data);
+        UpdateVerticalVelocity(controller, preset, data);
         UpdateMove(controller, data);
     }
 
-    public void ApplyRotation(CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data)
+    public void ApplyRotation(
+        CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data,
+        Actor characterObj, CameraData cameraData)
     {
         if (data.horizontalVelocity.LengthSquared <= 0.01f) return;
 
         var targetRot = Quaternion.LookRotation(data.horizontalVelocity.Normalized, Vector3.Up);
         var t = Time.DeltaTime * preset.FPRotationLerpSpeed;
         controller.Orientation = Quaternion.Lerp(controller.Transform.Orientation, targetRot, t);
+    }
+
+    public void ApplyCameraSmoothing(Camera camera, Actor cameraTarget, PlayerMovementPreset preset)
+    {
+        var camTrans = camera.Transform;
+        var camFactor = Mathf.Saturate(preset.FPSmoothing * Time.DeltaTime);
+
+        cameraTarget.LocalOrientation = Quaternion.Lerp(
+            cameraTarget.LocalOrientation,
+            Quaternion.Euler(cameraTarget.LocalEulerAngles.X, cameraTarget.LocalEulerAngles.Y, 0),
+            camFactor);
+
+        camTrans.Translation = Vector3.Lerp(camTrans.Translation, cameraTarget.Position, camFactor);
+        camTrans.Orientation = cameraTarget.Orientation;
+        camera.Transform = camTrans;
+    }
+
+    static void UpdateJumpTimers(
+        InputService input, CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data)
+    {
+        data.jumpBufferTimer = input.GetAction(InputActions.Jump)
+            ? preset.FPJumpBufferTime
+            : data.jumpBufferTimer - Time.DeltaTime;
+
+        data.coyoteTimer = controller.IsGrounded
+            ? preset.FPCoyoteTime
+            : data.coyoteTimer - Time.DeltaTime;
+
+        if (input.GetAction(InputActions.Jump)) data.jumpRequested = true;
+    }
+
+    static Vector3 Accelerate(Vector3 accelDir, Vector3 prevVelocity, float accelerate, float maxVelocity)
+    {
+        var projVel = (float)Vector3.Dot(prevVelocity, accelDir);
+        var accelVel = accelerate * Time.DeltaTime;
+        if (projVel + accelVel > maxVelocity) accelVel = maxVelocity - projVel;
+        return prevVelocity + accelDir * accelVel;
+    }
+
+    static Vector3 MoveGround(Vector3 accelDir, Vector3 prevVelocity, PlayerMovementPreset preset)
+    {
+        var speed = prevVelocity.Length;
+        if (Mathf.Abs(speed) > 0.01f)
+        {
+            var drop = speed * preset.FPFriction * Time.DeltaTime;
+            prevVelocity *= Mathf.Max(speed - drop, 0) / speed;
+        }
+        return Accelerate(accelDir, prevVelocity, preset.FPGroundAccelerate, preset.FPMaxVelocityGround);
+    }
+
+    static Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity, PlayerMovementPreset preset)
+        => Accelerate(accelDir, prevVelocity, preset.FPAirAccelerate, preset.FPMaxVelocityAir);
+
+    static void UpdateHorizontalVelocity(
+        InputService input, CharacterController controller, PlayerMovementPreset movementPreset,
+        CameraData cameraData, PlayerMovementData movementData)
+    {
+        var dir = new Vector3(input.GetAxis(GameAxis.MoveX), 0, input.GetAxis(GameAxis.MoveY));
+        dir.Normalize();
+
+        var yawRot = Quaternion.Euler(0, cameraData.yaw, 0);
+        dir = Vector3.Transform(dir, yawRot);
+
+        var horizontal = new Vector3(movementData.prevVelocity.X, 0, movementData.prevVelocity.Z);
+        horizontal = controller.IsGrounded ?
+            MoveGround(dir.Normalized, horizontal, movementPreset) :
+            MoveAir(dir.Normalized, horizontal, movementPreset);
+        if (horizontal.Length < 0.05f) horizontal = Vector3.Zero;
+
+        movementData.horizontalVelocity = horizontal;
+    }
+
+    static void UpdateVerticalVelocity(
+        CharacterController controller, PlayerMovementPreset preset, PlayerMovementData data)
+    {
+        var v = data.verticalVelocity;
+
+        if (controller.IsGrounded)
+        {
+            if (v.Y < 0) v.Y = 0;
+
+            if (data.jumpRequested && data.jumpBufferTimer > 0 && data.coyoteTimer > 0)
+            {
+                v.Y = preset.FPJumpForce;
+                data.jumpBufferTimer = 0;
+                data.coyoteTimer = 0;
+            }
+
+            v.Y = -Mathf.Abs(Physics.Gravity.Y * 0.5f);
+        }
+        else
+            v.Y = data.prevVelocity.Y;
+
+        data.jumpRequested = false;
+
+        v.Y += -Mathf.Abs(Physics.Gravity.Y * preset.FPGravityMultiplier) * Time.DeltaTime;
+        if ((controller.Flags & CharacterController.CollisionFlags.Above) != 0 && v.Y > 0) v.Y = 0;
+
+        data.verticalVelocity = v;
+    }
+
+    static void UpdateMove(CharacterController controller, PlayerMovementData data)
+    {
+        var finalMove = data.horizontalVelocity + data.verticalVelocity;
+        controller.Move(finalMove * Time.DeltaTime);
+        data.prevVelocity = finalMove;
     }
 }

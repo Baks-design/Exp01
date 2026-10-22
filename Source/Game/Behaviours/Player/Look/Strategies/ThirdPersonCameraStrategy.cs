@@ -3,46 +3,34 @@ using Game.Systems.Input;
 
 namespace Game.Behaviours.Player;
 
-public sealed class ThirdPersonCameraStrategy : ICameraStrategy
+public sealed class ThirdPersonCameraStrategy : ICameraStrategy //TODO: Better Smooth
 {
-    Vector3 currentPos;
-
     public JsonAssetReference<CameraPreset> PresetReference { get; set; }
 
-    public void Update(CameraData data, InputService input, Camera camera, Actor target, CameraPreset preset)
+    public void ApplyLook(InputService input, Actor cameraTarget, CameraData cameraData, CameraPreset preset, Camera camera)
     {
-        Rotation(data, input, preset, out var rotation);
-        Position(camera, target, preset, rotation);
+        Rotation(input, cameraTarget, cameraData, preset);
+        FOVZoom(input, cameraData, preset, camera);
     }
 
-    static void Rotation(CameraData data, InputService input, CameraPreset preset, out Quaternion rotation)
+    static void Rotation(InputService input, Actor cameraTarget, CameraData cameraData, CameraPreset preset)
     {
-        var mouseDelta = InputService.GetMousePosition;
+        cameraData.yaw += input.GetAxis(GameAxis.LookX) * preset.MouseSensitivity * Time.DeltaTime;
+        cameraData.pitch += input.GetAxis(GameAxis.LookY) * preset.MouseSensitivity * Time.DeltaTime;
+        cameraData.pitch = Mathf.Clamp(cameraData.pitch, preset.PitchMinMax.X, preset.PitchMinMax.Y);
 
-        data.yaw += mouseDelta.X * preset.TPMouseSpeed;
-        data.pitch = Mathf.Clamp(data.yaw, preset.TPMinPitch, preset.TPMaxPitch);
-
-        rotation = Quaternion.Euler(-data.pitch, data.yaw, 0);
+        var target = Quaternion.Euler(cameraData.pitch, cameraData.yaw, 0);
+        cameraTarget.Orientation = Quaternion.Lerp(cameraTarget.Orientation, target, Time.DeltaTime * preset.CameraLag);
     }
 
-    void Position(Camera camera, Actor target, CameraPreset preset, Quaternion rotation)
+    static void FOVZoom(InputService input, CameraData cameraData, CameraPreset preset, Camera camera)
     {
-        var targetPos = target.Position;
-        var direction = Vector3.Transform(Vector3.Forward, rotation).Normalized;
-
-        var targetDistance = preset.TPDistance;
-        if (Physics.RayCast(targetPos, direction, out var hit, preset.TPDistance, preset.TPCollisionLayers))
+        if (!cameraData.initialized)
         {
-            var bias = preset.TPCollisionDistanceBias + camera.NearPlane;
-            targetDistance = Mathf.Max(hit.Distance - bias, 10);
+            cameraData.defaultFov = camera.FieldOfView;
+            cameraData.initialized = true;
         }
-
-        var idealPos = targetPos + direction * targetDistance;
-
-        var t = 1 - Mathf.Exp(-preset.TPSmoothing * Time.DeltaTime);
-        currentPos = Vector3.Lerp(currentPos, idealPos, t);
-
-        camera.Position = currentPos;
-        camera.LookAt(targetPos, Vector3.Up);
+        var targetFov = input.GetAction(InputActions.Aim) ? preset.FOVZoom : cameraData.defaultFov;
+        camera.FieldOfView = Mathf.Lerp(camera.FieldOfView, targetFov, Time.DeltaTime * 5f);
     }
 }

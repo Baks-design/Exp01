@@ -213,6 +213,13 @@
 			}
 		},
 		{
+			"ID": "53cf030546bec7da97979991e43630a1",
+			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
+			"PrefabObjectID": "1980bcdd46166981f7c59db49eeb9164",
+			"ParentID": "f70e53fc475fc45fa8229db890c43775",
+			"V": {}
+		},
+		{
 			"ID": "6d0df38d42f6fe6598386ca1d2929010",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
 			"PrefabObjectID": "f21f41964f9a336df564e4bc9fcacedc",
@@ -225,7 +232,8 @@
 			"ParentID": "6d0df38d42f6fe6598386ca1d2929010",
 			"V": {
 	"thirdPerson": {},
-	"firstPerson": {}
+	"firstPerson": {},
+	"cameraTarget": "b0d72c3746caebca055e1f921ca21c7c"
 }
 		},
 		{
@@ -241,7 +249,8 @@
 			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e",
 			"V": {
 	"thirdPerson": {},
-	"firstPerson": {}
+	"firstPerson": {},
+	"cameraTarget": "b0d72c3746caebca055e1f921ca21c7c"
 }
 		},
 		{

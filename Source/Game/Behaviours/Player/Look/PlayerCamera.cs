@@ -1,4 +1,5 @@
 using FlaxEngine;
+using Game.Core.Cursor;
 using Game.Systems.Input;
 
 namespace Game.Behaviours.Player;
@@ -10,7 +11,7 @@ public sealed class PlayerCamera : Script
     public FirstPersonCameraStrategy firstPerson = new();
     [Header("References")]
     public Camera camera;
-    public Actor target;
+    public Actor cameraTarget;
     readonly InputService input = new();
     readonly CameraData data = new();
     CameraPreset activePreset;
@@ -20,17 +21,21 @@ public sealed class PlayerCamera : Script
     {
         if (!camera)
         {
-            Debug.LogError("PlayerCamera: CameraActor is not assigned.");
+            Debug.LogError("PlayerCamera: Camera is not assigned.");
             return;
         }
-        if (!target)
+        if (!cameraTarget)
         {
-            Debug.LogError("PlayerCamera: TargetActor is not assigned.");
+            Debug.LogError("PlayerCamera: CameraTarget is not assigned.");
             return;
         }
     }
 
-    public override void OnUpdate() => activeStrategy.Update(data, input, camera, target, activePreset);
+    public override void OnUpdate()
+    {
+        CursorService.Apply(CursorState.Gameplay);
+        activeStrategy.ApplyLook(input, cameraTarget, data, activePreset, camera);
+    }
 
     public void SetCameraStrategy(ICameraStrategy newStrategy)
     {
