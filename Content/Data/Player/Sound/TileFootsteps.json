@@ -1,0 +1,18 @@
+{
+	"ID": "c488f3134ba2f46ac666918abe1cb3d9",
+	"TypeName": "Game.Systems.Audio.SoundEntryByTag",
+	"EngineBuild": 7012,
+	"Data": {
+	"SurfaceTag": "Tile",
+	"Clip": [
+		"a0939121455bf1da975b50900483a5ac",
+		"416e706b4fb01ccc85a8c898c7a5d4e3",
+		"b5fc7efc4f5ff1cdbdce8186c084e671",
+		"548c49cd45afaf0e788103a5ed76647a",
+		"68a08e984c8ff7dae45600a663a8ec3d",
+		"89a647e2449eec372bc8d1a128eafaf0",
+		"5c58273f414374ca90005491ab235b13",
+		"17ddc0f247156160f5160faabaae5df0"
+	]
+}
+}

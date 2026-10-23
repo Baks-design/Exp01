@@ -4,7 +4,7 @@ namespace Game.Systems.Scene;
 
 // Use:
 // OnUpdate => sceneService = new SceneService();
-public sealed class SceneService()
+public sealed class SceneService
 {
     public static void RequestTransition(SceneTransitionRequest request)
     {

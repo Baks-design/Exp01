@@ -3,9 +3,9 @@ using FlaxEngine;
 
 namespace Game.Systems.Scene;
 
-public sealed class SceneTransitionRequest
+public sealed class SceneTransitionRequest(SceneReference target)
 {
-    SceneReference target;
+    SceneReference target = target;
 
     public SceneReference Target
     {

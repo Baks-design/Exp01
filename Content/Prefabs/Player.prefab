@@ -17,7 +17,8 @@
 		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
 		"V": {
 	"movement": "4165e4ab452b664d4e28b48de0e95d0a",
-	"camera": "bafb132f480ac3c7a2bf68a80afef881"
+	"camera": "bafb132f480ac3c7a2bf68a80afef881",
+	"sceneReference": "74a68a984824b4510d12589f199ad68f"
 }
 	},
 	{
@@ -40,7 +41,6 @@
 		"PresetReference": "4c3ba6dc4f1a0ab691fd09bce68ed892"
 	},
 	"controller": "05d72da047ffe91862554fbd5c7c2600",
-	"charObj": "b2bb6b8d460e8891fe09bbbfb59fa9bf",
 	"cameraTarget": "764d64de4fe1a0013d89d9802a78e24f",
 	"camera": "764d64de4fe1a0013d89d9802a78e24f",
 	"sound": "23ad38084d0a995c0183f8918b6e7e22"
@@ -123,16 +123,26 @@
 		"V": {
 	"controller": "05d72da047ffe91862554fbd5c7c2600",
 	"playerMovement": "4165e4ab452b664d4e28b48de0e95d0a",
-	"CharacterModel": "b2bb6b8d460e8891fe09bbbfb59fa9bf"
+	"CharacterModel": "3a826daf4e2436e0c016a1931f0814e5"
 }
 	},
 	{
-		"ID": "b2bb6b8d460e8891fe09bbbfb59fa9bf",
-		"TypeName": "FlaxEngine.AnimatedModel",
+		"ID": "3a826daf4e2436e0c016a1931f0814e5",
+		"PrefabID": "fd470657483f2f038f075a91488aeadf",
+		"PrefabObjectID": "1fc7ad10455026d2a531bf888e5d7b40",
 		"ParentID": "509d08014ea6b1102326219bc5b893f7",
-		"Name": "AnimatedModel",
-		"StaticFlags": 0,
-		"Layer": 1
+		"Transform": {
+			"Translation": {
+				"X": 0.0,
+				"Y": -125.0,
+				"Z": 0.0
+			},
+			"Scale": {
+				"X": 0.6499999761581421,
+				"Y": 0.6499999761581421,
+				"Z": 0.6499999761581421
+			}
+		}
 	},
 	{
 		"ID": "6e450e2c49cd2c6c12d3698e64c58d4b",
@@ -146,7 +156,9 @@
 		"ID": "f83dc94a4e26984f0a49ee8ea29637ed",
 		"TypeName": "Game.Behaviours.Player.PlayerData",
 		"ParentID": "6e450e2c49cd2c6c12d3698e64c58d4b",
-		"V": {}
+		"V": {
+	"controller": "05d72da047ffe91862554fbd5c7c2600"
+}
 	}
 ]
 }

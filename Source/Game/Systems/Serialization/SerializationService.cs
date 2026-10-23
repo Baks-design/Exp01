@@ -3,9 +3,9 @@ using System.Collections.Generic;
 namespace Game.Systems.Serialization;
 
 // Use: 
-// OnUpdate => serializationService = new SaveManager(new FileSaveStorage("save.json"))
-// OnUpdate => serializationService.SaveAll();
-// OnUpdate => serializationService.LoadAll();
+// serializationService = new SaveManager(new FileSaveStorage("save.json"))
+// serializationService.SaveAll();
+// serializationService.LoadAll();
 public sealed class SerializationService(ISaveStorage storage)
 {
     readonly Dictionary<string, ISaveable> saveables = [];

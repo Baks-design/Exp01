@@ -1,0 +1,27 @@
+{
+	"ID": "fd470657483f2f038f075a91488aeadf",
+	"TypeName": "FlaxEngine.Prefab",
+	"EngineBuild": 7012,
+	"Data": [
+	{
+		"ID": "1fc7ad10455026d2a531bf888e5d7b40",
+		"TypeName": "FlaxEngine.AnimatedModel",
+		"Name": "CharacterJobber",
+		"StaticFlags": 0,
+		"Layer": 1,
+		"SkinnedModel": "af051d9643890d319be32f93175077ba",
+		"AnimationGraph": "7e99ad004271097c5ace18a31498f5c9",
+		"UpdateMode": 1,
+		"Buffer": {
+			"Entries": [
+				{
+					"Material": "00000000000000000000000000000000",
+					"ShadowsMode": 3,
+					"Visible": true,
+					"ReceiveDecals": true
+				}
+			]
+		}
+	}
+]
+}

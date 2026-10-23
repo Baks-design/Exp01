@@ -17,32 +17,31 @@ public sealed class PlayerMovement : Script
     readonly InputService input = new();
     readonly PlayerMovementData data = new();
     readonly CameraData cameraData = new();
+    readonly MovementContext ctx = new();
     IMovementStrategy strategy;
-    object activePreset;
 
     public override void OnStart()
     {
-        if (!controller)
-        {
-            Debug.LogError("PlayerMovement: CharacterController is not assigned.");
-            return;
-        }
-        if (!camera)
-        {
-            Debug.LogError("PlayerMovement: Camera is not assigned.");
-            return;
-        }
+        if (!controller) { Debug.LogError("PlayerMovement: controller missing."); return; }
+        if (!camera) { Debug.LogError("PlayerMovement: camera missing."); return; }
+
+        ctx.input = input;
+        ctx.controller = controller;
+        ctx.cameraTarget = cameraTarget;
+        ctx.camera = camera;
+        ctx.movementData = data;
+        ctx.cameraData = cameraData;
+        ctx.sound = sound;
     }
 
     public override void OnUpdate() => data.jumpRequested = false;
 
     public override void OnFixedUpdate()
     {
-        if (strategy == null || activePreset == null) return;
-
-        strategy.ApplyCameraSmoothing(camera, cameraTarget, activePreset);
-        strategy.ApplyMovement(input, controller, cameraTarget, activePreset, data, cameraData, sound);
-        strategy.ApplyRotation(controller, activePreset, data, cameraData);
+        if (strategy == null) return;
+        
+        ctx.deltaTime = Time.DeltaTime;
+        strategy.Execute(ctx);
     }
 
     public override void OnDebugDraw()
@@ -57,24 +56,26 @@ public sealed class PlayerMovement : Script
             Color.Blue);
     }
 
-    public void SetMovementStrategy<T>(IMovementStrategy<T> newStrategy) where T : class
+    public void SetMovementStrategy(IMovementStrategy newStrategy)
     {
         if (newStrategy == null || strategy == newStrategy) return;
 
         strategy = newStrategy;
         data.Reset();
-
-        var reference = newStrategy.PresetReference;
-        if (reference == null || !reference.Asset)
+        switch (newStrategy)
         {
-            Debug.LogError($"{newStrategy.GetType().Name} has no preset assigned.");
-            activePreset = null;
-            return;
+            case FirstPersonMovement fp:
+                fp.SetPreset(fp.PresetReference ? fp.PresetReference.Asset?.CreateInstance<FirstPersonMovementPreset>() : null);
+                break;
+            case ThirdPersonMovement tp:
+                tp.SetPreset(tp.PresetReference ? tp.PresetReference.Asset?.CreateInstance<ThirdPersonMovementPreset>() : null);
+                break;
         }
-
-        activePreset = reference.Asset.CreateInstance<T>();
     }
 
     public void SetMovement(float horizontal, float vertical)
-        => strategy?.AddMovement(data, horizontal, vertical);
+    {
+        data.horizontalVelocity += horizontal;
+        data.velocity += vertical;
+    }
 }

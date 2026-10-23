@@ -301,7 +301,7 @@
     <Compile Include="Game\Behaviours\Player\Animation\PlayerAnimation.cs" />
     <Compile Include="Game\Behaviours\Player\Animation\PlaySoundAnimEvent.cs" />
     <Compile Include="Game\Behaviours\Player\Data\PlayerData.cs" />
-    <Compile Include="Game\Behaviours\Player\Data\PlayerSaveData.cs" />
+    <Compile Include="Game\Behaviours\Player\Look\Core\CameraContext.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Core\ICameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Data\CameraData.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Data\FirstPersonCameraPreset.cs" />
@@ -310,6 +310,7 @@
     <Compile Include="Game\Behaviours\Player\Look\Strategies\FirstPersonCameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Look\Strategies\ThirdPersonCameraStrategy.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Core\IMovementStrategy.cs" />
+    <Compile Include="Game\Behaviours\Player\Movement\Core\MovementContext.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\FirstPersonMovementPreset.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\PlayerMovementData.cs" />
     <Compile Include="Game\Behaviours\Player\Movement\Data\ThirdPersonMovementPreset.cs" />
@@ -336,6 +337,8 @@
     <Compile Include="Game\Systems\Serialization\FileSaveStorage.cs" />
     <Compile Include="Game\Systems\Serialization\ISaveable.cs" />
     <Compile Include="Game\Systems\Serialization\ISaveStorage.cs" />
+    <Compile Include="Game\Systems\Serialization\PlayerSaveData.cs" />
+    <Compile Include="Game\Systems\Serialization\SaveBundle.cs" />
     <Compile Include="Game\Systems\Serialization\SerializationService.cs" />
     <Compile Include="Game\Systems\State\IState.cs" />
     <Compile Include="Game\Systems\State\StateId.cs" />

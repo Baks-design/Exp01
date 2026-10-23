@@ -1,0 +1,12 @@
+{
+	"ID": "25c3438b4bbfa5bc62b36ea3b1103056",
+	"TypeName": "Game.Systems.Audio.SoundEntryByTag",
+	"EngineBuild": 7012,
+	"Data": {
+	"SurfaceTag": "Wood",
+	"Clip": [
+		"7557bad74c5230e3b98d69aeb2fb3cfb",
+		"838e082545ef0e6af4a9fabf0ba2b578"
+	]
+}
+}

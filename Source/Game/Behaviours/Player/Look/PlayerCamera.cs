@@ -11,50 +11,54 @@ public sealed class PlayerCamera : Script
     [Header("References")]
     public Camera camera;
     public Actor cameraTarget;
-    public Actor lockOnTarget;
     readonly InputService input = new();
     readonly CameraData data = new();
-    object activePreset;
-    ICameraStrategy activeStrategy;
+    readonly CameraContext ctx = new();
+    ICameraStrategy strategy;
 
     public override void OnStart()
     {
-        if (!camera)
-        {
-            Debug.LogError("PlayerCamera: Camera is not assigned.");
-            return;
-        }
-        if (!cameraTarget)
-        {
-            Debug.LogError("PlayerCamera: CameraTarget is not assigned.");
-            return;
-        }
+        if (!camera) { Debug.LogError("PlayerCamera: camera missing."); return; }
+        if (!cameraTarget) { Debug.LogError("PlayerCamera: cameraTarget missing."); return; }
+
+        ctx.input = input;
+        ctx.cameraTarget = cameraTarget;
+        ctx.camera = camera;
+        ctx.cameraData = data;
     }
 
     public override void OnUpdate()
-        => activeStrategy.ApplyLook(input, cameraTarget, data, activePreset, camera, this);
-
-    public void SetCameraStrategy<T>(ICameraStrategy<T> newStrategy) where T : class
     {
-        if (newStrategy == null || activeStrategy == newStrategy) return;
-
-        activeStrategy = newStrategy;
-        data.Reset();
-
-        var reference = newStrategy.PresetReference;
-        if (reference == null || !reference.Asset)
-        {
-            Debug.LogError($"{newStrategy.GetType().Name} has no preset assigned.");
-            activePreset = null;
-            return;
-        }
-
-        activePreset = reference.Asset.CreateInstance<T>();
+        if (strategy == null) return;
+       
+        ctx.deltaTime = Time.DeltaTime;
+        strategy.Execute(ctx);
     }
 
-    public void SetShake(float intensity, float duration)
-        => activeStrategy.TriggerShake(data, intensity, duration);
+    public void SetCameraStrategy(ICameraStrategy newStrategy)
+    {
+        if (newStrategy == null || strategy == newStrategy) return;
+
+        strategy = newStrategy;
+        data.Reset();
+        switch (newStrategy)
+        {
+            case FirstPersonCameraStrategy fp:
+                fp.SetPreset(fp.PresetReference
+                    ? fp.PresetReference.Asset?.CreateInstance<FirstPersonCameraPreset>()
+                    : null);
+                break;
+            case ThirdPersonCameraStrategy tp:
+                tp.SetPreset(tp.PresetReference
+                    ? tp.PresetReference.Asset?.CreateInstance<ThirdPersonCameraPreset>()
+                    : null);
+                break;
+        }
+    }
 
     public void SetRotation(float pitch, float yaw)
-        => activeStrategy.AddMovementRotation(data, pitch, yaw);
+    {
+        data.pitch += pitch;
+        data.yaw += yaw;
+    }
 }

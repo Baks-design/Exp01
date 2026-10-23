@@ -154,6 +154,7 @@
 					"Z": 50.0
 				}
 			},
+			"Tag": "Tile",
 			"Model": "b43f0f8f4aaba3f3156896a5a22ba493",
 			"Buffer": {
 				"Entries": [
@@ -293,9 +294,9 @@
 			"V": {}
 		},
 		{
-			"ID": "9f5f7aec40c2d011bd565ab796ad5794",
+			"ID": "9387d4a04ed6eec4fe8717a4cfa7f49d",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
-			"PrefabObjectID": "b2bb6b8d460e8891fe09bbbfb59fa9bf",
+			"PrefabObjectID": "3a826daf4e2436e0c016a1931f0814e5",
 			"ParentID": "681844c8449e3bd3f1e934b66824a691"
 		},
 		{

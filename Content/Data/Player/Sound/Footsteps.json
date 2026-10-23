@@ -1,9 +1,0 @@
-{
-	"ID": "c488f3134ba2f46ac666918abe1cb3d9",
-	"TypeName": "Game.Systems.Audio.SoundEntryByTag",
-	"EngineBuild": 6912,
-	"Data": {
-	"SurfaceTag": "",
-	"Clip": null
-}
-}

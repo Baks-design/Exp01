@@ -1,7 +1,7 @@
 using System;
 using FlaxEngine;
 
-namespace Game.Behaviours.Player;
+namespace Game.Systems.Serialization;
 
 [Serializable]
 public sealed class PlayerSaveData
