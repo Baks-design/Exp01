@@ -2,18 +2,16 @@ using System;
 using System.Collections.Generic;
 using FlaxEngine;
 
-namespace Game.Systems.Input;
+namespace Game.Systems.Inputs;
 
-// Use:
-// inputService = new InputService();
 public sealed class InputService
 {
     readonly Dictionary<InputActions, InputEvent> events = [];
     readonly Dictionary<GameAxis, InputAxis> axes = [];
     bool disposed;
 
-    public static Float2 GetMousePosition => FlaxEngine.Input.MousePositionDelta;
-    public static float GetScroll => FlaxEngine.Input.MouseScrollDelta;
+    public static Float2 GetMousePosition => Input.MousePositionDelta;
+    public static float GetScroll => Input.MouseScrollDelta;
 
     void ThrowIfDisposed() => ObjectDisposedException.ThrowIf(disposed, this);
 
@@ -51,7 +49,7 @@ public sealed class InputService
     public bool GetAction(InputActions action)
     {
         ThrowIfDisposed();
-        return FlaxEngine.Input.GetAction(action.Name);
+        return Input.GetAction(action.Name);
     }
 
     public float GetAxis(GameAxis axis, bool rawValue = true)

@@ -1,4 +1,4 @@
-namespace Game.Systems.Input;
+namespace Game.Systems.Inputs;
 
 public readonly record struct GameAxis(string Name)
 {

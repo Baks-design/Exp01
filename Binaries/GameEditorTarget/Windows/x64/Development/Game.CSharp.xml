@@ -4,6 +4,78 @@
         <name>Game.CSharp</name>
     </assembly>
     <members>
+        <member name="T:Game.Systems.Serialization.PlayerSaveData">
+            <summary>
+            Plain data container for player state. Kept separate from the
+            Script that owns it so it can be serialized independently.
+            </summary>
+        </member>
+        <member name="T:Game.Systems.Serialization.SaveBundle">
+            <summary>
+            Optional strongly-typed save container. Use this if you want a single
+            monolithic save with compile-time field checking instead of the keyed
+            <see cref="T:Game.Systems.Serialization.SerializationService"/> approach.
+            </summary>
+        </member>
+        <member name="T:Game.Systems.Serialization.FileSaveStorage">
+            <summary>
+            Writes/reads a single JSON file atomically (write-to-temp + replace).
+            Uses Flax's logging so errors show up in the editor/game log.
+            </summary>
+        </member>
+        <member name="T:Game.Systems.Serialization.GameSettings">
+            <summary>
+            Simple string-keyed settings store backed by a JSON file in the
+            product-local folder. Loaded eagerly in the constructor so <see cref="M:Game.Systems.Serialization.GameSettings.Save"/>
+            always works, even on first run.
+            </summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.GameSettings.Load">
+            <summary>Loads settings from disk. Safe to call multiple times.</summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.GameSettings.Save">
+            <summary>Saves current settings to disk atomically.</summary>
+        </member>
+        <member name="T:Game.Systems.Serialization.ISaveable">
+            <summary>
+            An object that can save and restore its state.
+            State is passed as raw JSON so the storage layer stays serializer-agnostic.
+            </summary>
+        </member>
+        <member name="P:Game.Systems.Serialization.ISaveable.SaveKey">
+            <summary>Unique key used as the dictionary entry in the save file.</summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.ISaveable.CaptureState">
+            <summary>Serializes this object's state to a JSON string.</summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.ISaveable.RestoreState(System.String)">
+            <summary>Deserializes the given JSON string back into this object.</summary>
+        </member>
+        <member name="T:Game.Systems.Serialization.ISaveStorage">
+            <summary>
+            Abstraction over a persistent storage backend.
+            Implementations must be atomic and must not throw on missing files.
+            </summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.ISaveStorage.Write(System.String)">
+            <summary>Writes the raw JSON string to storage atomically.</summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.ISaveStorage.Read">
+            <summary>
+            Reads the raw JSON string from storage.
+            Returns null if nothing has been saved yet.
+            </summary>
+        </member>
+        <member name="T:Game.Systems.Serialization.SerializationService">
+            <summary>
+            Coordinates saving/loading of all registered <see cref="T:Game.Systems.Serialization.ISaveable"/> instances.
+            </summary>
+        </member>
+        <member name="M:Game.Systems.Serialization.SerializationService.#ctor(Game.Systems.Serialization.ISaveStorage)">
+            <summary>
+            Coordinates saving/loading of all registered <see cref="T:Game.Systems.Serialization.ISaveable"/> instances.
+            </summary>
+        </member>
         <member name="M:Game.Core.Extensions.LerpExtensions.Eerp(System.Single,System.Single,System.Single)">
             <inheritdoc cref="M:Game.Core.Extensions.LerpExtensions.&lt;G&gt;$464CF13CF05F23E774A9D567340C67D6.Eerp(System.Single,System.Single)"/>
         </member>
@@ -18,6 +90,264 @@
         </member>
         <member name="M:Game.Core.Extensions.LerpExtensions.&lt;G&gt;$CFD185D6BF19A49CC0F32AA0163A3FBA.Eerp(FlaxEngine.Vector3,System.Single)">
             <inheritdoc cref="M:Game.Core.Extensions.LerpExtensions.Eerp(System.Single,System.Single,System.Single)"/>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.Coroutine.Invoke(System.Action,System.Single,System.Object,System.Boolean)">
+            <summary>
+            Invokes a function after a specified number of seconds
+            </summary>
+            <param name="function">The function to invoke.</param>
+            <param name="seconds">The number of seconds to wait.</param>
+            <param name="owner">The owner of this invocation.</param>
+            <param name="timeScaleIndependent">Whether to use the time scale or not.</param>
+            <returns>The coroutine that is handling this invocation.</returns>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.Coroutine.StartCoroutine(System.Collections.IEnumerator,System.Object)">
+            <summary>
+            Starts a new coroutine.
+            </summary>
+            <param name="coroutine">The IEnumerator to start.</param>
+            <param name="owner">The owner of the coroutine. Generally a script or an actor.</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.Coroutine.StopCoroutine(System.Collections.IEnumerator)">
+            <summary>
+            Stops the given coroutine.
+            </summary>
+            <param name="coroutine">The coroutine to stop.</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.Coroutine.StopAllCoroutines">
+            <summary>
+            Stops all active coroutines.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.Coroutine.StopAllObjectCoroutines(System.Object)">
+            <summary>
+            Removes all coroutines owned by the given object.
+            </summary>
+            <param name="owner">The owning object.</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.Coroutine.HasCoroutines">
+            <summary>
+            Whether there are any active coroutines.
+            </summary>
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.CoroutineSystem">
+            <summary>
+            CoroutineSystem GamePlugin.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.Invoke(System.Action,System.Single,System.Object,System.Boolean)">
+            <summary>
+            Invokes a function after a specified number of seconds
+            </summary>
+            <param name="function">The function to invoke.</param>
+            <param name="seconds">The number of seconds to wait.</param>
+            <param name="owner">The owner of this invocation.</param>
+            <param name="timeScaleIndependent">Whether to use the time scale or not.</param>
+            <returns>The coroutine that is handling this invocation.</returns>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.StartCoroutine(System.Collections.IEnumerator,System.Object)">
+            <summary>
+            Starts a new coroutine.
+            </summary>
+            <param name="coroutine">The IEnumerator to start.</param>
+            <param name="owner">The owner of the coroutine. Generally a script or an actor.</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.StopCoroutine(System.Collections.IEnumerator)">
+            <summary>
+            Stops the given coroutine.
+            </summary>
+            <param name="coroutine">The coroutine to stop.</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.StopAllCoroutines">
+            <summary>
+            Stops all active coroutines.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.StopAllObjectCoroutines(System.Object)">
+            <summary>
+            Removes all coroutines owned by the given object.
+            </summary>
+            <param name="owner">The owning object.</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.HasCoroutines">
+            <summary>
+            Whether there are any active coroutines.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.CoroutineSystem.Deinitialize">
+            <inheritdoc/>
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.WaitForFrames">
+            <summary>
+            Represents a yield instruction to wait until a certain number of frames have passed.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitForFrames.#ctor(System.Int32)">
+            <summary>
+            Represents a yield instruction to wait until a certain number of frames have passed.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitForFrames.Step(System.Single)">
+            <inheritdoc />
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.WaitForNextFrame">
+            <summary>
+            Waits for the next frame.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitForNextFrame.Step(System.Single)">
+            <inheritdoc />
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.WaitForSeconds">
+            <summary>
+            A class that represents a yield instruction to wait for a specific number of seconds.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitForSeconds.#ctor(System.Single,System.Boolean)">
+            <summary>
+            A class that represents a yield instruction to wait for a specific number of seconds.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitForSeconds.Step(System.Single)">
+            <inheritdoc />
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.WaitUntil">
+            <summary>
+            Represents a yield instruction to wait until a condition is met.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitUntil.#ctor(System.Func{System.Boolean})">
+            <summary>
+            Represents a yield instruction to wait until a condition is met.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitUntil.Step(System.Single)">
+            <inheritdoc />
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.WaitWhile">
+            <summary>
+            Represents a yield instruction to wait while a condition is met.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitWhile.#ctor(System.Func{System.Boolean})">
+            <summary>
+            Represents a yield instruction to wait while a condition is met.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.WaitWhile.Step(System.Single)">
+            <inheritdoc />
+        </member>
+        <member name="T:Game.Core.Helpers.Coroutines.IYieldInstruction">
+            <summary>
+            The interface for all yield instructions.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Coroutines.IYieldInstruction.Step(System.Single)">
+            <summary>
+            How to step the instruction. Responsible for determining if the instruction is finished.
+            </summary>
+            <param name="deltaTime">Time.DeltaTime</param>
+            <returns>Returns true if the instruction is complete, false otherwise.</returns>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.Register``1(``0)">
+            <summary>
+            Registers a service instance for type T.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.Register``2(``1)">
+            <summary>
+            Registers a service for a specific interface/base type.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.RegisterFactory``1(System.Func{``0})">
+            <summary>
+            Registers a factory resolved lazily on first request.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.Resolve``1">
+            <summary>
+            Resolves a service of type T. Throws if not registered.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.TryResolve``1(``0@)">
+            <summary>
+            Attempts to resolve a service of type T.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.IsRegistered``1">
+            <summary>
+            Checks registration without resolving.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.Unregister``1">
+            <summary>
+            Removes a registered service.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Services.ServiceLocator.Clear">
+            <summary>
+            Clears all registrations (useful for tests).
+            </summary>
+        </member>
+        <member name="P:Game.Core.Helpers.Timer.TimeService.CurrentTimeScale">
+            <summary>
+            Gets the current time scale value from the engine.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Timer.TimeService.PushTimeScale(System.Single)">
+            <summary>
+            Pushes a new time scale to the engine.
+            </summary>
+            <param name="scale">The scale factor (1 is normal speed, 0 is paused).</param>
+        </member>
+        <member name="M:Game.Core.Helpers.Timer.TimeService.ResetTimeScale">
+            <summary>
+            Resets the time scale back to the default value of 1.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Timer.TimeService.Pause">
+            <summary>
+            Pauses the game logic by setting the time scale to 0.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Helpers.Timer.TimeService.Resume">
+            <summary>
+            Resumes the game logic by resetting the time scale to 1.
+            </summary>
+        </member>
+        <member name="P:Game.Core.Cursor.CursorService.Current">
+            <summary>
+            Gets the current cursor state.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Cursor.CursorService.Apply(Game.Core.Cursor.CursorState)">
+            <summary>
+            Applies the given cursor state to the screen.
+            </summary>
+        </member>
+        <member name="M:Game.Core.Cursor.CursorService.ApplyGameplay">
+            <summary>
+            Convenience method to apply gameplay cursor (hidden + locked).
+            </summary>
+        </member>
+        <member name="M:Game.Core.Cursor.CursorService.ApplyMenu">
+            <summary>
+            Convenience method to apply menu cursor (visible + unlocked).
+            </summary>
+        </member>
+        <member name="M:Game.Core.Cursor.CursorService.Toggle">
+            <summary>
+            Toggles between gameplay and menu cursor states.
+            </summary>
+            <returns>The new applied state.</returns>
+        </member>
+        <member name="M:Game.Core.Cursor.CursorService.Reset">
+            <summary>
+            Resets cursor to a safe default (visible, unlocked).
+            </summary>
         </member>
     </members>
 </doc>

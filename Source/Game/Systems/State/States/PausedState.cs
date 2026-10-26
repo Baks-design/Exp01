@@ -6,6 +6,9 @@ namespace Game.Systems.State;
 
 public sealed class PausedState : IState
 {
+    readonly CursorService cursorService = new();
+    readonly TimeService timeService = new();
+
     public StateId Id => StateId.Paused;
 
     public bool CanEnter(StateId from) => from == StateId.InGame;
@@ -13,8 +16,8 @@ public sealed class PausedState : IState
     public void OnEnter()
     {
         Debug.Log("Enter Pause Menu");
-        CursorService.Apply(CursorState.Menu);
-        TimeService.PushTimeScale(0f);
+        cursorService.Apply(CursorState.Menu);
+        timeService.Pause(); 
     }
 
     public void OnExit() { }

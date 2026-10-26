@@ -1,5 +1,5 @@
 using FlaxEngine;
-using Game.Systems.Input;
+using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
 
@@ -13,167 +13,158 @@ public sealed class FirstPersonMovement : IMovementStrategy
 
     public void Execute(MovementContext ctx)
     {
+        if (preset == null && PresetReference != null)
+            preset = PresetReference.Instance;
         if (preset == null) return;
 
-        ApplyCameraSmoothing(ctx);
-        ApplyMovement(ctx);
-        ApplyRotation(ctx);
+        var grounded = IsGrounded(ctx);
+        var dt = Time.DeltaTime;
+        ApplyMovement(ctx, grounded, dt);
+        ApplyRotation(ctx, dt);
     }
 
-    void ApplyCameraSmoothing(MovementContext ctx)
+    void ApplyMovement(MovementContext ctx, bool grounded, float dt)
     {
-        var camTrans = ctx.camera.Transform;
-        var camFactor = 1 - Mathf.Exp(-preset.cameraSmoothing * Time.DeltaTime);
+        if (ctx.movementData.framesSinceJump < int.MaxValue) ctx.movementData.framesSinceJump++;
 
-        ctx.cameraTarget.LocalOrientation = Quaternion.Lerp(
-            ctx.cameraTarget.LocalOrientation,
-            Quaternion.Euler(ctx.cameraTarget.LocalEulerAngles.X, ctx.cameraTarget.LocalEulerAngles.Y, 0),
-            camFactor);
+        var jumpHeld = ctx.input.GetAction(InputActions.Jump);
 
-        camTrans.Translation = Vector3.Lerp(camTrans.Translation, ctx.cameraTarget.Position, camFactor);
-        camTrans.Orientation = ctx.cameraTarget.Orientation;
-        ctx.camera.Transform = camTrans;
+        UpdateJumpTimers(ctx, jumpHeld, grounded, dt);
+        UpdateHorizontalVelocity(ctx, grounded, dt);
+        UpdateVerticalVelocity(ctx, jumpHeld, grounded, dt);
+        UpdateMove(ctx, dt);
+        UpdateFootsteps(ctx, grounded, dt);
     }
 
-    void ApplyMovement(MovementContext ctx)
+    void ApplyRotation(MovementContext ctx, float dt)
     {
-        if (ctx.movementData.framesSinceJump < int.MaxValue)
-            ctx.movementData.framesSinceJump++;
-
-        UpdateJumpTimers(ctx);
-        UpdateHorizontalVelocity(ctx);
-        UpdateVerticalVelocity(ctx);
-        UpdateMove(ctx);
-        UpdateFootsteps(ctx);
-    }
-
-    void ApplyRotation(MovementContext ctx)
-    {
-        if (ctx.movementData.horizontalVelocity.LengthSquared <= 0.01f) return;
-
-        var targetRot = Quaternion.LookRotation(ctx.movementData.horizontalVelocity.Normalized, Vector3.Up);
-        var t = 1 - Mathf.Exp(-preset.rotationLerpSpeed * Time.DeltaTime);
-        ctx.controller.Orientation = Quaternion.Lerp(ctx.controller.Transform.Orientation, targetRot, t);
+        var targetRot = Quaternion.Euler(0, ctx.camera.LocalEulerAngles.Y, 0);
+        var t = 1 - Mathf.Exp(-preset.rotationLerpSpeed * dt);
+        ctx.controller.Orientation = Quaternion.Lerp(ctx.controller.Orientation, targetRot, t);
     }
 
     bool IsGrounded(MovementContext ctx)
     {
         if (ctx.controller.IsGrounded) return true;
 
-        return Physics.RayCast(
-            ctx.controller.Position, -Vector3.Up, out _,
-            preset.groundCheck, preset.groundLayers, false);
+        var bottom = ctx.controller.Position - Vector3.Up * (ctx.controller.Height * 0.5f - ctx.controller.Radius);
+        return Physics.RayCast(bottom, -Vector3.Up, out _, preset.groundCheck, preset.groundLayers, false);
     }
 
-    void UpdateJumpTimers(MovementContext ctx)
+    void UpdateJumpTimers(MovementContext ctx, bool jumpHeld, bool grounded, float dt)
     {
-        ctx.movementData.jumpBufferTimer = ctx.input.GetAction(InputActions.Jump)
-            ? preset.jumpBufferTime
-            : ctx.movementData.jumpBufferTimer - Time.DeltaTime;
+        if (jumpHeld && !ctx.movementData.jumpWasHeld)
+        {
+            ctx.movementData.jumpBufferTimer = preset.jumpBufferTime;
+            ctx.movementData.jumpRequested = true;
+        }
+        else
+            ctx.movementData.jumpBufferTimer = Mathf.Max(ctx.movementData.jumpBufferTimer - dt, 0);
 
-        ctx.movementData.coyoteTimer = IsGrounded(ctx)
-            ? preset.coyoteTime
-            : ctx.movementData.coyoteTimer - Time.DeltaTime;
-
-        if (ctx.input.GetAction(InputActions.Jump)) ctx.movementData.jumpRequested = true;
+        ctx.movementData.jumpWasHeld = jumpHeld;
+        ctx.movementData.coyoteTimer = grounded ? preset.coyoteTime : Mathf.Max(ctx.movementData.coyoteTimer - dt, 0);
     }
 
-    static Vector3 MoveGround(Vector3 accelDir, Vector3 prevVelocity, FirstPersonMovementPreset preset)
+    static Vector3 MoveGround(Vector3 accelDir, Vector3 prevVelocity, FirstPersonMovementPreset preset, float dt)
     {
         var speed = prevVelocity.Length;
-        if (Mathf.Abs(speed) > 0.01f)
+        if (speed > 0.01f)
         {
-            var drop = speed * preset.friction * Time.DeltaTime;
+            var drop = speed * preset.friction * dt;
             prevVelocity *= Mathf.Max(speed - drop, 0) / speed;
         }
-        return Accelerate(accelDir, prevVelocity, preset.groundAccelerate, preset.maxVelocityGround);
+        return Accelerate(accelDir, prevVelocity, preset.groundAccelerate, preset.maxVelocityGround, dt);
     }
 
-    static Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity, FirstPersonMovementPreset preset)
-        => Accelerate(accelDir, prevVelocity, preset.airAccelerate, preset.maxVelocityAir);
+    static Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity, FirstPersonMovementPreset preset, float dt)
+        => Accelerate(accelDir, prevVelocity, preset.airAccelerate, preset.maxVelocityAir, dt);
 
-    static Vector3 Accelerate(Vector3 accelDir, Vector3 prevVelocity, float accelerate, float maxVelocity)
+    static Vector3 Accelerate(Vector3 accelDir, Vector3 prevVelocity, float accelerate, float maxVelocity, float dt)
     {
         var projVel = Vector3.Dot(prevVelocity, accelDir);
-        var accelVel = accelerate * Time.DeltaTime;
+        var accelVel = accelerate * dt;
         if (projVel + accelVel > maxVelocity) accelVel = maxVelocity - projVel;
         return prevVelocity + accelDir * accelVel;
     }
 
-    void UpdateHorizontalVelocity(MovementContext ctx)
+    void UpdateHorizontalVelocity(MovementContext ctx, bool grounded, float dt) //FIXME
     {
         var raw = new Vector3(ctx.input.GetAxis(GameAxis.MoveX), 0, ctx.input.GetAxis(GameAxis.MoveY));
-        if (raw.LengthSquared > 1f) raw.Normalize();
+        if (raw.LengthSquared > 1) raw.Normalize();
 
-        var yawRot = Quaternion.Euler(0, ctx.cameraData.yaw, 0);
+        var yawRot = Quaternion.Euler(0, ctx.camera.Forward.Z, 0);
+
         var dir = Vector3.Transform(raw, yawRot);
         dir.Y = 0;
-        if (dir.LengthSquared > 0f) dir.Normalize();
+        if (dir.LengthSquared > 1) dir.Normalize();
 
         var horizontal = new Vector3(ctx.movementData.prevVelocity.X, 0, ctx.movementData.prevVelocity.Z);
-        horizontal = IsGrounded(ctx) ? MoveGround(dir, horizontal, preset) : MoveAir(dir, horizontal, preset);
-        if (horizontal.Length < 0.05f) horizontal = Vector3.Zero;
+        horizontal = grounded ? MoveGround(dir, horizontal, preset, dt) : MoveAir(dir, horizontal, preset, dt);
+        if (dir.LengthSquared < 1e-6f && horizontal.Length < 0.05f) horizontal = Vector3.Zero;
 
         ctx.movementData.horizontalVelocity = horizontal;
     }
 
-    void UpdateVerticalVelocity(MovementContext ctx)
+    void UpdateVerticalVelocity(MovementContext ctx, bool jumpHeld, bool grounded, float dt)
     {
         var v = ctx.movementData.verticalVelocity;
+        var gravity = Mathf.Abs(Physics.Gravity.Y) * preset.gravityMultiplier;
 
-        var grounded = IsGrounded(ctx);
         if (grounded)
         {
             if (v.Y < 0) v.Y = 0;
 
-            var wantJump = ctx.movementData.jumpRequested &&
-                ctx.movementData.jumpBufferTimer > 0 &&
-                ctx.movementData.coyoteTimer > 0;
+            var wantJump = ctx.movementData.jumpRequested
+                        && ctx.movementData.jumpBufferTimer > 0
+                        && ctx.movementData.coyoteTimer > 0;
             if (wantJump)
             {
                 v.Y = preset.jumpForce;
 
-                ctx.movementData.jumpBufferTimer = 0;
-                ctx.movementData.coyoteTimer = 0;
+                ctx.movementData.jumpBufferTimer = 0f;
+                ctx.movementData.coyoteTimer = 0f;
+                ctx.movementData.jumpRequested = false;
                 ctx.movementData.framesSinceJump = 0;
 
                 ctx.sound.PlayJump();
             }
             else if (ctx.movementData.framesSinceJump > preset.jumpGraceFrames)
-                v.Y = -Mathf.Abs(Physics.Gravity.Y * 0.5f);
+                v.Y = -Mathf.Abs(Physics.Gravity.Y) * 0.5f;
+
+            if (!wantJump
+                && ctx.movementData.lastVerticalVelocity < -1
+                && v.Y >= -Mathf.Abs(Physics.Gravity.Y * 0.5f))
+                ctx.sound.PlayLand();
         }
         else
         {
             v.Y = ctx.movementData.prevVelocity.Y;
-            v.Y += -Mathf.Abs(Physics.Gravity.Y * preset.gravityMultiplier) * Time.DeltaTime;
+            v.Y -= gravity * dt;
         }
 
-        if (grounded && ctx.movementData.lastVerticalVelocity < -1 &&
-            v.Y >= -Mathf.Abs(Physics.Gravity.Y * 0.5f))
-            ctx.sound.PlayLand();
+        if ((ctx.controller.Flags & CharacterController.CollisionFlags.Above) != 0 && v.Y > 0) v.Y = 0;
 
         ctx.movementData.lastVerticalVelocity = v.Y;
-        ctx.movementData.jumpRequested = false;
 
-        if ((ctx.controller.Flags & CharacterController.CollisionFlags.Above) != 0 && v.Y > 0)
-            v.Y = 0;
+        if (!jumpHeld && ctx.movementData.jumpBufferTimer <= 0)
+            ctx.movementData.jumpRequested = false;
 
         ctx.movementData.verticalVelocity = v;
     }
 
-    static void UpdateMove(MovementContext ctx)
+    static void UpdateMove(MovementContext ctx, float dt)
     {
         var finalMove = ctx.movementData.horizontalVelocity + ctx.movementData.verticalVelocity;
-        ctx.controller.Move(finalMove * Time.DeltaTime);
+        ctx.controller.Move(finalMove * dt);
         ctx.movementData.prevVelocity = finalMove;
     }
 
-    void UpdateFootsteps(MovementContext ctx)
+    void UpdateFootsteps(MovementContext ctx, bool grounded, float dt)
     {
         var speed = ctx.movementData.horizontalVelocity.Length;
-        if (IsGrounded(ctx) && speed > 1)
+        if (grounded && speed > 1)
         {
-            ctx.movementData.footstepDistance += speed * Time.DeltaTime;
+            ctx.movementData.footstepDistance += speed * dt;
             if (ctx.movementData.footstepDistance >= preset.footstepDistance)
             {
                 ctx.movementData.footstepDistance -= preset.footstepDistance;

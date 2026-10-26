@@ -1,5 +1,5 @@
 using FlaxEngine;
-using Game.Systems.Input;
+using Game.Systems.Inputs;
 using Game.Systems.State;
 
 namespace Game.UI;

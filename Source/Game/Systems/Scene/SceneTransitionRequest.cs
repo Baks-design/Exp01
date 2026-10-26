@@ -3,15 +3,24 @@ using FlaxEngine;
 
 namespace Game.Systems.Scene;
 
-public sealed class SceneTransitionRequest(SceneReference target)
+using System;
+using FlaxEngine;
+
+public sealed class SceneTransitionRequest
 {
-    SceneReference target = target;
+    SceneReference target;
+
+    public SceneTransitionRequest(SceneReference target) => Target = target;
 
     public SceneReference Target
     {
         get => target;
-        set => target = value.ID != Guid.Empty
-            ? value
-            : throw new ArgumentException("Scene reference must be valid.");
+        set
+        {
+            if (value.ID == Guid.Empty)
+                throw new ArgumentException("Scene reference must contain a valid asset ID.", nameof(value));
+
+            target = value;
+        }
     }
 }

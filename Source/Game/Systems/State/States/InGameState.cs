@@ -6,6 +6,9 @@ namespace Game.Systems.State;
 
 public sealed class InGameState : IState
 {
+    readonly CursorService cursorService = new();
+    readonly TimeService timeService = new();
+
     public StateId Id => StateId.InGame;
 
     public bool CanEnter(StateId from) => from == StateId.Loading || from == StateId.Paused;
@@ -13,8 +16,8 @@ public sealed class InGameState : IState
     public void OnEnter()
     {
         Debug.Log("Enter InGame");
-        CursorService.Apply(CursorState.Gameplay);
-        TimeService.PushTimeScale(1f);
+        cursorService.Apply(CursorState.Gameplay);
+        timeService.Resume();
     }
 
     public void OnExit() { }

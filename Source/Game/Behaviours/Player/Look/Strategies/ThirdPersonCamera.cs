@@ -1,10 +1,10 @@
 using FlaxEngine;
 using Game.Core.Extensions;
-using Game.Systems.Input;
+using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
 
-public sealed class ThirdPersonCameraStrategy : ICameraStrategy
+public sealed class ThirdPersonCamera : ICameraStrategy
 {
     ThirdPersonCameraPreset preset;
 
@@ -19,7 +19,6 @@ public sealed class ThirdPersonCameraStrategy : ICameraStrategy
         Rotation(ctx);
         ApplySpringArm(ctx);
         FOVZoom(ctx);
-        ApplyShake(ctx);
     }
 
     void Rotation(CameraContext ctx)
@@ -32,12 +31,12 @@ public sealed class ThirdPersonCameraStrategy : ICameraStrategy
         var toClamped = Mathf.Clamp(mouseDelta.X, preset.minMaxPitch.X, preset.minMaxPitch.Y);
         ctx.cameraData.pitch = Mathf.Lerp(ctx.cameraData.pitch, toClamped, t);
 
-        ctx.cameraTarget.LocalOrientation = Quaternion.Euler(ctx.cameraData.pitch, ctx.cameraData.yaw, 0);
+        ctx.camera.LocalOrientation = Quaternion.Euler(ctx.cameraData.pitch, ctx.cameraData.yaw, 0);
     }
 
     void ApplySpringArm(CameraContext ctx)
     {
-        var targetPos = ctx.cameraTarget.Position;
+        var targetPos = ctx.camera.Position;
         var lookRot = Quaternion.Euler(ctx.cameraData.pitch, ctx.cameraData.yaw, 0);
         var desiredDir = Vector3.Transform(Vector3.Backward, lookRot).Normalized;
         var desiredDistance = preset.distance;
@@ -67,27 +66,5 @@ public sealed class ThirdPersonCameraStrategy : ICameraStrategy
 
         var t = preset.fOVLerpSpeed * Time.DeltaTime;
         ctx.camera.FieldOfView = ctx.camera.FieldOfView.Eerp(targetFov, t);
-    }
-
-    void ApplyShake(CameraContext ctx)
-    {
-        if (ctx.cameraData.shakeTimer <= 0 || ctx.cameraData.shakeIntensity <= 0) return;
-
-        ctx.cameraData.shakeTimer -= Time.DeltaTime;
-        ctx.cameraData.shakeIntensity *= Mathf.Exp(-preset.shakeDecay * Time.DeltaTime);
-
-        if (ctx.cameraData.shakeTimer <= 0 || ctx.cameraData.shakeIntensity < 0.001f)
-        {
-            ctx.cameraData.shakeIntensity = 0;
-            ctx.cameraData.shakeTimer = 0;
-            return;
-        }
-
-        var t = Time.GameTime + ctx.cameraData.shakeSeed;
-        var offset = new Vector3(
-            Mathf.Sin(t * 37.1f) * ctx.cameraData.shakeIntensity,
-            Mathf.Sin(t * 47.3f) * ctx.cameraData.shakeIntensity, 0);
-
-        ctx.camera.Position = ctx.cameraData.basePosition + offset * preset.shakeScale;
     }
 }

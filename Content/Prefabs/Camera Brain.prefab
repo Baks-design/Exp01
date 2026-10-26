@@ -1,0 +1,21 @@
+{
+	"ID": "5c6c930148c12ef29a0fa095fdce3e11",
+	"TypeName": "FlaxEngine.Prefab",
+	"EngineBuild": 7012,
+	"Data": [
+	{
+		"ID": "cec065194bd5be3fe664cdbb28f0e26c",
+		"TypeName": "FlaxEngine.Camera",
+		"ParentID": "00000000000000000000000000000000",
+		"Name": "Camera Brain"
+	},
+	{
+		"ID": "7ca114cc42ddf2d7bc81069fb05a628a",
+		"TypeName": "Game.Systems.Cameras.CameraBrain",
+		"ParentID": "cec065194bd5be3fe664cdbb28f0e26c",
+		"V": {
+			"OutputCamera": "cec065194bd5be3fe664cdbb28f0e26c"
+		}
+	}
+]
+}

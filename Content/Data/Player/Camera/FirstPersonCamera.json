@@ -4,15 +4,13 @@
 	"EngineBuild": 7012,
 	"Data": {
 	"invertY": false,
-	"lookSmoothing": 20.0,
+	"lookSmoothing": 15.0,
 	"minMaxPitch": {
-		"X": -88.0,
-		"Y": 88.0
+		"X": -60.0,
+		"Y": 60.0
 	},
-	"sensitivity": 1.0,
-	"fOVLerpSpeed": 8.0,
-	"shakeDecay": 5.0,
-	"shakeScale": 1.0,
-	"fOVZoom": 30.0
+	"sensitivity": 2.0,
+	"fOVLerpSpeed": 10.0,
+	"fOVZoom": 45.0
 }
 }

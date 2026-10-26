@@ -18,47 +18,16 @@
 			}
 		},
 		{
-			"ID": "0aceca56432a4a265861c580382e8bf4",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
-			"ParentID": "74a68a984824b4510d12589f199ad68f",
-			"IsActive": false,
-			"V": {}
+			"ID": "423b3aae44e829c5974e3c84fbbdfc62",
+			"PrefabID": "5c6c930148c12ef29a0fa095fdce3e11",
+			"PrefabObjectID": "cec065194bd5be3fe664cdbb28f0e26c",
+			"ParentID": "74a68a984824b4510d12589f199ad68f"
 		},
 		{
-			"ID": "8f69e1d94657646b08ef95a68729ac04",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "9e296b9e44c5c50dd6d23d95e1766e13",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4",
-			"Transform": {
-				"Translation": {
-					"X": 11.60003662109375,
-					"Y": 4.79998779296875,
-					"Z": 0.0
-				}
-			},
-			"Data": {
-	"ResolutionCurve": {},
-	"DpiCurve": {},
-	"Offsets": {
-		"Left": 11.600037,
-		"Right": -98.80005,
-		"Top": 4.799988,
-		"Bottom": -4.799988
-	}
-}
-		},
-		{
-			"ID": "3b98aeec49c2715303a4d7841f9ff2bb",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "4e32e2f346ac14a0117f52a75f752caf",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4"
-		},
-		{
-			"ID": "b9a1c5cb4e63f3ea375efa8c630a4de8",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "9fb135ba411250842108bdbf00c7ce93",
-			"ParentID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"ID": "7f2214e2471a5007295de3829bb21345",
+			"PrefabID": "5c6c930148c12ef29a0fa095fdce3e11",
+			"PrefabObjectID": "7ca114cc42ddf2d7bc81069fb05a628a",
+			"ParentID": "423b3aae44e829c5974e3c84fbbdfc62",
 			"V": {}
 		},
 		{
@@ -135,6 +104,49 @@
 			},
 			"BakedProbe": "1c0e10484ff57d402275289550564b9f",
 			"Mode": 0
+		},
+		{
+			"ID": "0aceca56432a4a265861c580382e8bf4",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
+			"ParentID": "74a68a984824b4510d12589f199ad68f",
+			"V": {}
+		},
+		{
+			"ID": "8f69e1d94657646b08ef95a68729ac04",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "9e296b9e44c5c50dd6d23d95e1766e13",
+			"ParentID": "0aceca56432a4a265861c580382e8bf4",
+			"Transform": {
+				"Translation": {
+					"X": 11.60003662109375,
+					"Y": 4.79998779296875,
+					"Z": 0.0
+				}
+			},
+			"Data": {
+	"ResolutionCurve": {},
+	"DpiCurve": {},
+	"Offsets": {
+		"Left": 11.600037,
+		"Right": -98.80005,
+		"Top": 4.799988,
+		"Bottom": -4.799988
+	}
+}
+		},
+		{
+			"ID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "4e32e2f346ac14a0117f52a75f752caf",
+			"ParentID": "0aceca56432a4a265861c580382e8bf4"
+		},
+		{
+			"ID": "b9a1c5cb4e63f3ea375efa8c630a4de8",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "9fb135ba411250842108bdbf00c7ce93",
+			"ParentID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"V": {}
 		},
 		{
 			"ID": "8885bda54dd4bc4b6a779d8e4094ceaf",
@@ -235,8 +247,9 @@
 			"PrefabObjectID": "4165e4ab452b664d4e28b48de0e95d0a",
 			"ParentID": "6d0df38d42f6fe6598386ca1d2929010",
 			"V": {
+	"firstPerson": {},
 	"thirdPerson": {},
-	"firstPerson": {}
+	"MovementData": {}
 }
 		},
 		{
@@ -251,8 +264,9 @@
 			"PrefabObjectID": "bafb132f480ac3c7a2bf68a80afef881",
 			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e",
 			"V": {
+	"firstPerson": {},
 	"thirdPerson": {},
-	"firstPerson": {}
+	"CameraData": {}
 }
 		},
 		{
@@ -262,10 +276,17 @@
 			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e"
 		},
 		{
-			"ID": "b0d72c3746caebca055e1f921ca21c7c",
+			"ID": "a1202da046f623c0df377b9ec45a9437",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
-			"PrefabObjectID": "764d64de4fe1a0013d89d9802a78e24f",
+			"PrefabObjectID": "383feaa845c6f6821b90939c2a1c6622",
 			"ParentID": "926656744a86b66ba287acb276b783a0"
+		},
+		{
+			"ID": "12978ec34ff0c7888f3be9a042a91751",
+			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
+			"PrefabObjectID": "0317ed094407ba27d928e48c6de7c7fe",
+			"ParentID": "a1202da046f623c0df377b9ec45a9437",
+			"V": {}
 		},
 		{
 			"ID": "115b653b4d5a830f1617d9a19720a55b",

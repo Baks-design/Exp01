@@ -1,18 +1,27 @@
 using FlaxEngine;
+using FlaxEngine.Json;
 using Game.Systems.Serialization;
 
 namespace Game.Behaviours.Player;
 
-public sealed class PlayerData : Script, ISaveable //FIXME: 
+public class PlayerData : Script, ISaveable
 {
-    public CharacterController controller;
     public string SaveKey => "Player";
 
-    public object CaptureState() => new PlayerSaveData { Position = controller.Position };
-
-    public void RestoreState(object state)
+    public string CaptureState()
     {
-        var data = (PlayerSaveData)state;
-        controller.Position = data.Position;
+        var data = new PlayerSaveData
+        {
+            Position = Actor.Position
+        };
+        return JsonSerializer.Serialize(data);
+    }
+
+    public void RestoreState(string state)
+    {
+        var data = JsonSerializer.Deserialize<PlayerSaveData>(state);
+        if (data == null) return;
+
+        Actor.Position = data.Position;
     }
 }

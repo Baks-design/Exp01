@@ -1,24 +1,61 @@
-using System.Collections.Generic;
+using System;
 using System.IO;
-using FlaxEngine.Json;
+using FlaxEngine;
 
 namespace Game.Systems.Serialization;
 
-public sealed class FileSaveStorage(string filePath) : ISaveStorage
+/// <summary>
+/// Writes/reads a single JSON file atomically (write-to-temp + replace).
+/// Uses Flax's logging so errors show up in the editor/game log.
+/// </summary>
+public sealed class FileSaveStorage : ISaveStorage
 {
-    readonly string filePath = filePath;
+    readonly string filePath;
 
-    public void Write(Dictionary<string, object> data)
+    public FileSaveStorage(string filePath)
     {
-        var json = JsonSerializer.Serialize(data);
-        File.WriteAllText(filePath, json);
+        if (string.IsNullOrWhiteSpace(filePath))
+            throw new ArgumentException("filePath cannot be null or empty.", nameof(filePath));
+        this.filePath = filePath;
     }
 
-    public Dictionary<string, object> Read()
+    public void Write(string json)
     {
-        if (!File.Exists(filePath)) return [];
+        ArgumentNullException.ThrowIfNull(json);
 
-        var json = File.ReadAllText(filePath);
-        return JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+        try
+        {
+            var dir = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            // Atomic write: write to temp, then replace.
+            var tempPath = filePath + ".tmp";
+            File.WriteAllText(tempPath, json);
+
+            if (File.Exists(filePath))
+                File.Replace(tempPath, filePath, null);
+            else
+                File.Move(tempPath, filePath);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"FileSaveStorage.Write failed for '{filePath}': {ex}");
+        }
+    }
+
+    public string Read()
+    {
+        try
+        {
+            if (!File.Exists(filePath)) return null;
+
+            return File.ReadAllText(filePath);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"FileSaveStorage.Read failed for '{filePath}': {ex}");
+            return null;
+        }
     }
 }

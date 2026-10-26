@@ -1,54 +1,47 @@
 using FlaxEngine;
-using Game.Systems.Input;
+using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
 
 public sealed class PlayerCamera : Script
 {
-    [Header("Strategies")]
-    public ThirdPersonCameraStrategy thirdPerson = new();
-    public FirstPersonCameraStrategy firstPerson = new();
     [Header("References")]
     public Camera camera;
-    public Actor cameraTarget;
+    [Header("Strategies")]
+    public FirstPersonCamera firstPerson = new();
+    public ThirdPersonCamera thirdPerson = new();
     readonly InputService input = new();
-    readonly CameraData data = new();
     readonly CameraContext ctx = new();
-    ICameraStrategy strategy;
+    ICameraStrategy currentStrategy;
+
+    [ReadOnly] public CameraData CameraData { get; set; } = new();
 
     public override void OnStart()
     {
-        if (!camera) { Debug.LogError("PlayerCamera: camera missing."); return; }
-        if (!cameraTarget) { Debug.LogError("PlayerCamera: cameraTarget missing."); return; }
+        if (camera == null) camera = Level.FindActor<Camera>();
 
         ctx.input = input;
-        ctx.cameraTarget = cameraTarget;
         ctx.camera = camera;
-        ctx.cameraData = data;
+        ctx.cameraData = CameraData;
     }
 
-    public override void OnUpdate()
-    {
-        if (strategy == null) return;
-       
-        ctx.deltaTime = Time.DeltaTime;
-        strategy.Execute(ctx);
-    }
+    public override void OnUpdate() => currentStrategy.Execute(ctx);
 
     public void SetCameraStrategy(ICameraStrategy newStrategy)
     {
-        if (newStrategy == null || strategy == newStrategy) return;
+        if (currentStrategy == newStrategy) return;
 
-        strategy = newStrategy;
-        data.Reset();
+        currentStrategy = newStrategy;
+        CameraData.Reset();
+
         switch (newStrategy)
         {
-            case FirstPersonCameraStrategy fp:
+            case FirstPersonCamera fp:
                 fp.SetPreset(fp.PresetReference
                     ? fp.PresetReference.Asset?.CreateInstance<FirstPersonCameraPreset>()
                     : null);
                 break;
-            case ThirdPersonCameraStrategy tp:
+            case ThirdPersonCamera tp:
                 tp.SetPreset(tp.PresetReference
                     ? tp.PresetReference.Asset?.CreateInstance<ThirdPersonCameraPreset>()
                     : null);
@@ -58,7 +51,7 @@ public sealed class PlayerCamera : Script
 
     public void SetRotation(float pitch, float yaw)
     {
-        data.pitch += pitch;
-        data.yaw += yaw;
+        CameraData.pitch += pitch;
+        CameraData.yaw += yaw;
     }
 }

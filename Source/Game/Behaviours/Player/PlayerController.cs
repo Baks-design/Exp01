@@ -1,8 +1,8 @@
-using System.IO;
 using FlaxEngine;
-using Game.Systems.Input;
-using Game.Systems.Scene;
+using Game.Core.Cursor;
+using Game.Systems.Inputs;
 using Game.Systems.Serialization;
+using Game.Systems.State;
 
 namespace Game.Behaviours.Player;
 
@@ -12,30 +12,32 @@ public sealed class PlayerController : Script
     public PlayerCamera camera;
     public SceneReference sceneReference;
     readonly InputService input = new();
-    SerializationService serializationService;
+    readonly SerializationService serializationService;
+    readonly CursorService cursorService = new();
+    readonly StateService StateService = new();
 
     public override void OnAwake()
     {
-        var saveDir = Globals.ProductLocalFolder;
-        if (!Directory.Exists(saveDir))  Directory.CreateDirectory(saveDir);
-        var savePath = Path.Combine(Globals.ProductLocalFolder, "save.json");
-        serializationService = new SerializationService(new FileSaveStorage(savePath));
+        StateService.Initialize();
+        StateService.SetState(StateId.InGame);
+        if (StateService.CurrentId != StateId.InGame)
+            Debug.LogError($"[Bootstrap] Failed to enter {StateId.InGame} state.");
     }
 
     public override void OnStart()
     {
         if (!movement) { Debug.LogError("PlayerController: PlayerMovement is not assigned."); return; }
         if (!camera) { Debug.LogError("PlayerController: PlayerCamera is not assigned."); return; }
-
-        SetToFirstView();
     }
+
+    public override void OnEnable() => SetToFirstView();
 
     public override void OnUpdate()
     {
+        cursorService.Apply(CursorState.Gameplay);
+
         ChangeView();
         SaveGame();
-        LoadGame();
-        LoadScene();
     }
 
     void ChangeView()
@@ -66,26 +68,6 @@ public sealed class PlayerController : Script
         {
             serializationService.SaveAll();
             Debug.Log($"[SerializationService] SaveAll started.");
-        }
-    }
-
-    void LoadGame()
-    {
-        if (Input.Keyboard.GetKeyDown(KeyboardKeys.P))
-        {
-            serializationService.LoadAll();
-            Debug.Log("[SerializationService] LoadAll started.");
-        }
-    }
-
-    void LoadScene()
-    {
-        if (Input.Keyboard.GetKeyDown(KeyboardKeys.L))
-        {
-            SceneService.RequestTransition(new SceneTransitionRequest(sceneReference));
-            Debug.Log("Load Scene.");
-            serializationService.LoadAll();
-            Debug.Log("[SerializationService] LoadAll started.");
         }
     }
 

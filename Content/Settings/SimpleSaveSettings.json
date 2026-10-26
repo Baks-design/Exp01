@@ -1,0 +1,13 @@
+{
+	"ID": "73834e5b41da861d78dc8c8b10805fe2",
+	"TypeName": "Game.Systems.Serialization.SimpleSaveSettings",
+	"EngineBuild": 7012,
+	"Data": {
+	"DefaultFileName": "Default",
+	"RootSaveFolderName": "Save",
+	"UseEncryption": false,
+	"Password": "password",
+	"UseHash": true,
+	"VerboseLogging": true
+}
+}

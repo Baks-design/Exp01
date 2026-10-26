@@ -5,8 +5,8 @@
 		"gulp.autoDetect": "off",
 		"jake.autoDetect": "off",
 		"grunt.autoDetect": "off",
-		"omnisharp.useModernNet": true,
-		"dotnet.defaultSolution": "Exp01.slnx"
+		"omnisharp.defaultLaunchSolution": "Exp01.slnx",
+		"omnisharp.useModernNet": true
 	},
 	"folders": [
 		{
