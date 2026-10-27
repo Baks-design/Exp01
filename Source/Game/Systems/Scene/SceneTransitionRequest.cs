@@ -10,8 +10,6 @@ public sealed class SceneTransitionRequest
 {
     SceneReference target;
 
-    public SceneTransitionRequest(SceneReference target) => Target = target;
-
     public SceneReference Target
     {
         get => target;
@@ -23,4 +21,6 @@ public sealed class SceneTransitionRequest
             target = value;
         }
     }
+
+    public SceneTransitionRequest(SceneReference target) => Target = target;
 }

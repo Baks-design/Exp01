@@ -2,9 +2,6 @@ using FlaxEngine;
 
 namespace Game.Systems.Audio;
 
-// Use:
-//  jumpPool ??= new AudioSourcePool(host, 5, 20);
-//  jumpAudio ??= new AudioService(jumpPool);
 public sealed class AudioService(AudioSourcePool pool)
 {
     readonly AudioSourcePool pool = pool;

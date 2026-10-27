@@ -1,4 +1,3 @@
-
 using FlaxEngine;
 
 namespace Game.Systems.Cameras;

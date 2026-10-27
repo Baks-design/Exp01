@@ -4,7 +4,7 @@ using Game.Systems.Audio;
 
 namespace Game.Behaviours.Player;
 
-public sealed class PlayerSound : Script //FIXME
+public sealed class PlayerSound : Script 
 {
     [Header("Settings")]
     [Limit(0, 1)] public float volume = 0.8f;
@@ -113,6 +113,7 @@ public sealed class PlayerSound : Script //FIXME
             if (entry == null) continue;
             if (entry.SurfaceTag == Tag.Default) return entry;
         }
+        
         return null;
     }
 

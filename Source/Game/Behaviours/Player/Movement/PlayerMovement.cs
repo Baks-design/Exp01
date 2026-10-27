@@ -9,7 +9,7 @@ public sealed class PlayerMovement : Script
     public CharacterController controller;
     public PlayerSound sound;
     public PlayerCamera playerCamera;
-    public Camera camera;
+    public Actor cameraYaw;
     [Header("Strategies")]
     public FirstPersonMovement firstPerson = new();
     public ThirdPersonMovement thirdPerson = new();
@@ -22,11 +22,10 @@ public sealed class PlayerMovement : Script
     public override void OnStart()
     {
         if (!controller) { Debug.LogError("PlayerMovement: controller missing."); return; }
-        if (camera == null) camera = Level.FindActor<Camera>();
 
         ctx.input = input;
         ctx.controller = controller;
-        ctx.camera = camera;
+        ctx.cameraYaw = cameraYaw;
         ctx.movementData = MovementData;
         ctx.cameraData = playerCamera.CameraData;
         ctx.sound = sound;

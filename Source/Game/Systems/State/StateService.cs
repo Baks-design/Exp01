@@ -2,9 +2,6 @@ using System.Collections.Generic;
 
 namespace Game.Systems.State;
 
-// Use:
-// OnState => stateService.Initialize();
-// OnUpdate => stateService.SwitchState(StateId.)
 public sealed class StateService
 {
     readonly Dictionary<StateId, IState> states = [];

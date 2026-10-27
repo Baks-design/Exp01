@@ -16,8 +16,8 @@ public sealed class InGameState : IState
     public void OnEnter()
     {
         Debug.Log("Enter InGame");
-        cursorService.Apply(CursorState.Gameplay);
-        timeService.Resume();
+        cursorService?.Apply(CursorState.Gameplay);
+        timeService?.Resume();
     }
 
     public void OnExit() { }

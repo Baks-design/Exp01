@@ -4,10 +4,6 @@ using FlaxEngine;
 
 namespace Game.Systems.Serialization;
 
-/// <summary>
-/// Writes/reads a single JSON file atomically (write-to-temp + replace).
-/// Uses Flax's logging so errors show up in the editor/game log.
-/// </summary>
 public sealed class FileSaveStorage : ISaveStorage
 {
     readonly string filePath;
@@ -26,13 +22,11 @@ public sealed class FileSaveStorage : ISaveStorage
         try
         {
             var dir = Path.GetDirectoryName(filePath);
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) 
                 Directory.CreateDirectory(dir);
 
-            // Atomic write: write to temp, then replace.
             var tempPath = filePath + ".tmp";
             File.WriteAllText(tempPath, json);
-
             if (File.Exists(filePath))
                 File.Replace(tempPath, filePath, null);
             else
@@ -49,7 +43,6 @@ public sealed class FileSaveStorage : ISaveStorage
         try
         {
             if (!File.Exists(filePath)) return null;
-
             return File.ReadAllText(filePath);
         }
         catch (Exception ex)

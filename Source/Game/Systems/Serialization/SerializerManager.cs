@@ -4,28 +4,30 @@ using Game.Behaviours.Player;
 
 namespace Game.Systems.Serialization;
 
-public class SerializerManager
+public sealed class SerializerManager
 {
     SerializationService serializer;
     GameSettings settings;
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyboardKeys.F5)) serializer?.SaveAll();
-        if (Input.GetKeyDown(KeyboardKeys.F9)) serializer?.LoadAll();
-    }
-
     public void CreateSave()
     {
         var storage = new FileSaveStorage(Path.Combine(Globals.ProductLocalFolder, "save.json"));
-        serializer = new SerializationService(storage);
+        serializer = new(storage);
         var player = Level.FindScript<PlayerData>();
-        if (player != null) serializer.Register(player);
+        serializer?.Register(player);
     }
 
     public void CreateSettings()
     {
-        settings = new GameSettings();
-        settings.Save();
+        settings = new();
+        settings?.Save();
     }
+
+    public void SaveEntities() => serializer?.SaveAll();
+
+    public void SaveSettings() => settings?.Save();
+
+    public void LoadEntities() => serializer?.LoadAll();
+
+    public void LoadSettings() => settings?.Load();
 }

@@ -5,9 +5,6 @@ using FlaxEngine.Json;
 
 namespace Game.Systems.Serialization;
 
-/// <summary>
-/// Coordinates saving/loading of all registered <see cref="ISaveable"/> instances.
-/// </summary>
 public sealed class SerializationService(ISaveStorage storage)
 {
     readonly Dictionary<string, ISaveable> saveables = [];
@@ -19,19 +16,13 @@ public sealed class SerializationService(ISaveStorage storage)
         saveables[saveable.SaveKey] = saveable;
     }
 
-    public void Unregister(string saveKey)
-    {
-        if (saveKey != null) saveables.Remove(saveKey);
-    }
+    public void Unregister(string saveKey) => saveables?.Remove(saveKey);
 
     public void SaveAll()
     {
-        // Capture each saveable's state as a JSON string.
         var bundle = new Dictionary<string, string>();
         foreach (var kvp in saveables) bundle[kvp.Key] = kvp.Value.CaptureState();
-
-        // Serialize the outer dictionary with Flax's serializer.
-        var json = FlaxEngine.Json.JsonSerializer.Serialize(bundle);
+        var json = JsonSerializer.Serialize(bundle);
         storage.Write(json);
     }
 
@@ -67,9 +58,7 @@ public sealed class SerializationService(ISaveStorage storage)
                 }
             }
             else
-            {
                 Debug.LogWarning($"SerializationService.LoadAll: no saveable registered for key '{kvp.Key}'.");
-            }
         }
     }
 }

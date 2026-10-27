@@ -4,7 +4,7 @@ using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
 
-public sealed class ThirdPersonCamera : ICameraStrategy
+public sealed class ThirdPersonCamera : ICameraStrategy //FIXME
 {
     ThirdPersonCameraPreset preset;
 

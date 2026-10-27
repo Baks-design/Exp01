@@ -7,6 +7,8 @@ public sealed class PlayerCamera : Script
 {
     [Header("References")]
     public Camera camera;
+    public Actor cameraPitch;
+    public Actor cameraYaw;
     [Header("Strategies")]
     public FirstPersonCamera firstPerson = new();
     public ThirdPersonCamera thirdPerson = new();
@@ -22,6 +24,8 @@ public sealed class PlayerCamera : Script
 
         ctx.input = input;
         ctx.camera = camera;
+        ctx.cameraPitch = cameraPitch;
+        ctx.cameraYaw = cameraYaw;
         ctx.cameraData = CameraData;
     }
 

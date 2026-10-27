@@ -2,7 +2,7 @@ using FlaxEngine;
 
 namespace Game.Systems.Scene;
 
-public class SceneService
+public sealed class SceneService
 {
     public void RequestTransition(SceneTransitionRequest request)
     {

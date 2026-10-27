@@ -1,4 +1,3 @@
-
 using FlaxEngine;
 
 namespace Game.Systems.Cameras;
@@ -33,7 +32,7 @@ public sealed class FollowStrategy : Script, ICameraStrategy
             initialized = true;
         }
         else
-            currentPos = Vector3.Lerp(currentPos, desired, 1f - Mathf.Exp(-Smooth * Time.DeltaTime));
+            currentPos = Vector3.Lerp(currentPos, desired, 1 - Mathf.Exp(-Smooth * Time.DeltaTime));
 
         position = currentPos;
         rotation = Quaternion.LookAt(currentPos, Target.Position, Vector3.Up);

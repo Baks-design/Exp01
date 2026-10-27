@@ -22,17 +22,17 @@ public sealed class ThirdPersonMovement : IMovementStrategy
 
     void ApplyCameraSmoothing(MovementContext ctx)
     {
-        var camTrans = ctx.camera.Transform;
-        var camFactor = 1 - Mathf.Exp(-preset.cameraSmoothing * Time.DeltaTime);
+        // var camTrans = ctx.camera.Transform;
+        // var camFactor = 1 - Mathf.Exp(-preset.cameraSmoothing * Time.DeltaTime);
 
-        ctx.camera.LocalOrientation = Quaternion.Lerp(
-            ctx.camera.LocalOrientation,
-            Quaternion.Euler(ctx.camera.LocalEulerAngles.X, ctx.camera.LocalEulerAngles.Y, 0),
-            camFactor);
+        // ctx.camera.LocalOrientation = Quaternion.Lerp(
+        //     ctx.camera.LocalOrientation,
+        //     Quaternion.Euler(ctx.camera.LocalEulerAngles.X, ctx.camera.LocalEulerAngles.Y, 0),
+        //     camFactor);
 
-        camTrans.Translation = Vector3.Lerp(camTrans.Translation, ctx.camera.Position, camFactor);
-        camTrans.Orientation = ctx.camera.Orientation;
-        ctx.camera.Transform = camTrans;
+        // camTrans.Translation = Vector3.Lerp(camTrans.Translation, ctx.camera.Position, camFactor);
+        // camTrans.Orientation = ctx.camera.Orientation;
+        // ctx.camera.Transform = camTrans;
     }
 
     void ApplyMovement(MovementContext ctx)

@@ -6,11 +6,6 @@ using FlaxEngine.Json;
 
 namespace Game.Systems.Serialization;
 
-/// <summary>
-/// Simple string-keyed settings store backed by a JSON file in the
-/// product-local folder. Loaded eagerly in the constructor so <see cref="Save"/>
-/// always works, even on first run.
-/// </summary>
 public sealed class GameSettings
 {
     readonly string path;
@@ -34,7 +29,6 @@ public sealed class GameSettings
         data[key] = value;
     }
 
-    /// <summary>Loads settings from disk. Safe to call multiple times.</summary>
     public void Load()
     {
         if (!File.Exists(path)) return;
@@ -51,7 +45,6 @@ public sealed class GameSettings
         }
     }
 
-    /// <summary>Saves current settings to disk atomically.</summary>
     public void Save()
     {
         try

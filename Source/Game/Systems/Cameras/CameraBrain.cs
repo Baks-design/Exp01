@@ -1,4 +1,3 @@
-
 using FlaxEngine;
 
 namespace Game.Systems.Cameras;
@@ -31,7 +30,7 @@ public sealed class CameraBrain : Script
         activeStrategy?.OnDeactivate();
 
         activeVCam = best;
-        activeStrategy = best?.GetStrategy();  // helper below
+        activeStrategy = best?.GetStrategy;  // helper below
         activeStrategy?.OnActivate(activeVCam);
     }
 

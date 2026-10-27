@@ -7,8 +7,6 @@ namespace Game.Behaviours.Player;
 public sealed class FirstPersonCamera : ICameraStrategy
 {
     FirstPersonCameraPreset preset;
-    float targetYaw;
-    float targetPitch;
 
     public JsonAssetReference<FirstPersonCameraPreset> PresetReference { get; set; }
 
@@ -26,17 +24,19 @@ public sealed class FirstPersonCamera : ICameraStrategy
     void Rotation(CameraContext ctx)
     {
         var mouseDelta = new Float2(ctx.input.GetAxis(GameAxis.LookX), ctx.input.GetAxis(GameAxis.LookY));
-        var sensY = preset.invertY ? -preset.sensitivity : preset.sensitivity;
-        
-        targetYaw += mouseDelta.X * preset.sensitivity;
-        targetPitch += mouseDelta.Y * sensY;
-        targetPitch = Mathf.Clamp(targetPitch, preset.minMaxPitch.X, preset.minMaxPitch.Y);
+
+        ctx.cameraData.yaw += mouseDelta.X * preset.sensitivity;
+        ctx.cameraData.pitch += mouseDelta.Y * preset.sensitivity;
+
+        ctx.cameraData.pitch = Mathf.Clamp(ctx.cameraData.pitch, preset.minMaxPitch.X, preset.minMaxPitch.Y);
 
         var t = 1 - Mathf.Exp(-preset.lookSmoothing * ctx.deltaTime);
-        ctx.cameraData.yaw = Mathf.LerpAngle(ctx.cameraData.yaw, targetYaw, t);
-        ctx.cameraData.pitch = Mathf.Lerp(ctx.cameraData.pitch, targetPitch, t);
 
-        ctx.camera.LocalOrientation = Quaternion.Euler(ctx.cameraData.pitch, ctx.cameraData.yaw, 0);
+        ctx.cameraData.smoothedYaw = Mathf.LerpAngle(ctx.cameraData.smoothedYaw, ctx.cameraData.yaw, t);
+        ctx.cameraData.smoothedPitch = Mathf.Lerp(ctx.cameraData.smoothedPitch, ctx.cameraData.pitch, t);
+
+        ctx.cameraYaw.LocalOrientation = Quaternion.Euler(0, ctx.cameraData.smoothedYaw, 0);
+        ctx.cameraPitch.LocalOrientation = Quaternion.Euler(ctx.cameraData.smoothedPitch, 0, 0);
     }
 
     void FOVZoom(CameraContext ctx)

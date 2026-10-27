@@ -5,16 +5,13 @@ using FlaxEngine;
 
 namespace Game.Core.Helpers.Coroutines;
 
-/// <summary>
-/// CoroutineSystem GamePlugin.
-/// </summary>
-public class CoroutineSystem : GamePlugin
+public sealed class CoroutineSystem : GamePlugin
 {
-    // The list of active coroutine instances.
     readonly List<CoroutineHandle> activeCoroutines = [];
     readonly Coroutine coroutine = new();
 
-    /// <inheritdoc/>
+    public bool HasCoroutines => activeCoroutines.Count > 0;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -22,89 +19,12 @@ public class CoroutineSystem : GamePlugin
         Scripting.Update += Update;
     }
 
-    /// <summary>
-    /// Invokes a function after a specified number of seconds
-    /// </summary>
-    /// <param name="function">The function to invoke.</param>
-    /// <param name="seconds">The number of seconds to wait.</param>
-    /// <param name="owner">The owner of this invocation.</param>
-    /// <param name="timeScaleIndependent">Whether to use the time scale or not.</param>
-    /// <returns>The coroutine that is handling this invocation.</returns>
-    public IEnumerator Invoke(Action function, float seconds, object owner, bool timeScaleIndependent = false)
-    {
-        var routine = InvokeCoroutine(function, seconds, timeScaleIndependent);
-        StartCoroutine(routine, owner);
-        return routine;
-    }
-
-    // Used with the `Invoke` method to wait a specified time before function call.
-    static IEnumerator InvokeCoroutine(Action function, float seconds, bool timeScaleIndependent = false)
-    {
-        yield return new WaitForSeconds(seconds, timeScaleIndependent);
-        function();
-    }
-
-    /// <summary>
-    /// Starts a new coroutine.
-    /// </summary>
-    /// <param name="coroutine">The IEnumerator to start.</param>
-    /// <param name="owner">The owner of the coroutine. Generally a script or an actor.</param>
-    public void StartCoroutine(IEnumerator coroutine, object owner)
-    {
-        // Create and start coroutine.
-        var handle = new CoroutineHandle(coroutine, owner);
-        handle.Coroutine.MoveNext();
-        activeCoroutines.Add(handle);
-    }
-
-    /// <summary>
-    /// Stops the given coroutine.
-    /// </summary>
-    /// <param name="coroutine">The coroutine to stop.</param>
-    public void StopCoroutine(IEnumerator coroutine)
-    {
-        // Iterate backward to safely remove items from the list.
-        for (var i = activeCoroutines.Count - 1; i >= 0; i--)
-        {
-            if (Equals(activeCoroutines[i].Coroutine, coroutine))
-            {
-                activeCoroutines.RemoveAt(i);
-                return;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Stops all active coroutines.
-    /// </summary>
-    public void StopAllCoroutines() => activeCoroutines.Clear();
-
-    /// <summary>
-    /// Removes all coroutines owned by the given object.
-    /// </summary>
-    /// <param name="owner">The owning object.</param>
-    public void StopAllObjectCoroutines(object owner)
-    {
-        // Iterate backward to safely remove items from the list.
-        for (var i = activeCoroutines.Count - 1; i >= 0; i--)
-            if (Equals(activeCoroutines[i].Owner, owner))
-                activeCoroutines.RemoveAt(i);
-    }
-
-    /// <summary>
-    /// Whether there are any active coroutines.
-    /// </summary>
-    public bool HasCoroutines() => activeCoroutines.Count > 0;
-
-    private void Update()
+    void Update()
     {
         Profiler.BeginEvent("Update Coroutines");
-        // Iterate backward to safely remove items from the list.
         for (var i = activeCoroutines.Count - 1; i >= 0; i--)
         {
             var instance = activeCoroutines[i];
-
-            // Skip and remove if owner does not exist.
             if (instance.Owner == null)
             {
                 activeCoroutines.RemoveAt(i);
@@ -112,13 +32,11 @@ public class CoroutineSystem : GamePlugin
             }
 
             var currentElement = instance.Coroutine.Current;
-            // Check coroutine Step to see if can move to next instruction.
             if (currentElement is IYieldInstruction instruction)
             {
                 if (!instruction.Step(Time.DeltaTime)) continue;
                 if (!instance.Coroutine.MoveNext()) activeCoroutines.RemoveAt(i);
             }
-            // Check if can move to next if null is current element.
             else if (currentElement == null)
             {
                 if (!instance.Coroutine.MoveNext())
@@ -131,12 +49,52 @@ public class CoroutineSystem : GamePlugin
         Profiler.EndEvent();
     }
 
-    /// <inheritdoc/>
     public override void Deinitialize()
     {
         StopAllCoroutines();
         Scripting.Update -= Update;
         coroutine.DeInitialize();
         base.Deinitialize();
+    }
+
+    public IEnumerator Invoke(Action function, float seconds, object owner, bool timeScaleIndependent = false)
+    {
+        var routine = InvokeCoroutine(function, seconds, timeScaleIndependent);
+        StartCoroutine(routine, owner);
+        return routine;
+    }
+
+    static IEnumerator InvokeCoroutine(Action function, float seconds, bool timeScaleIndependent = false)
+    {
+        yield return new WaitForSeconds(seconds, timeScaleIndependent);
+        function();
+    }
+
+    public void StartCoroutine(IEnumerator coroutine, object owner)
+    {
+        var handle = new CoroutineHandle(coroutine, owner);
+        handle.Coroutine.MoveNext();
+        activeCoroutines.Add(handle);
+    }
+
+    public void StopCoroutine(IEnumerator coroutine)
+    {
+        for (var i = activeCoroutines.Count - 1; i >= 0; i--)
+        {
+            if (Equals(activeCoroutines[i].Coroutine, coroutine))
+            {
+                activeCoroutines.RemoveAt(i);
+                return;
+            }
+        }
+    }
+
+    public void StopAllCoroutines() => activeCoroutines.Clear();
+
+    public void StopAllObjectCoroutines(object owner)
+    {
+        for (var i = activeCoroutines.Count - 1; i >= 0; i--)
+            if (Equals(activeCoroutines[i].Owner, owner))
+                activeCoroutines.RemoveAt(i);
     }
 }

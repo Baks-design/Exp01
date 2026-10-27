@@ -38,9 +38,10 @@ public sealed class FirstPersonMovement : IMovementStrategy
 
     void ApplyRotation(MovementContext ctx, float dt)
     {
-        var targetRot = Quaternion.Euler(0, ctx.camera.LocalEulerAngles.Y, 0);
+        var currentRot = ctx.controller.Orientation;
+        var targetRot = Quaternion.Euler(0, ctx.cameraYaw.Orientation.Y, 0);
         var t = 1 - Mathf.Exp(-preset.rotationLerpSpeed * dt);
-        ctx.controller.Orientation = Quaternion.Lerp(ctx.controller.Orientation, targetRot, t);
+        ctx.controller.Orientation = Quaternion.Lerp(currentRot, targetRot, t);
     }
 
     bool IsGrounded(MovementContext ctx)
@@ -87,16 +88,13 @@ public sealed class FirstPersonMovement : IMovementStrategy
         return prevVelocity + accelDir * accelVel;
     }
 
-    void UpdateHorizontalVelocity(MovementContext ctx, bool grounded, float dt) //FIXME
+    void UpdateHorizontalVelocity(MovementContext ctx, bool grounded, float dt)
     {
         var raw = new Vector3(ctx.input.GetAxis(GameAxis.MoveX), 0, ctx.input.GetAxis(GameAxis.MoveY));
         if (raw.LengthSquared > 1) raw.Normalize();
 
-        var yawRot = Quaternion.Euler(0, ctx.camera.Forward.Z, 0);
-
-        var dir = Vector3.Transform(raw, yawRot);
-        dir.Y = 0;
-        if (dir.LengthSquared > 1) dir.Normalize();
+        var dir = Vector3.Transform(raw, ctx.cameraYaw.Orientation);
+        if (dir.LengthSquared > 1e-6f) dir.Normalize();
 
         var horizontal = new Vector3(ctx.movementData.prevVelocity.X, 0, ctx.movementData.prevVelocity.Z);
         horizontal = grounded ? MoveGround(dir, horizontal, preset, dt) : MoveAir(dir, horizontal, preset, dt);

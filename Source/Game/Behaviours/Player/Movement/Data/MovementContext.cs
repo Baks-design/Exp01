@@ -7,7 +7,7 @@ public sealed class MovementContext
 {
     public InputService input;
     public CharacterController controller;
-    public Camera camera;
+    public Actor cameraYaw;
     public PlayerMovementData movementData;
     public CameraData cameraData;
     public PlayerSound sound;

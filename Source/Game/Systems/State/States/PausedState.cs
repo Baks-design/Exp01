@@ -16,8 +16,8 @@ public sealed class PausedState : IState
     public void OnEnter()
     {
         Debug.Log("Enter Pause Menu");
-        cursorService.Apply(CursorState.Menu);
-        timeService.Pause(); 
+        cursorService?.Apply(CursorState.Menu);
+        timeService?.Pause(); 
     }
 
     public void OnExit() { }

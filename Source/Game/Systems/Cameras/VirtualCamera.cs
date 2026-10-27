@@ -1,4 +1,3 @@
-
 using FlaxEngine;
 
 namespace Game.Systems.Cameras;
@@ -7,6 +6,8 @@ public sealed class VirtualCamera : Script
 {
     public int Priority = 0;
     ICameraStrategy strategy;
+
+    public ICameraStrategy GetStrategy => strategy;
 
     public override void OnStart()
     {
@@ -24,6 +25,4 @@ public sealed class VirtualCamera : Script
             rotation = Actor.Orientation;
         }
     }
-
-    public ICameraStrategy GetStrategy() => strategy;
 }

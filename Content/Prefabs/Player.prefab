@@ -37,6 +37,7 @@
 	"controller": "05d72da047ffe91862554fbd5c7c2600",
 	"sound": "23ad38084d0a995c0183f8918b6e7e22",
 	"playerCamera": "bafb132f480ac3c7a2bf68a80afef881",
+	"cameraYaw": "c68c6b8b445fcc5842ef95a0d4942e97",
 	"firstPerson": {
 		"PresetReference": "4c3ba6dc4f1a0ab691fd09bce68ed892"
 	},
@@ -59,6 +60,9 @@
 		"TypeName": "Game.Behaviours.Player.PlayerCamera",
 		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
 		"V": {
+	"camera": "6e5a8f664642d14b41337aa11b168458",
+	"cameraPitch": "793f0db14f0cb15827e20391d72d8d3d",
+	"cameraYaw": "c68c6b8b445fcc5842ef95a0d4942e97",
 	"firstPerson": {
 		"PresetReference": "4d429e5e4c116ab4ee12f6ab6a664438"
 	},
@@ -80,20 +84,24 @@
 				"Z": 0.0
 			}
 		},
+		"StaticFlags": 0,
 		"Layer": 1
 	},
 	{
-		"ID": "383feaa845c6f6821b90939c2a1c6622",
+		"ID": "793f0db14f0cb15827e20391d72d8d3d",
 		"TypeName": "FlaxEngine.EmptyActor",
 		"ParentID": "c68c6b8b445fcc5842ef95a0d4942e97",
-		"Name": "FPCamera",
-		"StaticFlags": 0
+		"Name": "Pitch",
+		"StaticFlags": 0,
+		"Layer": 1
 	},
 	{
-		"ID": "0317ed094407ba27d928e48c6de7c7fe",
-		"TypeName": "Game.Systems.Cameras.VirtualCamera",
-		"ParentID": "383feaa845c6f6821b90939c2a1c6622",
-		"V": {}
+		"ID": "6e5a8f664642d14b41337aa11b168458",
+		"TypeName": "FlaxEngine.Camera",
+		"ParentID": "793f0db14f0cb15827e20391d72d8d3d",
+		"Name": "Camera",
+		"StaticFlags": 0,
+		"Layer": 1
 	},
 	{
 		"ID": "ed57bb6045f86fdd5978f69f602250a2",
@@ -129,7 +137,7 @@
 		"V": {
 	"controller": "05d72da047ffe91862554fbd5c7c2600",
 	"playerMovement": "4165e4ab452b664d4e28b48de0e95d0a",
-	"CharacterModel": "3a826daf4e2436e0c016a1931f0814e5"
+	"animatedModel": "3a826daf4e2436e0c016a1931f0814e5"
 }
 	},
 	{
