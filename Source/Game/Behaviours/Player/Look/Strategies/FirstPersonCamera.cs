@@ -6,7 +6,6 @@ namespace Game.Behaviours.Player;
 public sealed class FirstPersonCamera : ICameraStrategy
 {
     FirstPersonCameraPreset preset;
-    bool wasPausedLastFrame;
 
     public JsonAssetReference<FirstPersonCameraPreset> PresetReference { get; set; }
 

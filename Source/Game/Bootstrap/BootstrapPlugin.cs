@@ -11,6 +11,13 @@ public sealed class GameBootstrap : GamePlugin
 {
     public static ServiceLocator Services { get; private set; } = null!;
 
+    public GameBootstrap() => _description = new PluginDescription
+    {
+        Name = "Game Bootstrap",
+        Description = "Game Bootstrap.",
+        Category = "System"
+    };
+
     public override void Initialize()
     {
         Services = new ServiceLocator();

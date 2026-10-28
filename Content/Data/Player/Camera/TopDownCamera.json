@@ -1,0 +1,24 @@
+{
+	"ID": "f281e3ee4ba2edee091655b6e1a1ab48",
+	"TypeName": "Game.Behaviours.Player.TopDownCameraPreset",
+	"EngineBuild": 7012,
+	"Data": {
+	"distance": 800.0,
+	"fixedPitch": 70.0,
+	"targetOffset": {
+		"X": 0.0,
+		"Y": 50.0,
+		"Z": 0.0
+	},
+	"yawSensitivity": 1.5,
+	"smoothing": 12.0,
+	"collisionSmooth": 10.0,
+	"collisionBias": 20.0,
+	"minDistance": 100.0,
+	"cameraCollisionLayers": {
+		"Mask": 4294967295
+	},
+	"fOVZoom": 1.2,
+	"fOVLerpSpeed": 8.0
+}
+}

@@ -1,4 +1,5 @@
 using FlaxEngine;
+using Game.Systems.Bootstrap;
 using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
@@ -8,24 +9,24 @@ public sealed class PlayerController : Script
     public PlayerMovement movement;
     public PlayerCamera camera;
     public SceneReference sceneReference;
-    readonly InputService input = new();
+    InputService inputService;
 
     public override void OnStart()
     {
         if (!movement) { Debug.LogError("PlayerController: PlayerMovement is not assigned."); return; }
         if (!camera) { Debug.LogError("PlayerController: PlayerCamera is not assigned."); return; }
+
+        GameBootstrap.Services.TryResolve(out inputService);
     }
 
-    public override void OnEnable() => SetToFirstView();
+    public override void OnEnable() => SetToThirdView();
 
     public override void OnUpdate() => ChangeView();
 
     void ChangeView()
     {
-        if (input.GetAction(InputActions.FirstView))
-            SetToFirstView();
-        else if (input.GetAction(InputActions.ThirdView))
-            SetToThirdView();
+        if (inputService.GetAction(InputActions.FirstView)) SetToFirstView();
+        else if (inputService.GetAction(InputActions.ThirdView)) SetToThirdView();
     }
 
     void SetToFirstView()
@@ -37,8 +38,8 @@ public sealed class PlayerController : Script
 
     void SetToThirdView()
     {
-        movement.SetMovementStrategy(movement.thirdPerson);
-        camera.SetCameraStrategy(camera.thirdPerson);
+        movement.SetMovementStrategy(movement.topDown);
+        camera.SetCameraStrategy(camera.topDown);
         Debug.Log("Enter in Third View");
     }
 

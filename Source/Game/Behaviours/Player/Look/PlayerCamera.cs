@@ -1,4 +1,5 @@
 using FlaxEngine;
+using Game.Systems.Bootstrap;
 using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
@@ -13,9 +14,9 @@ public sealed class PlayerCamera : Script
 
     [Header("Strategies")]
     public FirstPersonCamera firstPerson = new();
-    public ThirdPersonCamera thirdPerson = new();
+    public TopDownCamera topDown = new();
 
-    readonly InputService input = new();
+    InputService inputService;
     readonly CameraContext ctx = new();
     ICameraStrategy currentStrategy;
     private bool wasPausedLastFrame;
@@ -26,7 +27,9 @@ public sealed class PlayerCamera : Script
     {
         if (camera == null) camera = Level.FindActor<Camera>();
 
-        ctx.input = input;
+        GameBootstrap.Services.TryResolve(out inputService);
+
+        ctx.input = inputService;
         ctx.camera = camera;
         ctx.cameraPitch = cameraPitch;
         ctx.cameraYaw = cameraYaw;
@@ -52,8 +55,8 @@ public sealed class PlayerCamera : Script
             wasPausedLastFrame = false;
             return;
         }
-        
-        ctx.deltaTime = Time.PhysicsFPS;
+
+        ctx.deltaTime = 1f / Time.PhysicsFPS;
         currentStrategy.Execute(ctx);
     }
 
@@ -72,7 +75,6 @@ public sealed class PlayerCamera : Script
         Float2 CurrentPitchRange() => currentStrategy switch
         {
             FirstPersonCamera => new Float2(-60f, 60f),
-            ThirdPersonCamera => new Float2(-60f, 60f),
             _ => new Float2(-89f, 89f)
         };
         CameraData.pitch = Mathf.Clamp(CameraData.pitch + pitch, range.X, range.Y);

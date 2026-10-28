@@ -18,21 +18,6 @@
 			}
 		},
 		{
-			"ID": "423b3aae44e829c5974e3c84fbbdfc62",
-			"PrefabID": "5c6c930148c12ef29a0fa095fdce3e11",
-			"PrefabObjectID": "cec065194bd5be3fe664cdbb28f0e26c",
-			"ParentID": "74a68a984824b4510d12589f199ad68f",
-			"IsActive": false,
-			"StaticFlags": 0
-		},
-		{
-			"ID": "7f2214e2471a5007295de3829bb21345",
-			"PrefabID": "5c6c930148c12ef29a0fa095fdce3e11",
-			"PrefabObjectID": "7ca114cc42ddf2d7bc81069fb05a628a",
-			"ParentID": "423b3aae44e829c5974e3c84fbbdfc62",
-			"V": {}
-		},
-		{
 			"ID": "28553d634087c67c711ebd96080482aa",
 			"TypeName": "FlaxEngine.EmptyActor",
 			"ParentID": "74a68a984824b4510d12589f199ad68f",
@@ -108,49 +93,6 @@
 			"Mode": 0
 		},
 		{
-			"ID": "0aceca56432a4a265861c580382e8bf4",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
-			"ParentID": "74a68a984824b4510d12589f199ad68f",
-			"V": {}
-		},
-		{
-			"ID": "8f69e1d94657646b08ef95a68729ac04",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "9e296b9e44c5c50dd6d23d95e1766e13",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4",
-			"Transform": {
-				"Translation": {
-					"X": 11.60003662109375,
-					"Y": 4.79998779296875,
-					"Z": 0.0
-				}
-			},
-			"Data": {
-	"ResolutionCurve": {},
-	"DpiCurve": {},
-	"Offsets": {
-		"Left": 11.600037,
-		"Right": -98.80005,
-		"Top": 4.799988,
-		"Bottom": -4.799988
-	}
-}
-		},
-		{
-			"ID": "3b98aeec49c2715303a4d7841f9ff2bb",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "4e32e2f346ac14a0117f52a75f752caf",
-			"ParentID": "0aceca56432a4a265861c580382e8bf4"
-		},
-		{
-			"ID": "b9a1c5cb4e63f3ea375efa8c630a4de8",
-			"PrefabID": "a884dab64755cb311374d89448d0f767",
-			"PrefabObjectID": "9fb135ba411250842108bdbf00c7ce93",
-			"ParentID": "3b98aeec49c2715303a4d7841f9ff2bb",
-			"V": {}
-		},
-		{
 			"ID": "8885bda54dd4bc4b6a779d8e4094ceaf",
 			"TypeName": "FlaxEngine.EmptyActor",
 			"ParentID": "74a68a984824b4510d12589f199ad68f",
@@ -218,6 +160,63 @@
 			"Name": "BoxCollider"
 		},
 		{
+			"ID": "0aceca56432a4a265861c580382e8bf4",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "35a54e51417459217b7b97a40452b6b7",
+			"ParentID": "74a68a984824b4510d12589f199ad68f",
+			"V": {}
+		},
+		{
+			"ID": "8f69e1d94657646b08ef95a68729ac04",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "9e296b9e44c5c50dd6d23d95e1766e13",
+			"ParentID": "0aceca56432a4a265861c580382e8bf4",
+			"Transform": {
+				"Translation": {
+					"X": 11.60003662109375,
+					"Y": 4.79998779296875,
+					"Z": 0.0
+				}
+			},
+			"Data": {
+	"ResolutionCurve": {},
+	"DpiCurve": {},
+	"Offsets": {
+		"Left": 11.600037,
+		"Right": -98.80005,
+		"Top": 4.799988,
+		"Bottom": -4.799988
+	}
+}
+		},
+		{
+			"ID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "4e32e2f346ac14a0117f52a75f752caf",
+			"ParentID": "0aceca56432a4a265861c580382e8bf4"
+		},
+		{
+			"ID": "b9a1c5cb4e63f3ea375efa8c630a4de8",
+			"PrefabID": "a884dab64755cb311374d89448d0f767",
+			"PrefabObjectID": "9fb135ba411250842108bdbf00c7ce93",
+			"ParentID": "3b98aeec49c2715303a4d7841f9ff2bb",
+			"V": {}
+		},
+		{
+			"ID": "423b3aae44e829c5974e3c84fbbdfc62",
+			"PrefabID": "5c6c930148c12ef29a0fa095fdce3e11",
+			"PrefabObjectID": "cec065194bd5be3fe664cdbb28f0e26c",
+			"ParentID": "74a68a984824b4510d12589f199ad68f",
+			"StaticFlags": 0
+		},
+		{
+			"ID": "7f2214e2471a5007295de3829bb21345",
+			"PrefabID": "5c6c930148c12ef29a0fa095fdce3e11",
+			"PrefabObjectID": "7ca114cc42ddf2d7bc81069fb05a628a",
+			"ParentID": "423b3aae44e829c5974e3c84fbbdfc62",
+			"V": {}
+		},
+		{
 			"ID": "f70e53fc475fc45fa8229db890c43775",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
 			"PrefabObjectID": "05d72da047ffe91862554fbd5c7c2600",
@@ -250,7 +249,7 @@
 			"ParentID": "6d0df38d42f6fe6598386ca1d2929010",
 			"V": {
 	"firstPerson": {},
-	"thirdPerson": {},
+	"topDown": {},
 	"MovementData": {}
 }
 		},
@@ -267,7 +266,7 @@
 			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e",
 			"V": {
 	"firstPerson": {},
-	"thirdPerson": {},
+	"topDown": {},
 	"CameraData": {}
 }
 		},
@@ -284,10 +283,17 @@
 			"ParentID": "926656744a86b66ba287acb276b783a0"
 		},
 		{
-			"ID": "8438cda64877505a5057349da3206152",
+			"ID": "9dc4bbef4cb5171643ec378aef1724b2",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
-			"PrefabObjectID": "6e5a8f664642d14b41337aa11b168458",
+			"PrefabObjectID": "741ee8c24e85916702ed63a5790017b4",
 			"ParentID": "757ac3504a43066fa204fcb7d1f1a6d0"
+		},
+		{
+			"ID": "200388894e28f94d13d8e1b29488be8e",
+			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
+			"PrefabObjectID": "0436c24c44cc0cc99099f5bba39d2f9c",
+			"ParentID": "9dc4bbef4cb5171643ec378aef1724b2",
+			"V": {}
 		},
 		{
 			"ID": "c869dca745cbb9c1c6fe71ac104b0faa",
@@ -307,25 +313,6 @@
 			"PrefabObjectID": "23ad38084d0a995c0183f8918b6e7e22",
 			"ParentID": "115b653b4d5a830f1617d9a19720a55b",
 			"V": {}
-		},
-		{
-			"ID": "681844c8449e3bd3f1e934b66824a691",
-			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
-			"PrefabObjectID": "509d08014ea6b1102326219bc5b893f7",
-			"ParentID": "f70e53fc475fc45fa8229db890c43775"
-		},
-		{
-			"ID": "4a1b297d45fdae469e421a9e3d404758",
-			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
-			"PrefabObjectID": "df70a0854d918c87e5ab79b647c8f8e2",
-			"ParentID": "681844c8449e3bd3f1e934b66824a691",
-			"V": {}
-		},
-		{
-			"ID": "9387d4a04ed6eec4fe8717a4cfa7f49d",
-			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
-			"PrefabObjectID": "3a826daf4e2436e0c016a1931f0814e5",
-			"ParentID": "681844c8449e3bd3f1e934b66824a691"
 		},
 		{
 			"ID": "8ae41c4a475f91e4fc45649e1951b1da",

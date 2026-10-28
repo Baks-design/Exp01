@@ -12,6 +12,13 @@ public sealed class CoroutineSystem : GamePlugin
 
     public bool HasCoroutines => active.Count > 0;
 
+    public CoroutineSystem() => _description = new PluginDescription
+    {
+        Name = "Coroutine System",
+        Description = "Global coroutine service.",
+        Category = "Tools"
+    };
+
     public override void Initialize()
     {
         base.Initialize();

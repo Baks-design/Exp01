@@ -2,7 +2,7 @@ using FlaxEngine;
 
 namespace Game.Behaviours.Player;
 
-public sealed class ThirdPersonMovementPreset
+public sealed class TopDownMovementPreset
 {
     [Tooltip("Speed at which the camera orientation is smoothed toward its target. " +
              "Higher = snappier camera, lower = floatier. Only affects pitch-flattening " +

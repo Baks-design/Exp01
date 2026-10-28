@@ -41,8 +41,8 @@
 	"firstPerson": {
 		"PresetReference": "4c3ba6dc4f1a0ab691fd09bce68ed892"
 	},
-	"thirdPerson": {
-		"PresetReference": "0db1291340c724383d303e942199dcbf"
+	"topDown": {
+		"PresetReference": "d17b706c4f8b7a650de3a293febc9484"
 	},
 	"MovementData": {}
 }
@@ -60,15 +60,15 @@
 		"TypeName": "Game.Behaviours.Player.PlayerCamera",
 		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
 		"V": {
-	"camera": "6e5a8f664642d14b41337aa11b168458",
+	"camera": "423b3aae44e829c5974e3c84fbbdfc62",
 	"cameraPitch": "793f0db14f0cb15827e20391d72d8d3d",
 	"cameraYaw": "c68c6b8b445fcc5842ef95a0d4942e97",
 	"cameraTarget": "724eae25415034d6dcf899a6e9dd8a10",
 	"firstPerson": {
 		"PresetReference": "4d429e5e4c116ab4ee12f6ab6a664438"
 	},
-	"thirdPerson": {
-		"PresetReference": "57a06232469b205ac3347ea419e29d8d"
+	"topDown": {
+		"PresetReference": "f281e3ee4ba2edee091655b6e1a1ab48"
 	},
 	"CameraData": {}
 }
@@ -97,12 +97,16 @@
 		"Layer": 1
 	},
 	{
-		"ID": "6e5a8f664642d14b41337aa11b168458",
-		"TypeName": "FlaxEngine.Camera",
+		"ID": "741ee8c24e85916702ed63a5790017b4",
+		"TypeName": "FlaxEngine.EmptyActor",
 		"ParentID": "793f0db14f0cb15827e20391d72d8d3d",
-		"Name": "Camera",
-		"StaticFlags": 0,
-		"Layer": 1
+		"Name": "Virtual Camera"
+	},
+	{
+		"ID": "0436c24c44cc0cc99099f5bba39d2f9c",
+		"TypeName": "Game.Systems.Cameras.VirtualCamera",
+		"ParentID": "741ee8c24e85916702ed63a5790017b4",
+		"V": {}
 	},
 	{
 		"ID": "724eae25415034d6dcf899a6e9dd8a10",
@@ -134,42 +138,6 @@
 	"SoundBankAsset": "8cafa9524c8a73c54c93e99f87777e63",
 	"volume": 1.0
 }
-	},
-	{
-		"ID": "509d08014ea6b1102326219bc5b893f7",
-		"TypeName": "FlaxEngine.EmptyActor",
-		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
-		"Name": "Animation",
-		"StaticFlags": 0,
-		"Layer": 1
-	},
-	{
-		"ID": "df70a0854d918c87e5ab79b647c8f8e2",
-		"TypeName": "Game.Behaviours.Player.PlayerAnimation",
-		"ParentID": "509d08014ea6b1102326219bc5b893f7",
-		"V": {
-	"controller": "05d72da047ffe91862554fbd5c7c2600",
-	"playerMovement": "4165e4ab452b664d4e28b48de0e95d0a",
-	"animatedModel": "3a826daf4e2436e0c016a1931f0814e5"
-}
-	},
-	{
-		"ID": "3a826daf4e2436e0c016a1931f0814e5",
-		"PrefabID": "fd470657483f2f038f075a91488aeadf",
-		"PrefabObjectID": "1fc7ad10455026d2a531bf888e5d7b40",
-		"ParentID": "509d08014ea6b1102326219bc5b893f7",
-		"Transform": {
-			"Translation": {
-				"X": 0.0,
-				"Y": -125.0,
-				"Z": 0.0
-			},
-			"Scale": {
-				"X": 0.6499999761581421,
-				"Y": 0.6499999761581421,
-				"Z": 0.6499999761581421
-			}
-		}
 	},
 	{
 		"ID": "6e450e2c49cd2c6c12d3698e64c58d4b",

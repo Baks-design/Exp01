@@ -1,4 +1,5 @@
 using FlaxEngine;
+using Game.Systems.Bootstrap;
 using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
@@ -13,9 +14,9 @@ public sealed class PlayerMovement : Script
 
     [Header("Strategies")]
     public FirstPersonMovement firstPerson = new();
-    public ThirdPersonMovement thirdPerson = new();
+    public TopDownMovement topDown = new();
 
-    readonly InputService input = new();
+    InputService inputService;
     readonly MovementContext ctx = new();
     IMovementStrategy strategy;
 
@@ -27,10 +28,12 @@ public sealed class PlayerMovement : Script
         if (!cameraYaw) { Debug.LogError("PlayerMovement: cameraYaw missing."); return; }
         if (!playerCamera) { Debug.LogError("PlayerMovement: playerCamera missing."); return; }
 
-        ctx.input = input;
+        GameBootstrap.Services.TryResolve(out inputService);
+
+        ctx.input = inputService;
         ctx.controller = controller;
         ctx.cameraYaw = cameraYaw;
-        ctx.camera = playerCamera;  
+        ctx.camera = playerCamera;
         ctx.movementData = MovementData;
         ctx.sound = sound;
     }
@@ -39,7 +42,7 @@ public sealed class PlayerMovement : Script
     {
         if (strategy == null) return;
 
-        var dt = Time.PhysicsFPS;
+        var dt = 1f / Time.PhysicsFPS;
         ctx.deltaTime = dt;
         strategy.Execute(ctx, dt);
     }
@@ -66,9 +69,9 @@ public sealed class PlayerMovement : Script
                     ? fp.PresetReference.Asset?.CreateInstance<FirstPersonMovementPreset>()
                     : null);
                 break;
-            case ThirdPersonMovement tp:
+            case TopDownMovement tp:
                 tp.SetPreset(tp.PresetReference
-                    ? tp.PresetReference.Asset?.CreateInstance<ThirdPersonMovementPreset>()
+                    ? tp.PresetReference.Asset?.CreateInstance<TopDownMovementPreset>()
                     : null);
                 break;
         }

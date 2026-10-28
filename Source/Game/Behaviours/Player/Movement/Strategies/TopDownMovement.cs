@@ -3,20 +3,20 @@ using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
 
-public sealed class ThirdPersonMovement : IMovementStrategy
+public sealed class TopDownMovement : IMovementStrategy
 {
-    ThirdPersonMovementPreset preset;
+    TopDownMovementPreset preset; 
 
-    public JsonAssetReference<ThirdPersonMovementPreset> PresetReference { get; set; }
+    public JsonAssetReference<TopDownMovementPreset> PresetReference { get; set; }
 
-    public void SetPreset(ThirdPersonMovementPreset preset) => this.preset = preset;
+    public void SetPreset(TopDownMovementPreset preset) => this.preset = preset;
 
     public void Execute(MovementContext ctx, float dt)
     {
         if (preset == null && PresetReference != null) preset = PresetReference.Instance;
         if (preset == null)
         {
-            Debug.LogError("ThirdPersonMovement: preset missing.");
+            Debug.LogError("TopDownMovement: preset missing.");
             return;
         }
 

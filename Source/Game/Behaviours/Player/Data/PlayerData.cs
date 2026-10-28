@@ -13,8 +13,8 @@ public sealed class PlayerData : Script, ISaveable
         public Vector3 Position;
     }
 
+    [ReadOnly] public PlayerData playerData;
     State pendingState;
-    PlayerData playerData;
 
     public string SaveKey => "player";
 

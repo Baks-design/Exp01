@@ -1,189 +1,191 @@
-[00:00:058] Flax.Build 1.0.0
-[00:00:069]   Arguments: -log -mutex -genproject -vs2026 -vscode
-[00:00:069]   Workspace: C:\Users\Adriano\Flax\Exp01
-[00:00:069]   Engine: C:\Program Files (x86)\Flax\Flax_1.13
-[00:00:069]   .NET 10.0.13
-[00:00:249] Loading project file from "C:\Users\Adriano\Flax\Exp01\Exp01.flaxproj"...
-[00:00:611] Loading project file from "C:\Program Files (x86)\Flax\Flax_1.13\Flax.flaxproj"...
-[00:00:618] Loaded project Flax, version 1.13.7012
-[00:00:618] Loaded project Exp01, version 1.0
-[00:00:917] Engine build version: 1.13.7012
-[00:01:035] Generating project files...
-[00:01:076] Found target GameEditorTarget
-[00:01:076] Found target GameTarget
-[00:01:076] Found target FlaxEditor
-[00:01:076] Found target FlaxGame
-[00:01:077] Found project Flax
-[00:01:126] Missing Android SDK. Cannot build for Android platform.
-[00:01:127] Missing Linux Toolchain. Cannot build for Linux platform.
-[00:01:153] Found Windows SDK v10_0_19041_0 at C:\Program Files (x86)\Windows Kits\10\
-[00:01:228] Missing Emscripten SDK. Cannot build for Web platform.
-[00:01:229] Missing MSVC toolset v140 or later (VS 2015 or later C++ build tools). Cannot build for Windows platform.
-[00:01:239] Skipping configuration Editor.Windows.Debug for x64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Windows.Debug for ARM64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Windows.Development for x64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Windows.Development for ARM64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Windows.Release for x64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Windows.Release for ARM64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
-[00:01:239] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
-[00:01:240] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
-[00:01:240] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
-[00:01:240] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
-[00:01:240] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
-[00:01:240] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
-[00:01:240] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Windows.Debug for x64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Windows.Debug for ARM64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Windows.Development for x64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Windows.Development for ARM64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Windows.Release for x64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Windows.Release for ARM64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
-[00:01:241] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
-[00:01:242] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
-[00:01:242] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
-[00:01:243] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
-[00:01:243] Skipping configuration Game.Web.Development for x86: Missing platform SDK
-[00:01:243] Skipping configuration Game.Web.Release for x86: Missing platform SDK
-[00:01:250] Found project Exp01
-[00:01:315] Missing VULKAN_SDK environment variable. Cannot build Vulkan.
-[00:01:316] Building for Windows without Vulkan rendering backend (Vulkan SDK is missing)
-[00:01:316] Building for Windows without D3D12 rendering backend (Windows SDK is missing)
-[00:01:393] Found the following .NET SDK versions: 10.0.402
-[00:01:394] Found the following .NET runtime versions: 10.0.13
-[00:01:404] Using .NET SDK 10.0.402, runtime 10.0.13 (C:\Program Files\dotnet\)
-[00:01:408]   - Host Runtime for Windows x64
-[00:01:815] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
-[00:01:815] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
-[00:02:587] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
-[00:02:587] Skipping configuration Game.Web.Development for x86: Missing platform SDK
-[00:02:587] Skipping configuration Game.Web.Release for x86: Missing platform SDK
-[00:02:706] Using Dotnet runtime versions range 10-11 for Game Cooker
-[00:03:414] Project Game -> C:\Users\Adriano\Flax\Exp01\Source\Game.csproj
-[00:03:470] Saved file to C:\Users\Adriano\Flax\Exp01\Source\Game.csproj
-[00:03:471] Project BuildScripts -> C:\Users\Adriano\Flax\Exp01\Cache\Projects\BuildScripts.csproj
-[00:03:508] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Cache\Projects\BuildScripts.csproj
-[00:03:509] Solution -> C:\Users\Adriano\Flax\Exp01\Exp01.slnx
-[00:03:578] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Exp01.slnx
-[00:03:584] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Exp01.slnx.DotSettings.user
-[00:03:606] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Cache\Projects\Flax.Build.CSharp.SkipBuild.targets
-[00:03:630] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Cache\Projects\Flax.Build.CSharp.targets
-[00:03:631] Found target GameEditorTarget
-[00:03:631] Found target GameTarget
-[00:03:631] Found target FlaxEditor
-[00:03:631] Found target FlaxGame
-[00:03:631] Found project Flax
-[00:03:631] Skipping configuration Editor.Windows.Debug for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Windows.Debug for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Windows.Development for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Windows.Development for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Windows.Release for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Windows.Release for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
-[00:03:631] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Windows.Debug for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Windows.Debug for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Windows.Development for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Windows.Development for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Windows.Release for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Windows.Release for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
-[00:03:631] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
-[00:03:631] Skipping configuration Game.Web.Development for x86: Missing platform SDK
-[00:03:631] Skipping configuration Game.Web.Release for x86: Missing platform SDK
-[00:03:631] Found project Exp01
-[00:03:937] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
-[00:03:937] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
-[00:04:181] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
-[00:04:182] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
-[00:04:182] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
-[00:04:182] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
-[00:04:182] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
-[00:04:182] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
-[00:04:182] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
-[00:04:182] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
-[00:04:182] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
-[00:04:182] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
-[00:04:182] Skipping configuration Game.Web.Development for x86: Missing platform SDK
-[00:04:182] Skipping configuration Game.Web.Release for x86: Missing platform SDK
-[00:06:772] Project Game -> C:\Users\Adriano\Flax\Exp01\Source\Game.
-[00:06:773] Project BuildScripts -> C:\Users\Adriano\Flax\Exp01\Cache\Projects\BuildScripts.
-[00:06:773] Solution -> C:\Users\Adriano\Flax\Exp01\Exp01.
-[00:06:887] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\tasks.json
-[00:06:899] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\launch.json
-[00:06:917] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\c_cpp_properties.json
-[00:06:923] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\settings.json
-[00:06:931] Saved file to C:\Users\Adriano\Flax\Exp01\Exp01.code-workspace
-[00:06:934] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\extensions.json
-[00:06:953] Skipped saving file to C:\Users\Adriano\Flax\Exp01\omnisharp.json
-[00:06:954] Total time: 00:00:07.1081840
-[00:06:954] End.
+[00:00:016] Flax.Build 1.0.0
+[00:00:017]   Arguments: -log -mutex -genproject -vs2026 -vscode
+[00:00:017]   Workspace: C:\Users\Adriano\Flax\Exp01
+[00:00:017]   Engine: C:\Program Files (x86)\Flax\Flax_1.13
+[00:00:018]   .NET 10.0.13
+[00:00:164] Loading project file from "C:\Users\Adriano\Flax\Exp01\Exp01.flaxproj"...
+[00:00:333] Loading project file from "C:\Program Files (x86)\Flax\Flax_1.13\Flax.flaxproj"...
+[00:00:345] Loaded project Flax, version 1.13.7012
+[00:00:345] Loaded project Exp01, version 1.0
+[00:00:378] Wait for another instance(s) of Flax.Build to end...
+[00:10:934] Waiting done.
+[00:11:039] Engine build version: 1.13.7012
+[00:11:157] Generating project files...
+[00:11:195] Found target GameEditorTarget
+[00:11:195] Found target GameTarget
+[00:11:195] Found target FlaxEditor
+[00:11:195] Found target FlaxGame
+[00:11:197] Found project Flax
+[00:11:242] Missing Android SDK. Cannot build for Android platform.
+[00:11:244] Missing Linux Toolchain. Cannot build for Linux platform.
+[00:11:263] Found Windows SDK v10_0_19041_0 at C:\Program Files (x86)\Windows Kits\10\
+[00:11:318] Missing Emscripten SDK. Cannot build for Web platform.
+[00:11:319] Missing MSVC toolset v140 or later (VS 2015 or later C++ build tools). Cannot build for Windows platform.
+[00:11:329] Skipping configuration Editor.Windows.Debug for x64: Missing platform SDK
+[00:11:329] Skipping configuration Editor.Windows.Debug for ARM64: Missing platform SDK
+[00:11:329] Skipping configuration Editor.Windows.Development for x64: Missing platform SDK
+[00:11:329] Skipping configuration Editor.Windows.Development for ARM64: Missing platform SDK
+[00:11:329] Skipping configuration Editor.Windows.Release for x64: Missing platform SDK
+[00:11:329] Skipping configuration Editor.Windows.Release for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
+[00:11:330] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Windows.Debug for x64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Windows.Debug for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Windows.Development for x64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Windows.Development for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Windows.Release for x64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Windows.Release for ARM64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
+[00:11:330] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
+[00:11:331] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
+[00:11:331] Skipping configuration Game.Web.Development for x86: Missing platform SDK
+[00:11:331] Skipping configuration Game.Web.Release for x86: Missing platform SDK
+[00:11:338] Found project Exp01
+[00:11:415] Missing VULKAN_SDK environment variable. Cannot build Vulkan.
+[00:11:415] Building for Windows without Vulkan rendering backend (Vulkan SDK is missing)
+[00:11:415] Building for Windows without D3D12 rendering backend (Windows SDK is missing)
+[00:11:500] Found the following .NET SDK versions: 10.0.402
+[00:11:501] Found the following .NET runtime versions: 10.0.13
+[00:11:513] Using .NET SDK 10.0.402, runtime 10.0.13 (C:\Program Files\dotnet\)
+[00:11:518]   - Host Runtime for Windows x64
+[00:12:003] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
+[00:12:003] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
+[00:12:379] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
+[00:12:379] Skipping configuration Game.Web.Development for x86: Missing platform SDK
+[00:12:379] Skipping configuration Game.Web.Release for x86: Missing platform SDK
+[00:12:571] Using Dotnet runtime versions range 10-11 for Game Cooker
+[00:13:893] Project Game -> C:\Users\Adriano\Flax\Exp01\Source\Game.csproj
+[00:14:012] Saved file to C:\Users\Adriano\Flax\Exp01\Source\Game.csproj
+[00:14:012] Project BuildScripts -> C:\Users\Adriano\Flax\Exp01\Cache\Projects\BuildScripts.csproj
+[00:14:021] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Cache\Projects\BuildScripts.csproj
+[00:14:021] Solution -> C:\Users\Adriano\Flax\Exp01\Exp01.slnx
+[00:14:135] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Exp01.slnx
+[00:14:143] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Exp01.slnx.DotSettings.user
+[00:14:145] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Cache\Projects\Flax.Build.CSharp.SkipBuild.targets
+[00:14:148] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Cache\Projects\Flax.Build.CSharp.targets
+[00:14:148] Found target GameEditorTarget
+[00:14:148] Found target GameTarget
+[00:14:148] Found target FlaxEditor
+[00:14:148] Found target FlaxGame
+[00:14:148] Found project Flax
+[00:14:149] Skipping configuration Editor.Windows.Debug for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Windows.Debug for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Windows.Development for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Windows.Development for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Windows.Release for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Windows.Release for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
+[00:14:149] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Windows.Debug for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Windows.Debug for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Windows.Development for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Windows.Development for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Windows.Release for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Windows.Release for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
+[00:14:149] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
+[00:14:149] Skipping configuration Game.Web.Development for x86: Missing platform SDK
+[00:14:149] Skipping configuration Game.Web.Release for x86: Missing platform SDK
+[00:14:150] Found project Exp01
+[00:14:760] Skipping configuration Editor.Linux.Debug for x64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Linux.Development for x64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Linux.Release for x64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Mac.Debug for x64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Mac.Debug for ARM64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Mac.Development for x64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Mac.Development for ARM64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Mac.Release for x64: Missing platform SDK
+[00:14:760] Skipping configuration Editor.Mac.Release for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Linux.Debug for x64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Linux.Development for x64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Linux.Release for x64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Android.Debug for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Android.Development for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Android.Release for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Mac.Debug for x64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Mac.Debug for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Mac.Development for x64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Mac.Development for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Mac.Release for x64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Mac.Release for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.iOS.Debug for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.iOS.Development for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.iOS.Release for ARM64: Missing platform SDK
+[00:15:145] Skipping configuration Game.Web.Debug for x86: Missing platform SDK
+[00:15:145] Skipping configuration Game.Web.Development for x86: Missing platform SDK
+[00:15:145] Skipping configuration Game.Web.Release for x86: Missing platform SDK
+[00:16:558] Project Game -> C:\Users\Adriano\Flax\Exp01\Source\Game.
+[00:16:558] Project BuildScripts -> C:\Users\Adriano\Flax\Exp01\Cache\Projects\BuildScripts.
+[00:16:558] Solution -> C:\Users\Adriano\Flax\Exp01\Exp01.
+[00:16:613] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\tasks.json
+[00:16:618] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\launch.json
+[00:16:618] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\c_cpp_properties.json
+[00:16:619] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\settings.json
+[00:16:623] Skipped saving file to C:\Users\Adriano\Flax\Exp01\Exp01.code-workspace
+[00:16:624] Skipped saving file to C:\Users\Adriano\Flax\Exp01\.vscode\extensions.json
+[00:16:624] Skipped saving file to C:\Users\Adriano\Flax\Exp01\omnisharp.json
+[00:16:626] Total time: 00:00:16.7298353
+[00:16:626] End.
