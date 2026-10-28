@@ -20,12 +20,12 @@ public sealed class PlayerMovementData
         horizontalVelocity = Vector3.Zero;
         verticalVelocity = Vector3.Zero;
         prevVelocity = Vector3.Zero;
-        jumpBufferTimer = 0;
-        coyoteTimer = 0;
+        jumpBufferTimer = 0f;
+        coyoteTimer = 0f;
         jumpRequested = false;
-        footstepDistance = 0;
-        lastVerticalVelocity = 0;
-        framesSinceJump = int.MaxValue;  
+        footstepDistance = 0f;
+        lastVerticalVelocity = 0f;
+        framesSinceJump = int.MaxValue;
         jumpWasHeld = false;
     }
 }

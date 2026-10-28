@@ -11,158 +11,141 @@ public sealed class ThirdPersonMovement : IMovementStrategy
 
     public void SetPreset(ThirdPersonMovementPreset preset) => this.preset = preset;
 
-    public void Execute(MovementContext ctx)
+    public void Execute(MovementContext ctx, float dt)
     {
-        if (preset == null) return;
-        
-        ApplyCameraSmoothing(ctx);
-        ApplyMovement(ctx);
-        ApplyRotation(ctx);
+        if (preset == null && PresetReference != null) preset = PresetReference.Instance;
+        if (preset == null)
+        {
+            Debug.LogError("ThirdPersonMovement: preset missing.");
+            return;
+        }
+
+        ApplyMovement(ctx, dt);
+        ApplyRotation(ctx, dt);
     }
 
-    void ApplyCameraSmoothing(MovementContext ctx)
+    void ApplyMovement(MovementContext ctx, float dt)
     {
-        // var camTrans = ctx.camera.Transform;
-        // var camFactor = 1 - Mathf.Exp(-preset.cameraSmoothing * Time.DeltaTime);
+        if (ctx.movementData.framesSinceJump < int.MaxValue) ctx.movementData.framesSinceJump++;
 
-        // ctx.camera.LocalOrientation = Quaternion.Lerp(
-        //     ctx.camera.LocalOrientation,
-        //     Quaternion.Euler(ctx.camera.LocalEulerAngles.X, ctx.camera.LocalEulerAngles.Y, 0),
-        //     camFactor);
-
-        // camTrans.Translation = Vector3.Lerp(camTrans.Translation, ctx.camera.Position, camFactor);
-        // camTrans.Orientation = ctx.camera.Orientation;
-        // ctx.camera.Transform = camTrans;
+        UpdateJumpTimers(ctx, dt);
+        UpdateHorizontalVelocity(ctx, dt);
+        UpdateVerticalVelocity(ctx, dt);
+        UpdateMove(ctx, dt);
+        UpdateFootsteps(ctx, dt);
     }
 
-    void ApplyMovement(MovementContext ctx)
-    {
-        if (ctx.movementData.framesSinceJump < int.MaxValue)
-            ctx.movementData.framesSinceJump++;
-
-        UpdateJumpTimers(ctx);
-        UpdateHorizontalVelocity(ctx);
-        UpdateVerticalVelocity(ctx);
-        UpdateMove(ctx);
-    }
-
-    void ApplyRotation(MovementContext ctx)
+    void ApplyRotation(MovementContext ctx, float dt)
     {
         Vector3 faceDir;
         if (preset.strafe)
-            faceDir = Vector3.Transform(Vector3.Forward, Quaternion.Euler(0, ctx.cameraData.yaw, 0));
+            faceDir = Vector3.Transform(Vector3.Forward, Quaternion.Euler(0f, ctx.cameraYaw.Orientation.Y, 0f));
         else
         {
             if (ctx.movementData.horizontalVelocity.LengthSquared <= 0.01f) return;
             faceDir = ctx.movementData.horizontalVelocity.Normalized;
         }
 
+        var currentRot = ctx.controller.Orientation;
         var targetRot = Quaternion.LookRotation(faceDir, Vector3.Up);
-        var t = 1 - Mathf.Exp(-preset.rotationLerpSpeed * Time.DeltaTime);
-        ctx.controller.Orientation = Quaternion.Lerp(ctx.controller.Transform.Orientation, targetRot, t);
+        var t = 1f - Mathf.Exp(-preset.rotationLerpSpeed * dt);
+        ctx.controller.Orientation = Quaternion.Lerp(currentRot, targetRot, t);
     }
 
-    bool IsGrounded(MovementContext ctx)
+    void UpdateJumpTimers(MovementContext ctx, float dt)
     {
-        if (ctx.controller.IsGrounded) return true;
+        var jumpHeld = ctx.input.GetAction(InputActions.Jump);
+        var grounded = MovementMath.IsGrounded(ctx.controller, preset.groundCheck, preset.groundLayers);
 
-        return Physics.RayCast(ctx.controller.Position, -Vector3.Up, out _, preset.groundCheck,
-            preset.groundLayers, false);
-    }
-
-    void UpdateJumpTimers(MovementContext ctx)
-    {
-        ctx.movementData.jumpBufferTimer = ctx.input.GetAction(InputActions.Jump)
-            ? preset.jumpBufferTime
-            : ctx.movementData.jumpBufferTimer - Time.DeltaTime;
-
-        ctx.movementData.coyoteTimer = IsGrounded(ctx)
-            ? preset.coyoteTime
-            : ctx.movementData.coyoteTimer - Time.DeltaTime;
-
-        if (ctx.input.GetAction(InputActions.Jump))
-            ctx.movementData.jumpRequested = true;
-    }
-
-    static Vector3 MoveGround(Vector3 accelDir, Vector3 prevVelocity, ThirdPersonMovementPreset preset)
-    {
-        var speed = prevVelocity.Length;
-        if (Mathf.Abs(speed) > 0.01f)
+        if (jumpHeld && !ctx.movementData.jumpWasHeld)
         {
-            var drop = speed * preset.friction * Time.DeltaTime;
-            prevVelocity *= Mathf.Max(speed - drop, 0) / speed;
+            ctx.movementData.jumpBufferTimer = preset.jumpBufferTime;
+            ctx.movementData.jumpRequested = true;
         }
-        return Accelerate(accelDir, prevVelocity, preset.groundAccelerate, preset.maxVelocityGround);
+        else
+            ctx.movementData.jumpBufferTimer = Mathf.Max(ctx.movementData.jumpBufferTimer - dt, 0f);
+
+        ctx.movementData.jumpWasHeld = jumpHeld;
+        ctx.movementData.coyoteTimer = grounded ? preset.coyoteTime : Mathf.Max(ctx.movementData.coyoteTimer - dt, 0f);
     }
 
-    static Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity, ThirdPersonMovementPreset preset)
-      => Accelerate(accelDir, prevVelocity, preset.airAccelerate, preset.maxVelocityAir);
-
-    static Vector3 Accelerate(Vector3 accelDir, Vector3 prevVelocity, float accelerate, float maxVelocity)
+    void UpdateHorizontalVelocity(MovementContext ctx, float dt)
     {
-        var projVel = Vector3.Dot(prevVelocity, accelDir);
-        var accelVel = accelerate * Time.DeltaTime;
-        if (projVel + accelVel > maxVelocity) accelVel = maxVelocity - projVel;
-        return prevVelocity + accelDir * accelVel;
-    }
+        var dir = MovementMath.ComputeMoveDirection(ctx.input, ctx.cameraYaw);
 
-    void UpdateHorizontalVelocity(MovementContext ctx)
-    {
-        var raw = new Vector3(ctx.input.GetAxis(GameAxis.MoveX), 0, ctx.input.GetAxis(GameAxis.MoveY));
-        if (raw.LengthSquared > 1) raw.Normalize();
+        var horizontal = new Vector3(ctx.movementData.prevVelocity.X, 0f, ctx.movementData.prevVelocity.Z);
+        horizontal = MovementMath.IsGrounded(ctx.controller, preset.groundCheck, preset.groundLayers)
+            ? MovementMath.MoveGround(dir, horizontal, preset.friction, preset.groundAccelerate, preset.maxVelocityGround, dt)
+            : MovementMath.MoveAir(dir, horizontal, preset.airAccelerate, preset.maxVelocityAir, dt);
 
-        var yawRot = Quaternion.Euler(0, ctx.cameraData.yaw, 0);
-        var dir = Vector3.Transform(raw, yawRot);
-        dir.Y = 0;
-        if (dir.LengthSquared > 0) dir.Normalize();
-
-        var horizontal = new Vector3(ctx.movementData.prevVelocity.X, 0, ctx.movementData.prevVelocity.Z);
-
-        horizontal = IsGrounded(ctx) ? MoveGround(dir, horizontal, preset) : MoveAir(dir, horizontal, preset);
-        if (horizontal.Length < 0.05f) horizontal = Vector3.Zero;
+        if (dir.LengthSquared < 1e-6f && horizontal.Length < 0.05f) horizontal = Vector3.Zero;
 
         ctx.movementData.horizontalVelocity = horizontal;
     }
 
-    void UpdateVerticalVelocity(MovementContext ctx)
+    void UpdateVerticalVelocity(MovementContext ctx, float dt)
     {
         var v = ctx.movementData.verticalVelocity;
+        var grounded = MovementMath.IsGrounded(ctx.controller, preset.groundCheck, preset.groundLayers);
 
-        if (IsGrounded(ctx))
+        if (grounded)
         {
-            if (v.Y < 0) v.Y = 0;
+            if (v.Y < 0f) v.Y = 0f;
 
-            var wantJump = ctx.movementData.jumpRequested &&
-                ctx.movementData.jumpBufferTimer > 0 &&
-                ctx.movementData.coyoteTimer > 0;
+            var wantJump = ctx.movementData.jumpRequested
+                        && ctx.movementData.jumpBufferTimer > 0f
+                        && ctx.movementData.coyoteTimer > 0f;
             if (wantJump)
             {
                 v.Y = preset.jumpForce;
-                ctx.movementData.jumpBufferTimer = 0;
-                ctx.movementData.coyoteTimer = 0;
+
+                ctx.movementData.jumpBufferTimer = 0f;
+                ctx.movementData.coyoteTimer = 0f;
+                ctx.movementData.jumpRequested = false;
                 ctx.movementData.framesSinceJump = 0;
+
+                ctx.sound.PlayJump();
             }
             else if (ctx.movementData.framesSinceJump > preset.jumpGraceFrames)
+            {
                 v.Y = -preset.stickyGroundForce;
+
+                if (ctx.movementData.lastVerticalVelocity < -1f) ctx.sound.PlayLand();
+            }
         }
         else
         {
             v.Y = ctx.movementData.prevVelocity.Y;
-            v.Y += -Mathf.Abs(Physics.Gravity.Y * preset.gravityMultiplier) * Time.DeltaTime;
+            v.Y -= Mathf.Abs(Physics.Gravity.Y * preset.gravityMultiplier) * dt;
         }
 
-        ctx.movementData.jumpRequested = false;
+        if ((ctx.controller.Flags & CharacterController.CollisionFlags.Above) != 0 && v.Y > 0f) v.Y = 0f;
 
-        if ((ctx.controller.Flags & CharacterController.CollisionFlags.Above) != 0 && v.Y > 0) 
-            v.Y = 0;
-
+        ctx.movementData.lastVerticalVelocity = v.Y;
         ctx.movementData.verticalVelocity = v;
     }
 
-    static void UpdateMove(MovementContext ctx)
+    static void UpdateMove(MovementContext ctx, float dt)
     {
         var finalMove = ctx.movementData.horizontalVelocity + ctx.movementData.verticalVelocity;
-        ctx.controller.Move(finalMove * Time.DeltaTime);
+        ctx.controller.Move(finalMove * dt);
         ctx.movementData.prevVelocity = finalMove;
+    }
+
+    void UpdateFootsteps(MovementContext ctx, float dt)
+    {
+        if (!preset.strafe && ctx.movementData.horizontalVelocity.LengthSquared <= 0.01f) return;
+
+        var speed = ctx.movementData.horizontalVelocity.Length;
+        if (MovementMath.IsGrounded(ctx.controller, preset.groundCheck, preset.groundLayers) && speed > 1f)
+        {
+            ctx.movementData.footstepDistance += speed * dt;
+            if (ctx.movementData.footstepDistance >= preset.footstepDistance)
+            {
+                ctx.movementData.footstepDistance -= preset.footstepDistance;
+                ctx.sound.PlayFootstep();
+            }
+        }
+        else ctx.movementData.footstepDistance = 0f;
     }
 }

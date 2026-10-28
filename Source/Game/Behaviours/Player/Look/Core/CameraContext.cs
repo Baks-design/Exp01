@@ -7,8 +7,9 @@ public sealed class CameraContext
 {
     public InputService input;
     public Camera camera;
+    public Actor cameraTarget;
     public Actor cameraPitch;
     public Actor cameraYaw;
     public CameraData cameraData;
-    public float deltaTime;
+    public float deltaTime; 
 }

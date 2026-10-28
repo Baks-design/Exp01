@@ -1,39 +1,63 @@
+using System;
 using System.Collections.Generic;
+using FlaxEngine;
+using Game.Core.Cursor;
+using Game.Core.Helpers.Timer;
+using Game.Systems.Bootstrap;
 
 namespace Game.Systems.State;
 
 public sealed class StateService
 {
     readonly Dictionary<StateId, IState> states = [];
-    IState currentState;
 
-    public StateId CurrentId => currentState?.Id ?? StateId.None;
+    public StateId CurrentId => Current?.Id ?? StateId.None;
+    public IState Current { get; private set; }
 
-    public void Initialize()
+    public void Initialize(bool startAtBooting = true)
     {
-        SetupStates();
-        SetState(StateId.InGame);
+        if (states.Count > 0) throw new InvalidOperationException("StateService already initialized.");
+
+        GameBootstrap.Services.TryResolve<CursorService>(out var cursor);
+        GameBootstrap.Services.TryResolve<TimeService>(out var time);
+        SetupStates(cursor, time);
+
+        var entry = StateId.InGame; //startAtBooting ? StateId.Booting : StateId.MainMenu;
+        if (!SetState(entry)) throw new InvalidOperationException($"Failed to enter initial state {entry}.");
     }
 
-    void SetupStates()
+    void SetupStates(CursorService cursor, TimeService time)
     {
-        states[StateId.Booting] = new BootingState();
-        states[StateId.MainMenu] = new MainMenuState();
-        states[StateId.Loading] = new LoadingState();
-        states[StateId.InGame] = new InGameState();
-        states[StateId.Paused] = new PausedState();
-        states[StateId.GameOver] = new GameOverState();
+        states[StateId.InGame] = new InGameState(cursor, time);
+        states[StateId.Paused] = new PausedState(cursor, time);
     }
 
     public bool SetState(StateId targetId)
     {
-        if (!states.TryGetValue(targetId, out var next)) return false;
-        if (currentState != null && !next.CanEnter(currentState.Id)) return false;
+        if (!states.TryGetValue(targetId, out var next))
+        {
+            Debug.LogWarning($"[StateService] Unknown state: {targetId}");
+            return false;
+        }
 
-        currentState?.OnExit();
-        currentState = next;
-        currentState.OnEnter();
+        if (Current is { } cur && !next.CanEnter(cur.Id))
+        {
+            Debug.LogWarning($"[StateService] Illegal transition {cur.Id} -> {targetId}");
+            return false;
+        }
 
+        Current?.OnExit();
+        Current = next;
+        Current.OnEnter();
         return true;
+    }
+
+    public void Update(float dt) => Current?.OnUpdate(dt);
+
+    public void Shutdown()
+    {
+        Current?.OnExit();
+        Current = null;
+        states.Clear();
     }
 }

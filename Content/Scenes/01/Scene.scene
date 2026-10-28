@@ -290,6 +290,12 @@
 			"ParentID": "757ac3504a43066fa204fcb7d1f1a6d0"
 		},
 		{
+			"ID": "c869dca745cbb9c1c6fe71ac104b0faa",
+			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
+			"PrefabObjectID": "724eae25415034d6dcf899a6e9dd8a10",
+			"ParentID": "f45d3ee04b613d0c283bc485f6ae5e3e"
+		},
+		{
 			"ID": "115b653b4d5a830f1617d9a19720a55b",
 			"PrefabID": "5cf8834e4101fec29984dd9b85389834",
 			"PrefabObjectID": "ed57bb6045f86fdd5978f69f602250a2",

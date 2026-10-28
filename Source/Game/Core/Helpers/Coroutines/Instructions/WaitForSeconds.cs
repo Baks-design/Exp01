@@ -4,12 +4,12 @@ namespace Game.Core.Helpers.Coroutines;
 
 public struct WaitForSeconds(float seconds, bool timeScaleIndependent = false) : IYieldInstruction
 {
-    float secondsRemaining = seconds;
-    readonly bool timeScaleIndependent = timeScaleIndependent;
+    float remaining = seconds;
+    readonly bool unscaled = timeScaleIndependent;
 
     public bool Step(float deltaTime)
     {
-        secondsRemaining -= timeScaleIndependent ? Time.UnscaledDeltaTime : deltaTime;
-        return secondsRemaining <= 0;
+        remaining -= unscaled ? Time.UnscaledDeltaTime : deltaTime;
+        return remaining <= 0f;
     }
 }

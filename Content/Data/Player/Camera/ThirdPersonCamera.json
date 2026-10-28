@@ -8,16 +8,16 @@
 		"X": -60.0,
 		"Y": 60.0
 	},
-	"distance": 400.0,
-	"minDistance": 80.0,
+	"distance": 1.0,
+	"minDistance": 1.0,
 	"collisionBias": 10.0,
 	"cameraCollisionLayers": {
-		"Mask": 3
+		"Mask": 0
 	},
 	"fOVZoom": 50.0,
 	"fOVLerpSpeed": 8.0,
 	"shakeDecay": 5.0,
 	"shakeScale": 1.0,
-	"lockOnLerpSpeed": 10.0
+	"smoothing": 10.0
 }
 }

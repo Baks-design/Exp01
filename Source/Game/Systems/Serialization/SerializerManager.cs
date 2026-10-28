@@ -1,33 +1,39 @@
 using System.IO;
 using FlaxEngine;
-using Game.Behaviours.Player;
 
 namespace Game.Systems.Serialization;
 
-public sealed class SerializerManager
+public sealed class SerializerManager : GamePlugin
 {
-    SerializationService serializer;
-    GameSettings settings;
+    public static SerializerManager Instance => PluginManager.GetPlugin<SerializerManager>();
+    public SerializationService Serializer { get; private set; }
+    public GameSettings Settings { get; private set; }
 
-    public void CreateSave()
+    public SerializerManager() => _description = new PluginDescription
     {
-        var storage = new FileSaveStorage(Path.Combine(Globals.ProductLocalFolder, "save.json"));
-        serializer = new(storage);
-        var player = Level.FindScript<PlayerData>();
-        serializer?.Register(player);
+        Name = "Serializer Manager",
+        Description = "Global save/load service.",
+        Category = "Gameplay"
+    };
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        var savePath = Path.Combine(Globals.ProductLocalFolder, "save.json");
+        var storage = new FileSaveStorage(savePath);
+        Serializer = new SerializationService(storage);
+        Settings = new GameSettings();
     }
 
-    public void CreateSettings()
+    public override void Deinitialize()
     {
-        settings = new();
-        settings?.Save();
+        Serializer = null;
+        Settings = null;
+        base.Deinitialize();
     }
 
-    public void SaveEntities() => serializer?.SaveAll();
-
-    public void SaveSettings() => settings?.Save();
-
-    public void LoadEntities() => serializer?.LoadAll();
-
-    public void LoadSettings() => settings?.Load();
+    public void SaveEntities() => Serializer?.SaveAll();
+    public void LoadEntities() => Serializer?.LoadAll();
+    public void SaveSettings() => Settings?.Save();
+    public void LoadSettings() => Settings?.Load();
 }

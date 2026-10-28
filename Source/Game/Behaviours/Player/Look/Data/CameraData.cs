@@ -11,11 +11,9 @@ public sealed class CameraData
 
     public void Reset()
     {
-        yaw = 0;
-        smoothedYaw = 0;
-        pitch = 0;
-        smoothedPitch = 0;
-        defaultFov = 0;
-        initialized = false;
+        yaw = 0f;
+        smoothedYaw = 0f;
+        pitch = 0f;
+        smoothedPitch = 0f;
     }
 }

@@ -13,11 +13,9 @@ public sealed class InputService
     public static Float2 GetMousePosition => Input.MousePositionDelta;
     public static float GetScroll => Input.MouseScrollDelta;
 
-    void ThrowIfDisposed() => ObjectDisposedException.ThrowIf(disposed, this);
-
     public void Subscribe(InputActions action, Action callback)
     {
-        ThrowIfDisposed();
+        ObjectDisposedException.ThrowIf(disposed, this);
         ArgumentNullException.ThrowIfNull(callback);
 
         if (!events.TryGetValue(action, out var inputEvent))
@@ -48,13 +46,13 @@ public sealed class InputService
 
     public bool GetAction(InputActions action)
     {
-        ThrowIfDisposed();
+        ObjectDisposedException.ThrowIf(disposed, this);
         return Input.GetAction(action.Name);
     }
 
     public float GetAxis(GameAxis axis, bool rawValue = true)
     {
-        ThrowIfDisposed();
+        ObjectDisposedException.ThrowIf(disposed, this);
 
         if (!axes.TryGetValue(axis, out var engineAxis))
         {

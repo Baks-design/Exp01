@@ -63,6 +63,7 @@
 	"camera": "6e5a8f664642d14b41337aa11b168458",
 	"cameraPitch": "793f0db14f0cb15827e20391d72d8d3d",
 	"cameraYaw": "c68c6b8b445fcc5842ef95a0d4942e97",
+	"cameraTarget": "724eae25415034d6dcf899a6e9dd8a10",
 	"firstPerson": {
 		"PresetReference": "4d429e5e4c116ab4ee12f6ab6a664438"
 	},
@@ -104,6 +105,19 @@
 		"Layer": 1
 	},
 	{
+		"ID": "724eae25415034d6dcf899a6e9dd8a10",
+		"TypeName": "FlaxEngine.EmptyActor",
+		"ParentID": "5b557b414d049a6a7dbcf79814c91083",
+		"Name": "Camera Target",
+		"Transform": {
+			"Translation": {
+				"X": 0.0,
+				"Y": 94.1859130859375,
+				"Z": 121.36508178710938
+			}
+		}
+	},
+	{
 		"ID": "ed57bb6045f86fdd5978f69f602250a2",
 		"TypeName": "FlaxEngine.EmptyActor",
 		"ParentID": "05d72da047ffe91862554fbd5c7c2600",
@@ -116,10 +130,9 @@
 		"TypeName": "Game.Behaviours.Player.PlayerSound",
 		"ParentID": "ed57bb6045f86fdd5978f69f602250a2",
 		"V": {
-	"volume": 1.0,
-	"maxDistance": 100.0,
 	"PoolHost": "ed57bb6045f86fdd5978f69f602250a2",
-	"SoundBank": "8cafa9524c8a73c54c93e99f87777e63"
+	"SoundBankAsset": "8cafa9524c8a73c54c93e99f87777e63",
+	"volume": 1.0
 }
 	},
 	{

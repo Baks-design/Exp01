@@ -1,4 +1,5 @@
 using FlaxEngine;
+using Game.Systems.Bootstrap;
 using Game.Systems.Inputs;
 using Game.Systems.State;
 
@@ -6,13 +7,19 @@ namespace Game.UI;
 
 public sealed class PauseMenu : Script
 {
-    readonly InputService input = new();
-    readonly StateService state = new();
+    StateManager stateInstance;
+    InputService inputService;
     bool isOpen;
 
-    public override void OnEnable() => input.Subscribe(InputActions.Menu, TogglePause);
+    public override void OnStart()
+    {
+        GameBootstrap.Services.TryResolve(out inputService);
+        stateInstance = StateManager.Instance;
+    }
 
-    public override void OnDisable() => input.Unsubscribe(InputActions.Menu, TogglePause);
+    public override void OnEnable() => inputService.Subscribe(InputActions.Menu, TogglePause);
+
+    public override void OnDisable() => inputService.Unsubscribe(InputActions.Menu, TogglePause);
 
     void TogglePause()
     {
@@ -27,7 +34,7 @@ public sealed class PauseMenu : Script
         if (isOpen) return;
 
         isOpen = true;
-        state.SetState(StateId.Paused);
+        stateInstance.PauseGame();
     }
 
     void CloseMenu()
@@ -35,6 +42,6 @@ public sealed class PauseMenu : Script
         if (!isOpen) return;
 
         isOpen = false;
-        state.SetState(StateId.InGame);
+        stateInstance.ResumeGame();
     }
 }

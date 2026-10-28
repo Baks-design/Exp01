@@ -6,5 +6,6 @@ public interface IState
 
     bool CanEnter(StateId from);
     void OnEnter();
+    void OnUpdate(float dt);
     void OnExit();
 }

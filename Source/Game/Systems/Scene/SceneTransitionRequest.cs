@@ -3,9 +3,6 @@ using FlaxEngine;
 
 namespace Game.Systems.Scene;
 
-using System;
-using FlaxEngine;
-
 public sealed class SceneTransitionRequest
 {
     SceneReference target;

@@ -10,9 +10,11 @@ public sealed class PlayerMovement : Script
     public PlayerSound sound;
     public PlayerCamera playerCamera;
     public Actor cameraYaw;
+
     [Header("Strategies")]
     public FirstPersonMovement firstPerson = new();
     public ThirdPersonMovement thirdPerson = new();
+
     readonly InputService input = new();
     readonly MovementContext ctx = new();
     IMovementStrategy strategy;
@@ -22,23 +24,30 @@ public sealed class PlayerMovement : Script
     public override void OnStart()
     {
         if (!controller) { Debug.LogError("PlayerMovement: controller missing."); return; }
+        if (!cameraYaw) { Debug.LogError("PlayerMovement: cameraYaw missing."); return; }
+        if (!playerCamera) { Debug.LogError("PlayerMovement: playerCamera missing."); return; }
 
         ctx.input = input;
         ctx.controller = controller;
         ctx.cameraYaw = cameraYaw;
+        ctx.camera = playerCamera;  
         ctx.movementData = MovementData;
-        ctx.cameraData = playerCamera.CameraData;
         ctx.sound = sound;
     }
 
-    public override void OnUpdate() => MovementData.jumpRequested = false;
+    public override void OnFixedUpdate()
+    {
+        if (strategy == null) return;
 
-    public override void OnFixedUpdate() => strategy.Execute(ctx);
+        var dt = Time.PhysicsFPS;
+        ctx.deltaTime = dt;
+        strategy.Execute(ctx, dt);
+    }
 
     public override void OnDebugDraw() =>
         DebugDraw.DrawWireCapsule(
             controller.Transform.Translation,
-            controller.Transform.Orientation * Quaternion.Euler(90, 0, 0),
+            controller.Transform.Orientation * Quaternion.Euler(90f, 0f, 0f),
             controller.Radius,
             controller.Height,
             Color.Blue);
@@ -65,9 +74,5 @@ public sealed class PlayerMovement : Script
         }
     }
 
-    public void SetMovement(float horizontal, float vertical)
-    {
-        MovementData.horizontalVelocity += horizontal;
-        MovementData.verticalVelocity += vertical;
-    }
+    public void AddImpulse(Vector3 impulse) => MovementData.prevVelocity += impulse;
 }

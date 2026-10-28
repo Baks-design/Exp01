@@ -1,24 +1,23 @@
-using FlaxEngine;
 using Game.Core.Cursor;
 using Game.Core.Helpers.Timer;
 
 namespace Game.Systems.State;
 
-public sealed class InGameState : IState
+public sealed class InGameState(CursorService cursor, TimeService time) : StateBase
 {
-    readonly CursorService cursorService = new();
-    readonly TimeService timeService = new();
+    readonly CursorService cursor = cursor;
+    readonly TimeService time = time;
 
-    public StateId Id => StateId.InGame;
+    public override StateId Id => StateId.InGame;
 
-    public bool CanEnter(StateId from) => from == StateId.Loading || from == StateId.Paused;
+    public override bool CanEnter(StateId from) => from is StateId.Loading or StateId.Paused;
 
-    public void OnEnter()
+    public override void OnEnter()
     {
-        Debug.Log("Enter InGame");
-        cursorService?.Apply(CursorState.Gameplay);
-        timeService?.Resume();
+        base.OnEnter();
+        cursor.ApplyGameplay();
+        time.Resume();
     }
 
-    public void OnExit() { }
+    public override void OnUpdate(float dt) => cursor.ApplyGameplay();
 }

@@ -2,5 +2,5 @@ namespace Game.Behaviours.Player;
 
 public interface IMovementStrategy
 {
-    void Execute(MovementContext ctx);
+    void Execute(MovementContext ctx, float deltaTime);
 }

@@ -1,18 +1,28 @@
 using FlaxEngine;
-using Game.Systems.State;
+using Game.Core.Cursor;
+using Game.Core.Helpers.Services;
+using Game.Core.Helpers.Timer;
+using Game.Systems.Inputs;
+using Game.Systems.Scene;
 
 namespace Game.Systems.Bootstrap;
 
-public sealed class BootstrapPlugin : GamePlugin
+public sealed class GameBootstrap : GamePlugin
 {
-    public StateService StateService { get; } = new();
+    public static ServiceLocator Services { get; private set; } = null!;
 
     public override void Initialize()
     {
-        StateService.Initialize();
-        if (StateService.CurrentId != StateId.InGame)
-            Debug.LogError($"[Bootstrap] Failed to enter {StateId.InGame} state.");
+        Services = new ServiceLocator();
+        Services.RegisterFactory(() => new InputService());
+        Services.RegisterFactory(() => new SceneService());
+        Services.RegisterFactory(() => new TimeService());
+        Services.RegisterFactory(() => new CursorService());
     }
 
-    public override void Deinitialize() => StateService.SetState(StateId.None);
+    public override void Deinitialize()
+    {
+        Services?.Dispose();
+        Services = null!;
+    }
 }

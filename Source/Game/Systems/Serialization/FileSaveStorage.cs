@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using FlaxEngine;
 
 namespace Game.Systems.Serialization;
@@ -18,37 +17,15 @@ public sealed class FileSaveStorage : ISaveStorage
     public void Write(string json)
     {
         ArgumentNullException.ThrowIfNull(json);
-
         try
         {
-            var dir = Path.GetDirectoryName(filePath);
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) 
-                Directory.CreateDirectory(dir);
-
-            var tempPath = filePath + ".tmp";
-            File.WriteAllText(tempPath, json);
-            if (File.Exists(filePath))
-                File.Replace(tempPath, filePath, null);
-            else
-                File.Move(tempPath, filePath);
+            AtomicFile.Write(filePath, json);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"FileSaveStorage.Write failed for '{filePath}': {ex}");
+            Debug.LogError($"FileSaveStorage.Write failed for '{filePath}': {ex.Message}");
         }
     }
 
-    public string Read()
-    {
-        try
-        {
-            if (!File.Exists(filePath)) return null;
-            return File.ReadAllText(filePath);
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"FileSaveStorage.Read failed for '{filePath}': {ex}");
-            return null;
-        }
-    }
+    public string Read() => AtomicFile.Read(filePath);
 }

@@ -1,13 +1,14 @@
-﻿namespace Game.Core.Helpers.Coroutines;
+﻿using FlaxEngine;
 
-public struct WaitForFrames(int expectedFramesCount = 0) : IYieldInstruction
+namespace Game.Core.Helpers.Coroutines;
+
+public struct WaitForFrames(int frames = 1) : IYieldInstruction
 {
-    readonly int expectedFramesCount = expectedFramesCount;
-    int currentFrameCount = 0;
+    int remaining = Mathf.Max(1, frames);
 
     public bool Step(float deltaTime)
     {
-        currentFrameCount++;
-        return currentFrameCount >= expectedFramesCount;
+        remaining--;
+        return remaining <= 0;
     }
 }

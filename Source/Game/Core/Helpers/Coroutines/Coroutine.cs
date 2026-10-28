@@ -41,20 +41,23 @@ public sealed class Coroutine
 {
     CoroutineSystem system;
 
-    public bool HasCoroutines => system.HasCoroutines;
+    public bool HasCoroutines => system != null && system.HasCoroutines;
+    CoroutineSystem System =>
+       system ?? throw new ObjectDisposedException(nameof(Coroutine),
+           "Coroutine facade is not attached. It was never initialized, or the owning system has been deinitialized.");
 
-    internal void Initialize(CoroutineSystem coroutineSystem) => system = coroutineSystem;
+    internal void Initialize(CoroutineSystem system) => this.system = system;
 
     internal void DeInitialize() => system = null;
 
-    public IEnumerator Invoke(Action function, float seconds, object owner, bool timeScaleIndependent = false)
-        => system.Invoke(function, seconds, owner, timeScaleIndependent);
+    public IEnumerator Invoke(Action fn, float seconds, object owner, bool unscaled = false)
+        => System.Invoke(fn, seconds, owner, unscaled);
 
-    public void StartCoroutine(IEnumerator coroutine, object owner) => system.StartCoroutine(coroutine, owner);
+    public void StartCoroutine(IEnumerator routine, object owner) => System.StartCoroutine(routine, owner);
 
-    public void StopCoroutine(IEnumerator coroutine) => system.StopCoroutine(coroutine);
+    public void StopCoroutine(IEnumerator routine) => System.StopCoroutine(routine);
 
-    public void StopAllCoroutines() => system.StopAllCoroutines();
+    public void StopAllCoroutines() => System.StopAllCoroutines();
 
-    public void StopAllObjectCoroutines(object owner) => system.StopAllObjectCoroutines(owner);
+    public void StopAllObjectCoroutines(object owner) => System.StopAllObjectCoroutines(owner);
 }

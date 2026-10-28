@@ -1,16 +1,29 @@
 using FlaxEngine;
-using Game.Core.Extensions;
 using Game.Systems.Inputs;
 
 namespace Game.Behaviours.Player;
 
-public sealed class ThirdPersonCamera : ICameraStrategy //FIXME
+public sealed class ThirdPersonCamera : ICameraStrategy
 {
     ThirdPersonCameraPreset preset;
+    float currentDistance = -1f;
+    bool wasPausedLastFrame;
 
     public JsonAssetReference<ThirdPersonCameraPreset> PresetReference { get; set; }
 
     public void SetPreset(ThirdPersonCameraPreset preset) => this.preset = preset;
+
+    public void Configure()
+    {
+        currentDistance = -1f;
+        if (PresetReference && PresetReference.Asset != null)
+            preset = PresetReference.Asset.CreateInstance<ThirdPersonCameraPreset>();
+        else
+        {
+            if (PresetReference) Debug.LogWarning("ThirdPersonCamera: PresetReference set but asset failed to load.");
+            preset = null;
+        }
+    }
 
     public void Execute(CameraContext ctx)
     {
@@ -25,46 +38,47 @@ public sealed class ThirdPersonCamera : ICameraStrategy //FIXME
     {
         var mouseDelta = new Float2(ctx.input.GetAxis(GameAxis.LookX), ctx.input.GetAxis(GameAxis.LookY));
 
-        var t = 1 - Mathf.Exp(-preset.lockOnLerpSpeed * Time.DeltaTime);
+        var pitchSign = preset.invertY ? 1f : -1f;
 
-        ctx.cameraData.yaw = Mathf.LerpAngle(ctx.cameraData.yaw, mouseDelta.Y, t);
-        var toClamped = Mathf.Clamp(mouseDelta.X, preset.minMaxPitch.X, preset.minMaxPitch.Y);
-        ctx.cameraData.pitch = Mathf.Lerp(ctx.cameraData.pitch, toClamped, t);
+        ctx.cameraData.yaw += mouseDelta.X * preset.sensitivity;
+        ctx.cameraData.pitch += mouseDelta.Y * preset.sensitivity * pitchSign;
 
-        ctx.camera.LocalOrientation = Quaternion.Euler(ctx.cameraData.pitch, ctx.cameraData.yaw, 0);
+        var range = CameraMath.NormalizePitchRange(preset.minMaxPitch);
+        ctx.cameraData.pitch = Mathf.Clamp(ctx.cameraData.pitch, range.X, range.Y);
+
+        var t = CameraMath.ExpSmooth(preset.smoothing, ctx.deltaTime);
+
+        ctx.cameraData.smoothedYaw = Mathf.LerpAngle(ctx.cameraData.smoothedYaw, ctx.cameraData.yaw, t);
+        ctx.cameraData.smoothedPitch = Mathf.Lerp(ctx.cameraData.smoothedPitch, ctx.cameraData.pitch, t);
+
+        ctx.cameraYaw.LocalOrientation = Quaternion.Euler(0f, ctx.cameraData.smoothedYaw, 0f);
+        ctx.cameraPitch.LocalOrientation = Quaternion.Euler(ctx.cameraData.smoothedPitch, 0f, 0f);
     }
 
     void ApplySpringArm(CameraContext ctx)
     {
-        var targetPos = ctx.camera.Position;
-        var lookRot = Quaternion.Euler(ctx.cameraData.pitch, ctx.cameraData.yaw, 0);
-        var desiredDir = Vector3.Transform(Vector3.Backward, lookRot).Normalized;
+        var lookRot = Quaternion.Euler(ctx.cameraData.smoothedPitch, ctx.cameraData.smoothedYaw, 0f);
+        var camDir = Vector3.Transform(Vector3.Backward, lookRot).Normalized;
+
         var desiredDistance = preset.distance;
+        var pivotPos = ctx.cameraTarget.Position;
 
-        Vector3 basePosition;
-        if (Physics.RayCast(targetPos, desiredDir, out var hit, desiredDistance, preset.cameraCollisionLayers, false))
-        {
-            var safeDistance = Mathf.Max(hit.Distance - preset.collisionBias - ctx.camera.NearPlane, preset.minDistance);
-            basePosition = targetPos + desiredDir * safeDistance;
-        }
+        var targetDistance = desiredDistance;
+        if (Physics.RayCast(pivotPos, camDir, out var hit, desiredDistance + preset.collisionBias,
+            preset.cameraCollisionLayers, false))
+            targetDistance = Mathf.Max(hit.Distance - preset.collisionBias, preset.minDistance);
+
+        if (currentDistance < 0f) currentDistance = targetDistance;
         else
-            basePosition = targetPos + desiredDir * desiredDistance;
-
-        ctx.camera.Position = basePosition;
-        ctx.camera.Orientation = Quaternion.LookRotation(-desiredDir, Vector3.Up);
-    }
-
-    void FOVZoom(CameraContext ctx)
-    {
-        if (!ctx.cameraData.initialized)
         {
-            ctx.cameraData.defaultFov = ctx.camera.FieldOfView;
-            ctx.cameraData.initialized = true;
+            var t = CameraMath.ExpSmooth(preset.collisionSmooth, ctx.deltaTime);
+            currentDistance = Mathf.Lerp(currentDistance, targetDistance, t);
         }
 
-        var targetFov = ctx.input.GetAction(InputActions.Aim) ? preset.fOVZoom : ctx.cameraData.defaultFov;
-
-        var t = preset.fOVLerpSpeed * Time.DeltaTime;
-        ctx.camera.FieldOfView = ctx.camera.FieldOfView.Eerp(targetFov, t);
+        ctx.camera.Position = pivotPos + camDir * currentDistance;
+        ctx.camera.Orientation = Quaternion.LookRotation(-camDir, Vector3.Up);
     }
+
+    void FOVZoom(CameraContext ctx) =>
+        CameraMath.ApplyFovZoom(ctx, ctx.input.GetAction(InputActions.Aim), preset.fOVZoom, preset.fOVLerpSpeed);
 }

@@ -4,22 +4,23 @@
 	"EngineBuild": 7012,
 	"Data": {
 	"cameraSmoothing": 20.0,
-	"jumpForce": 800.0,
-	"gravityMultiplier": 2.0,
+	"jumpForce": 0.8,
+	"gravityMultiplier": 0.2,
 	"jumpBufferTime": 0.1,
 	"coyoteTime": 0.1,
-	"rotationLerpSpeed": 15.0,
-	"friction": 8.0,
-	"groundAccelerate": 5000.0,
-	"airAccelerate": 10000.0,
-	"maxVelocityGround": 400.0,
-	"maxVelocityAir": 200.0,
+	"rotationLerpSpeed": 0.15,
+	"friction": 0.8,
+	"groundAccelerate": 0.5,
+	"airAccelerate": 0.1,
+	"maxVelocityGround": 0.4,
+	"maxVelocityAir": 0.2,
 	"strafe": true,
 	"jumpGraceFrames": 2,
-	"stickyGroundForce": 490.0,
+	"stickyGroundForce": 0.4,
 	"groundLayers": {
 		"Mask": 4294967295
 	},
-	"groundCheck": 10.0
+	"groundCheck": 10.0,
+	"footstepDistance": 200.0
 }
 }

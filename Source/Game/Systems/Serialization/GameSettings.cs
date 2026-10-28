@@ -9,14 +9,13 @@ namespace Game.Systems.Serialization;
 public sealed class GameSettings
 {
     readonly string path;
-    Dictionary<string, string> data;
+    Dictionary<string, string> data = [];
 
     public IReadOnlyDictionary<string, string> Data => data;
 
     public GameSettings()
     {
         path = Path.Combine(Globals.ProductLocalFolder, "Game.settings");
-        data = [];
         Load();
     }
 
@@ -26,7 +25,7 @@ public sealed class GameSettings
     public void Set(string key, string value)
     {
         ArgumentNullException.ThrowIfNull(key);
-        data[key] = value;
+        data[key] = value ?? string.Empty;
     }
 
     public void Load()
@@ -49,17 +48,8 @@ public sealed class GameSettings
     {
         try
         {
-            var dir = Path.GetDirectoryName(path);
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
             var json = JsonSerializer.Serialize(data);
-            var tempPath = path + ".tmp";
-            File.WriteAllText(tempPath, json);
-            if (File.Exists(path))
-                File.Replace(tempPath, path, null);
-            else
-                File.Move(tempPath, path);
+            AtomicFile.Write(path, json);
         }
         catch (Exception ex)
         {

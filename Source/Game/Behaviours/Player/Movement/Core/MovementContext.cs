@@ -5,11 +5,11 @@ namespace Game.Behaviours.Player;
 
 public sealed class MovementContext
 {
+    public float deltaTime;
+    public Actor cameraYaw;
+    public PlayerCamera camera;
     public InputService input;
     public CharacterController controller;
-    public Actor cameraYaw;
     public PlayerMovementData movementData;
-    public CameraData cameraData;
     public PlayerSound sound;
-    public float deltaTime;
 }

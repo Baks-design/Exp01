@@ -2,5 +2,5 @@
 
 public interface IYieldInstruction
 {
-    public bool Step(float deltaTime);
+    bool Step(float deltaTime);
 }
